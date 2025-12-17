@@ -1,7 +1,7 @@
 {
   "version": "5",
   "specifiers": {
-    "jsr:@nshiab/journalism-format@^1.0.1": "1.0.1",
+    "jsr:@nshiab/journalism-format@^1.0.2": "1.0.2",
     "jsr:@std/assert@*": "1.0.16",
     "jsr:@std/dotenv@~0.225.5": "0.225.5",
     "jsr:@std/fs@*": "1.0.20",
@@ -14,8 +14,8 @@
     "npm:google-spreadsheet@^5.0.2": "5.0.2_google-auth-library@10.5.0"
   },
   "jsr": {
-    "@nshiab/journalism-format@1.0.1": {
-      "integrity": "efa3b8594fd640f930196fd68d77c8497f14bbac1b875e9573d60ab93a98e495",
+    "@nshiab/journalism-format@1.0.2": {
+      "integrity": "2974e5ce6a542c3e8457476d3c9f5f1d17ede6fe44652a9e65a0f8f62727cafd",
       "dependencies": [
         "npm:d3-dsv",
         "npm:date-fns-tz"
@@ -810,7 +810,7 @@
   },
   "workspace": {
     "dependencies": [
-      "jsr:@nshiab/journalism-format@^1.0.1",
+      "jsr:@nshiab/journalism-format@^1.0.2",
       "jsr:@std/dotenv@~0.225.5",
       "npm:@google-cloud/storage@^7.18.0",
       "npm:d3-dsv@^3.0.1",
