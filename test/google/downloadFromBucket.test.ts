@@ -1,6 +1,6 @@
 import "@std/dotenv/load";
 import { assertEquals, assertRejects } from "jsr:@std/assert";
-import { existsSync } from "jsr:@std/fs";
+import { ensureDirSync, existsSync } from "jsr:@std/fs";
 import toBucket from "../../src/google/toBucket.ts";
 import downloadFromBucket from "../../src/google/downloadFromBucket.ts";
 
@@ -9,8 +9,12 @@ const testDataFile = "test/data/data.json";
 const testDestination = "journalism-tests/test-file.json";
 const localDestination = "test/output/downloaded-file.json";
 
+ensureDirSync("test/output");
+
 if (typeof bucketKey === "string") {
-  Deno.test("should download a file from a bucket", async () => {
+  Deno.test("should download a file from a bucket", {
+    sanitizeResources: false,
+  }, async () => {
     await toBucket(testDataFile, testDestination, { overwrite: true });
 
     if (existsSync(localDestination)) {
@@ -49,7 +53,9 @@ if (typeof bucketKey === "string") {
     assertEquals(existsSync(localDestination), true);
   });
 
-  Deno.test("should overwrite file when exists and overwrite option is true", async () => {
+  Deno.test("should overwrite file when exists and overwrite option is true", {
+    sanitizeResources: false,
+  }, async () => {
     // Ensure local file exists
     if (!existsSync(localDestination)) {
       await downloadFromBucket(testDestination, localDestination);

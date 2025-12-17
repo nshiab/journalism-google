@@ -23,7 +23,7 @@ if (
   typeof key === "string" &&
   key !== ""
 ) {
-  // Deno.test("should add a row to a sheet", async () => {
+  // Deno.test("should add a row to a sheet", { sanitizeResources: false }, async () => {
   //     await overwriteSheetData(data, sheetUrl)
 
   //     await addSheetRows(
@@ -38,7 +38,9 @@ if (
   //         { first: "Dexter", last: "McMillan" },
   //     ])
   // })
-  Deno.test("should add a row to a sheet with a specific headerIndex", async () => {
+  Deno.test("should add a row to a sheet with a specific headerIndex", {
+    sanitizeResources: false,
+  }, async () => {
     await overwriteSheetData(data, sheetUrl, {
       prepend: "Hi",
       lastUpdate: true,
@@ -75,7 +77,7 @@ if (
 //     typeof differentKey === "string" &&
 //     differentKey !== ""
 // ) {
-//     Deno.test("should add rows with a specific apiEmail and apiKey", async () => {
+//     Deno.test("should add rows with a specific apiEmail and apiKey", { sanitizeResources: false }, async () => {
 //         await overwriteSheetData(data, sheetUrl)
 
 //         await addSheetRows(

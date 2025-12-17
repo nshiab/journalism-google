@@ -1,4 +1,4 @@
-import formatDate from "../format/formatDate.ts";
+import { formatDate } from "@nshiab/journalism-format";
 import cleanData from "./helpers/cleanData.ts";
 import logToSheet from "./helpers/logToSheet.ts";
 

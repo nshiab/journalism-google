@@ -22,7 +22,7 @@ if (
   typeof key === "string" &&
   key !== ""
 ) {
-  // Deno.test("should overwrite the data in a sheet", async () => {
+  // Deno.test("should overwrite the data in a sheet", { sanitizeResources: false }, async () => {
   //     await overwriteSheetData(data, sheetUrl)
 
   //     const csv = await getSheetData(sheetUrl, { csv: true })
@@ -49,7 +49,7 @@ if (
   //         "Last update:,DATE UTC\r\nfirst,last\r\nNael,Shiab\r\nAndrew,Ryan"
   //     )
   // })
-  // Deno.test("should overwrite the data in a sheet with a lastUpdate option and a specific time zone", async () => {
+  // Deno.test("should overwrite the data in a sheet with a lastUpdate option and a specific time zone", { sanitizeResources: false }, async () => {
   //     await overwriteSheetData(data, sheetUrl, {
   //         lastUpdate: true,
   //         timeZone: "Canada/Eastern",
@@ -78,22 +78,26 @@ if (
   //     )
   // })
 
-  Deno.test("should overwrite the data in a sheet with a prepended text and lastUpdate with a specific time zone", async () => {
-    await overwriteSheetData(data, sheetUrl, {
-      prepend: "Contact me for more info",
-      lastUpdate: true,
-      timeZone: "Canada/Eastern",
-    });
+  Deno.test(
+    "should overwrite the data in a sheet with a prepended text and lastUpdate with a specific time zone",
+    { sanitizeResources: false },
+    async () => {
+      await overwriteSheetData(data, sheetUrl, {
+        prepend: "Contact me for more info",
+        lastUpdate: true,
+        timeZone: "Canada/Eastern",
+      });
 
-    const csv = await getSheetData(sheetUrl, { csv: true });
+      const csv = await getSheetData(sheetUrl, { csv: true });
 
-    assertEquals(
-      (csv as string)
-        .replace(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/, "DATE")
-        .replace(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/, "DATE"),
-      "Contact me for more info,\r\nLast update:,DATE ET\r\nfirst,last\r\nNael,Shiab\r\nAndrew,Ryan",
-    );
-  });
+      assertEquals(
+        (csv as string)
+          .replace(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/, "DATE")
+          .replace(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/, "DATE"),
+        "Contact me for more info,\r\nLast update:,DATE ET\r\nfirst,last\r\nNael,Shiab\r\nAndrew,Ryan",
+      );
+    },
+  );
 } else {
   console.log(
     "No GOOGLE_SERVICE_ACCOUNT_EMAIL or GOOGLE_PRIVATE_KEY in process.env",
@@ -109,7 +113,7 @@ if (
 //     typeof differentKey === "string" &&
 //     differentKey !== ""
 // ) {
-//     Deno.test("should overwrite the data in a sheet with a prepended text and lastUpdate with a specific time zone, using a specific apiEmail and apiKey", async () => {
+//     Deno.test("should overwrite the data in a sheet with a prepended text and lastUpdate with a specific time zone, using a specific apiEmail and apiKey", { sanitizeResources: false }, async () => {
 //         await overwriteSheetData(data, sheetUrl, {
 //             prepend: "Contact me for more info",
 //             lastUpdate: true,

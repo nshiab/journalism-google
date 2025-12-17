@@ -24,7 +24,7 @@ if (
   typeof key === "string" &&
   key !== ""
 ) {
-  // Deno.test("should return the data from a sheet as an array of object", async () => {
+  // Deno.test("should return the data from a sheet as an array of object", { sanitizeResources: false }, async () => {
   //     await overwriteSheetData(originalData, sheetUrl)
 
   //     const data = await getSheetData(sheetUrl)
@@ -48,15 +48,19 @@ if (
   //     )
   // })
 
-  Deno.test("should return the data as an array of objects after skipping the first row", async () => {
-    await overwriteSheetData(originalData, sheetUrl, {
-      prepend: "Contact me for more info",
-    });
+  Deno.test(
+    "should return the data as an array of objects after skipping the first row",
+    { sanitizeResources: false },
+    async () => {
+      await overwriteSheetData(originalData, sheetUrl, {
+        prepend: "Contact me for more info",
+      });
 
-    const data = await getSheetData(sheetUrl, { skip: 1 });
+      const data = await getSheetData(sheetUrl, { skip: 1 });
 
-    assertEquals(data, originalData);
-  });
+      assertEquals(data, originalData);
+    },
+  );
 } else {
   console.log(
     "No GOOGLE_SERVICE_ACCOUNT_EMAIL or GOOGLE_PRIVATE_KEY in process.env",
@@ -72,7 +76,7 @@ if (
 //     typeof differentKey === "string" &&
 //     differentKey !== ""
 // ) {
-//     Deno.test("should return the data as an array of objects after skipping the first row, with a specific apiEmail and apiKey", async () => {
+//     Deno.test("should return the data as an array of objects after skipping the first row, with a specific apiEmail and apiKey", { sanitizeResources: false }, async () => {
 //         await overwriteSheetData(originalData, sheetUrl, {
 //             prepend: "Contact me for more info",
 //             apiEmail: "GG_EMAIL",

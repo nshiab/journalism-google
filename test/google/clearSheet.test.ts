@@ -23,7 +23,7 @@ if (
   typeof key === "string" &&
   key !== ""
 ) {
-  Deno.test("should clear a sheet", async () => {
+  Deno.test("should clear a sheet", { sanitizeResources: false }, async () => {
     await overwriteSheetData(data, sheetUrl, {
       prepend: "Hi",
       lastUpdate: true,
@@ -51,7 +51,7 @@ if (
 //     typeof differentKey === "string" &&
 //     differentKey !== ""
 // ) {
-//     Deno.test("should clear a sheet with a specific apiEmail and apiKey", async () => {
+//     Deno.test("should clear a sheet with a specific apiEmail and apiKey", { sanitizeResources: false }, async () => {
 //         await overwriteSheetData(data, sheetUrl, {
 //             prepend: "Hi",
 //             lastUpdate: true,
