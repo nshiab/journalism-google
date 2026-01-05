@@ -18,6 +18,13 @@ if (typeof bucketKey === "string") {
     assertArrayIncludes(files, ["journalism-tests/list-test/data.json"]);
   });
 
+  Deno.test("filesInBucket lists uploaded files in a folder and takes care of pagination", async () => {
+    const files = await filesInBucket({
+      folder: "journalism-tests/test-many-files/",
+    });
+    assertEquals(files.length, 100_000);
+  });
+
   Deno.test("filesInBucket lists all files in the bucket", async () => {
     const files = await filesInBucket();
     if (files.length === 0) throw new Error("No files found in bucket");
