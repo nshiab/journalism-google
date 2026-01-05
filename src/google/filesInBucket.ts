@@ -65,7 +65,7 @@ export default async function filesInBucket(
 
   const s = new Storage({ projectId });
   const b = s.bucket(bucketName);
-  const [files] = await b.getFiles({ prefix: folder });
+  const [files] = await b.getFiles({ prefix: folder, autoPaginate: true });
 
   if (URI) {
     return files.map((file) => `gs://${bucketName}/${file.name}`);
