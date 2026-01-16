@@ -32,7 +32,7 @@ if (typeof bucketKey === "string") {
   );
 
   Deno.test("filesInBucket lists all files in the bucket", {
-    sanitizeResources: true,
+    sanitizeResources: false,
   }, async () => {
     const files = await filesInBucket();
     if (files.length === 0) throw new Error("No files found in bucket");
