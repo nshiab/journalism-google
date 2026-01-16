@@ -38,7 +38,9 @@ if (typeof bucketKey === "string") {
     if (files.length === 0) throw new Error("No files found in bucket");
   });
 
-  Deno.test("filesInBucket returns Google Storage URIs when URI is true", async () => {
+  Deno.test("filesInBucket returns Google Storage URIs when URI is true", {
+    sanitizeResources: false,
+  }, async () => {
     const uris = await filesInBucket({
       folder: "journalism-tests/list-test/",
       URI: true,

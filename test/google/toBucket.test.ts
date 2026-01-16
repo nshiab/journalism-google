@@ -9,7 +9,9 @@ const testDataFile = "test/data/data.json";
 const testDestination = "journalism-tests/test-file.json";
 
 if (typeof bucketKey === "string") {
-  Deno.test("should upload a file when it does not exist", async () => {
+  Deno.test("should upload a file when it does not exist", {
+    sanitizeResources: false,
+  }, async () => {
     // Ensure file doesn't exist before test
     const existsBefore = await inBucket(testDestination);
     if (existsBefore) {
@@ -29,7 +31,9 @@ if (typeof bucketKey === "string") {
     assertEquals(existsAfter, true);
   });
 
-  Deno.test("should throw if file exists and overwrite is false", async () => {
+  Deno.test("should throw if file exists and overwrite is false", {
+    sanitizeResources: false,
+  }, async () => {
     // Try to upload without overwrite - should throw
     await assertRejects(
       () => toBucket(testDataFile, testDestination),
@@ -38,7 +42,9 @@ if (typeof bucketKey === "string") {
     );
   });
 
-  Deno.test("should overwrite file when overwrite option is true", async () => {
+  Deno.test("should overwrite file when overwrite option is true", {
+    sanitizeResources: false,
+  }, async () => {
     // Then overwrite it
     const result = await toBucket(testDataFile, testDestination, {
       overwrite: true,
@@ -50,7 +56,9 @@ if (typeof bucketKey === "string") {
     assertEquals(result.includes(testDestination), true);
   });
 
-  Deno.test("should skip upload when skip option is true and file exists", async () => {
+  Deno.test("should skip upload when skip option is true and file exists", {
+    sanitizeResources: false,
+  }, async () => {
     // Then try to upload with skip option
     const result = await toBucket(testDataFile, testDestination, {
       skip: true,
@@ -62,7 +70,9 @@ if (typeof bucketKey === "string") {
     assertEquals(result.includes(testDestination), true);
   });
 
-  Deno.test("should upload when skip option is true but file does not exist", async () => {
+  Deno.test("should upload when skip option is true but file does not exist", {
+    sanitizeResources: false,
+  }, async () => {
     // Ensure file doesn't exist before test
     const existsBefore = await inBucket(testDestination);
     if (existsBefore) {
@@ -97,43 +107,51 @@ if (typeof bucketKey === "string") {
     );
   });
 
-  Deno.test("should return URI when skip is true, local file doesn't exist, but remote file exists", async () => {
-    // Ensure remote file exists
-    await toBucket(testDataFile, testDestination, { overwrite: true });
+  Deno.test(
+    "should return URI when skip is true, local file doesn't exist, but remote file exists",
+    { sanitizeResources: false },
+    async () => {
+      // Ensure remote file exists
+      await toBucket(testDataFile, testDestination, { overwrite: true });
 
-    // Verify remote file exists
-    const remoteExists = await inBucket(testDestination);
-    assertEquals(remoteExists, true);
+      // Verify remote file exists
+      const remoteExists = await inBucket(testDestination);
+      assertEquals(remoteExists, true);
 
-    // Try to upload a non-existent local file with skip option
-    const nonExistentFile = "test/data/non-existent-file.json";
-    const result = await toBucket(nonExistentFile, testDestination, {
-      skip: true,
-    });
+      // Try to upload a non-existent local file with skip option
+      const nonExistentFile = "test/data/non-existent-file.json";
+      const result = await toBucket(nonExistentFile, testDestination, {
+        skip: true,
+      });
 
-    // Should return URI of existing remote file
-    assertEquals(typeof result, "string");
-    assertEquals(result.startsWith("gs://"), true);
-    assertEquals(result.includes(testDestination), true);
-  });
+      // Should return URI of existing remote file
+      assertEquals(typeof result, "string");
+      assertEquals(result.startsWith("gs://"), true);
+      assertEquals(result.includes(testDestination), true);
+    },
+  );
 
-  Deno.test("should throw error when skip is true and neither local nor remote file exists", async () => {
-    // Ensure remote file doesn't exist
-    const nonExistentDestination =
-      "journalism-tests/definitely-non-existent-file.json";
-    const existsBefore = await inBucket(nonExistentDestination);
-    if (existsBefore) {
-      await deleteFromBucket(nonExistentDestination);
-    }
+  Deno.test(
+    "should throw error when skip is true and neither local nor remote file exists",
+    { sanitizeResources: false },
+    async () => {
+      // Ensure remote file doesn't exist
+      const nonExistentDestination =
+        "journalism-tests/definitely-non-existent-file.json";
+      const existsBefore = await inBucket(nonExistentDestination);
+      if (existsBefore) {
+        await deleteFromBucket(nonExistentDestination);
+      }
 
-    // Try to upload a non-existent local file to non-existent remote location with skip option
-    const nonExistentFile = "test/data/non-existent-file.json";
-    await assertRejects(
-      () => toBucket(nonExistentFile, nonExistentDestination, { skip: true }),
-      Error,
-      "Local file",
-    );
-  });
+      // Try to upload a non-existent local file to non-existent remote location with skip option
+      const nonExistentFile = "test/data/non-existent-file.json";
+      await assertRejects(
+        () => toBucket(nonExistentFile, nonExistentDestination, { skip: true }),
+        Error,
+        "Local file",
+      );
+    },
+  );
 } else {
   console.log("No BUCKET_PROJECT in process.env");
 }

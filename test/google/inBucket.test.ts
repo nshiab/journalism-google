@@ -6,7 +6,9 @@ import toBucket from "../../src/google/toBucket.ts";
 const bucketKey = Deno.env.get("BUCKET_PROJECT");
 
 if (typeof bucketKey === "string") {
-  Deno.test("inBucket returns true for an uploaded file", async () => {
+  Deno.test("inBucket returns true for an uploaded file", {
+    sanitizeResources: false,
+  }, async () => {
     // Upload a file first
     await toBucket(
       "test/data/data.json",
@@ -18,7 +20,9 @@ if (typeof bucketKey === "string") {
     assertEquals(exists, true);
   });
 
-  Deno.test("inBucket returns false for a non-existent file", async () => {
+  Deno.test("inBucket returns false for a non-existent file", {
+    sanitizeResources: false,
+  }, async () => {
     const exists = await inBucket(
       "journalism-tests/this-file-should-not-exist.json",
     );
