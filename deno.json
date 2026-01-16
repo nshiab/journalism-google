@@ -23,8 +23,8 @@
   "nodeModulesDir": "auto",
   "imports": {
     "@google-cloud/storage": "npm:@google-cloud/storage@^7.18.0",
-    "@nshiab/journalism-format": "jsr:@nshiab/journalism-format@^1.0.2",
-    "@std/dotenv": "jsr:@std/dotenv@^0.225.5",
+    "@nshiab/journalism-format": "jsr:@nshiab/journalism-format@^1.0.3",
+    "@std/dotenv": "jsr:@std/dotenv@^0.225.6",
     "d3-dsv": "npm:d3-dsv@^3.0.1",
     "google-auth-library": "npm:google-auth-library@^10.5.0",
     "google-spreadsheet": "npm:google-spreadsheet@^5.0.2"
