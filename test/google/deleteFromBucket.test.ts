@@ -9,7 +9,9 @@ const testDataFile = "test/data/data.json";
 const testDestination = "journalism-tests/delete-test-file.json";
 
 if (typeof bucketKey === "string") {
-  Deno.test("deleteFromBucket deletes a file from the bucket", async () => {
+  Deno.test("deleteFromBucket deletes a file from the bucket", {
+    sanitizeResources: false,
+  }, async () => {
     // Upload a file first
     await toBucket(testDataFile, testDestination, { skip: true });
 
@@ -25,7 +27,9 @@ if (typeof bucketKey === "string") {
     assertEquals(exists, false);
   });
 
-  Deno.test("deleteFromBucket throws error when file doesn't exist", async () => {
+  Deno.test("deleteFromBucket throws error when file doesn't exist", {
+    sanitizeResources: false,
+  }, async () => {
     const nonExistentFile = "journalism-tests/non-existent-file.json";
 
     // Ensure file doesn't exist
@@ -39,22 +43,28 @@ if (typeof bucketKey === "string") {
     );
   });
 
-  Deno.test("deleteFromBucket with try option doesn't throw when file doesn't exist", async () => {
-    const nonExistentFile = "journalism-tests/try-delete-test.json";
+  Deno.test(
+    "deleteFromBucket with try option doesn't throw when file doesn't exist",
+    { sanitizeResources: false },
+    async () => {
+      const nonExistentFile = "journalism-tests/try-delete-test.json";
 
-    // Ensure file doesn't exist
-    const exists = await inBucket(nonExistentFile);
-    assertEquals(exists, false);
+      // Ensure file doesn't exist
+      const exists = await inBucket(nonExistentFile);
+      assertEquals(exists, false);
 
-    // Delete with try option - should not throw
-    await deleteFromBucket(nonExistentFile, { try: true });
+      // Delete with try option - should not throw
+      await deleteFromBucket(nonExistentFile, { try: true });
 
-    // Still shouldn't exist
-    const stillExists = await inBucket(nonExistentFile);
-    assertEquals(stillExists, false);
-  });
+      // Still shouldn't exist
+      const stillExists = await inBucket(nonExistentFile);
+      assertEquals(stillExists, false);
+    },
+  );
 
-  Deno.test("deleteFromBucket with try option deletes existing file", async () => {
+  Deno.test("deleteFromBucket with try option deletes existing file", {
+    sanitizeResources: false,
+  }, async () => {
     // Upload a file first
     await toBucket(testDataFile, testDestination);
 
