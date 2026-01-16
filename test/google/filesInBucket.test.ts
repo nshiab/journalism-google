@@ -6,7 +6,9 @@ import filesInBucket from "../../src/google/filesInBucket.ts";
 const bucketKey = Deno.env.get("BUCKET_PROJECT");
 
 if (typeof bucketKey === "string") {
-  Deno.test("filesInBucket lists uploaded files in a folder", async () => {
+  Deno.test("filesInBucket lists uploaded files in a folder", {
+    sanitizeResources: false,
+  }, async () => {
     await toBucket(
       "test/data/data.json",
       "journalism-tests/list-test/data.json",
