@@ -26,7 +26,9 @@ if (typeof bucketKey === "string") {
     assertEquals(existsSync(localDestination), true);
   });
 
-  Deno.test("should throw error when file exists and no options are set", async () => {
+  Deno.test("should throw error when file exists and no options are set", {
+    sanitizeResources: false,
+  }, async () => {
     await toBucket(testDataFile, testDestination, { overwrite: true });
 
     // Ensure local file exists
