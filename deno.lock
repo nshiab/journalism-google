@@ -11,7 +11,7 @@
     "npm:d3-dsv@^3.0.1": "3.0.1",
     "npm:date-fns-tz@^3.2.0": "3.2.0_date-fns@4.1.0",
     "npm:google-auth-library@^10.5.0": "10.5.0",
-    "npm:google-spreadsheet@^5.0.2": "5.0.2_google-auth-library@10.5.0"
+    "npm:google-spreadsheet@^5.1.0": "5.1.0_google-auth-library@10.5.0"
   },
   "jsr": {
     "@nshiab/journalism-format@1.0.3": {
@@ -301,8 +301,8 @@
         "hasown"
       ]
     },
-    "es-toolkit@1.42.0": {
-      "integrity": "sha512-SLHIyY7VfDJBM8clz4+T2oquwTQxEzu263AyhVK4jREOAwJ+8eebaa4wM3nlvnAqhDrMm2EsA6hWHaQsMPQ1nA=="
+    "es-toolkit@1.44.0": {
+      "integrity": "sha512-6penXeZalaV88MM3cGkFZZfOoLGWshWWfdy0tWw/RlVVyhvMaWSBTOvXNeiW3e5FwdS5ePW0LGEu17zT139ktg=="
     },
     "event-target-shim@5.0.1": {
       "integrity": "sha512-i/2XbnSz/uxRCU6+NdVJgKWDTM427+MqYbkQzD321DuCQJUqOuJKIA0IM2+W2xtYHdKOmZ4dR6fExsd4SXL+WQ=="
@@ -450,8 +450,8 @@
     "google-logging-utils@1.1.3": {
       "integrity": "sha512-eAmLkjDjAFCVXg7A1unxHsLf961m6y17QFqXqAXGj/gVkKFrEICfStRfwUlGNfeCEjNRa32JEWOUTlYXPyyKvA=="
     },
-    "google-spreadsheet@5.0.2_google-auth-library@10.5.0": {
-      "integrity": "sha512-8ugGYGsy6BLl6d4z2zwllEv8hFB2IVcCNAUYT/seo4DU7Pk6m79qv+qRxE2cE8bxbf4S13T5fzrjcPhbk2ogsw==",
+    "google-spreadsheet@5.1.0_google-auth-library@10.5.0": {
+      "integrity": "sha512-RODtEsyKaMhhDP2d9uMkK1VTEn07EHl76B+OSLygc/TgewgK7oSImTbyfPhma+Q5a1ttBmM6Hd9jRAA3seCY5w==",
       "dependencies": [
         "es-toolkit",
         "google-auth-library@10.5.0",
@@ -566,8 +566,8 @@
         "safe-buffer"
       ]
     },
-    "ky@1.14.1": {
-      "integrity": "sha512-hYje4L9JCmpEQBtudo+v52X5X8tgWXUYyPcxKSuxQNboqufecl9VMWjGiucAFH060AwPXHZuH+WB2rrqfkmafw=="
+    "ky@1.14.3": {
+      "integrity": "sha512-9zy9lkjac+TR1c2tG+mkNSVlyOpInnWdSMiue4F+kq8TwJSgv6o8jhLRg8Ho6SnZ9wOYUq/yozts9qQCfk7bIw=="
     },
     "lru-cache@10.4.3": {
       "integrity": "sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ=="
@@ -816,7 +816,7 @@
       "npm:@google-cloud/storage@^7.19.0",
       "npm:d3-dsv@^3.0.1",
       "npm:google-auth-library@^10.5.0",
-      "npm:google-spreadsheet@^5.0.2"
+      "npm:google-spreadsheet@^5.1.0"
     ]
   }
 }
