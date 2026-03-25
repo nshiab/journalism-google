@@ -1,4 +1,4 @@
-import { Storage, type UploadOptions } from "@google-cloud/storage";
+import { Storage } from "@google-cloud/storage";
 import process from "node:process";
 import { existsSync } from "node:fs";
 
@@ -72,7 +72,8 @@ export default async function toBucket(
   options: {
     project?: string;
     bucket?: string;
-    metadata?: UploadOptions["metadata"];
+    // deno-lint-ignore no-explicit-any
+    metadata?: any;
     overwrite?: boolean;
     skip?: boolean;
   } = {},

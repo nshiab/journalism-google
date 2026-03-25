@@ -34,23 +34,23 @@ async function addSheetRows(
 
 ### Parameters
 
-- **`data`**: - An array of objects, where each object represents a row to be
+- **`data`**: An array of objects, where each object represents a row to be
   appended to the sheet. The keys of the objects should match the existing
   column headers in the sheet.
-- **`sheetUrl`**: - The URL of the Google Sheet to which rows will be appended.
+- **`sheetUrl`**: The URL of the Google Sheet to which rows will be appended.
   This URL should point to a specific sheet (e.g., ending with `#gid=0`).
-- **`options`**: - An optional object with configuration options:
-- **`options.headerIndex`**: - The 0-based index of the row that contains the
+- **`options`**: An optional object with configuration options:
+- **`options.headerIndex`**: The 0-based index of the row that contains the
   headers in your sheet. By default, the first row (index 0) is considered the
   header. Use this if your headers are in a different row.
-- **`options.raw`**: - If `true`, data will be written as raw values, preventing
+- **`options.raw`**: If `true`, data will be written as raw values, preventing
   Google Sheets from automatically guessing data types or applying formatting.
   This can be useful for preserving exact string representations. Defaults to
   `false`.
-- **`options.apiEmail`**: - Optional. Your Google Service Account email. If
+- **`options.apiEmail`**: Optional. Your Google Service Account email. If
   provided, this will override the `process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL`
   environment variable.
-- **`options.apiKey`**: - Optional. Your Google Service Account private key. If
+- **`options.apiKey`**: Optional. Your Google Service Account private key. If
   provided, this will override the `process.env.GOOGLE_PRIVATE_KEY` environment
   variable.
 
@@ -345,20 +345,20 @@ function getSheetData(
 
 ### Parameters
 
-- **`sheetUrl`**: - The URL of the Google Sheet from which to retrieve data.
-  This URL should point to a specific sheet (e.g., ending with `#gid=0`).
-- **`options`**: - An optional object with configuration options:
-- **`options.skip`**: - The number of rows to skip from the beginning of the
-  sheet before parsing the data. This is useful for sheets that have metadata at
-  the top. Defaults to `0`.
-- **`options.csv`**: - If `true`, the function will return the raw data as a CSV
+- **`sheetUrl`**: The URL of the Google Sheet from which to retrieve data. This
+  URL should point to a specific sheet (e.g., ending with `#gid=0`).
+- **`options`**: An optional object with configuration options:
+- **`options.skip`**: The number of rows to skip from the beginning of the sheet
+  before parsing the data. This is useful for sheets that have metadata at the
+  top. Defaults to `0`.
+- **`options.csv`**: If `true`, the function will return the raw data as a CSV
   string. If `false` or omitted, it will return an array of objects, where each
   object represents a row and keys correspond to column headers. Defaults to
   `false`.
-- **`options.apiEmail`**: - Optional. Your Google Service Account email. If
+- **`options.apiEmail`**: Optional. Your Google Service Account email. If
   provided, this will override the `GOOGLE_SERVICE_ACCOUNT_EMAIL` environment
   variable.
-- **`options.apiKey`**: - Optional. Your Google Service Account private key. If
+- **`options.apiKey`**: Optional. Your Google Service Account private key. If
   provided, this will override the `GOOGLE_PRIVATE_KEY` environment variable.
 
 ### Returns
@@ -435,20 +435,20 @@ function getSheetData(
 
 ### Parameters
 
-- **`sheetUrl`**: - The URL of the Google Sheet from which to retrieve data.
-  This URL should point to a specific sheet (e.g., ending with `#gid=0`).
-- **`options`**: - An optional object with configuration options:
-- **`options.skip`**: - The number of rows to skip from the beginning of the
-  sheet before parsing the data. This is useful for sheets that have metadata at
-  the top. Defaults to `0`.
-- **`options.csv`**: - If `true`, the function will return the raw data as a CSV
+- **`sheetUrl`**: The URL of the Google Sheet from which to retrieve data. This
+  URL should point to a specific sheet (e.g., ending with `#gid=0`).
+- **`options`**: An optional object with configuration options:
+- **`options.skip`**: The number of rows to skip from the beginning of the sheet
+  before parsing the data. This is useful for sheets that have metadata at the
+  top. Defaults to `0`.
+- **`options.csv`**: If `true`, the function will return the raw data as a CSV
   string. If `false` or omitted, it will return an array of objects, where each
   object represents a row and keys correspond to column headers. Defaults to
   `false`.
-- **`options.apiEmail`**: - Optional. Your Google Service Account email. If
+- **`options.apiEmail`**: Optional. Your Google Service Account email. If
   provided, this will override the `GOOGLE_SERVICE_ACCOUNT_EMAIL` environment
   variable.
-- **`options.apiKey`**: - Optional. Your Google Service Account private key. If
+- **`options.apiKey`**: Optional. Your Google Service Account private key. If
   provided, this will override the `GOOGLE_PRIVATE_KEY` environment variable.
 
 ### Returns
@@ -530,20 +530,20 @@ async function getSheetData(
 
 ### Parameters
 
-- **`sheetUrl`**: - The URL of the Google Sheet from which to retrieve data.
-  This URL should point to a specific sheet (e.g., ending with `#gid=0`).
-- **`options`**: - An optional object with configuration options:
-- **`options.skip`**: - The number of rows to skip from the beginning of the
-  sheet before parsing the data. This is useful for sheets that have metadata at
-  the top. Defaults to `0`.
-- **`options.csv`**: - If `true`, the function will return the raw data as a CSV
+- **`sheetUrl`**: The URL of the Google Sheet from which to retrieve data. This
+  URL should point to a specific sheet (e.g., ending with `#gid=0`).
+- **`options`**: An optional object with configuration options:
+- **`options.skip`**: The number of rows to skip from the beginning of the sheet
+  before parsing the data. This is useful for sheets that have metadata at the
+  top. Defaults to `0`.
+- **`options.csv`**: If `true`, the function will return the raw data as a CSV
   string. If `false` or omitted, it will return an array of objects, where each
   object represents a row and keys correspond to column headers. Defaults to
   `false`.
-- **`options.apiEmail`**: - Optional. Your Google Service Account email. If
+- **`options.apiEmail`**: Optional. Your Google Service Account email. If
   provided, this will override the `GOOGLE_SERVICE_ACCOUNT_EMAIL` environment
   variable.
-- **`options.apiKey`**: - Optional. Your Google Service Account private key. If
+- **`options.apiKey`**: Optional. Your Google Service Account private key. If
   provided, this will override the `GOOGLE_PRIVATE_KEY` environment variable.
 
 ### Returns
@@ -621,12 +621,12 @@ async function inBucket(
 
 ### Parameters
 
-- **`destination`**: - The full path to the file within the bucket (e.g.,
+- **`destination`**: The full path to the file within the bucket (e.g.,
   'my-folder/my-file.txt').
-- **`options`**: - Optional settings for configuring the GCS client.
-- **`options.project`**: - Your Google Cloud Project ID. If not provided, it
+- **`options`**: Optional settings for configuring the GCS client.
+- **`options.project`**: Your Google Cloud Project ID. If not provided, it
   defaults to the `BUCKET_PROJECT` environment variable.
-- **`options.bucket`**: - The name of the Google Cloud Storage bucket. If not
+- **`options.bucket`**: The name of the Google Cloud Storage bucket. If not
   provided, it defaults to the `BUCKET_NAME` environment variable.
 
 ### Returns
@@ -705,27 +705,27 @@ async function overwriteSheetData(
 
 ### Parameters
 
-- **`data`**: - An array of objects to be written to the Google Sheet. The keys
-  of the first object in this array will be used as column headers.
-- **`sheetUrl`**: - The URL of the Google Sheet to be updated. This URL should
+- **`data`**: An array of objects to be written to the Google Sheet. The keys of
+  the first object in this array will be used as column headers.
+- **`sheetUrl`**: The URL of the Google Sheet to be updated. This URL should
   point to a specific sheet (e.g., ending with `#gid=0`).
-- **`options`**: - An optional object with configuration options:
-- **`options.prepend`**: - A string to be added as a new row at the very top of
+- **`options`**: An optional object with configuration options:
+- **`options.prepend`**: A string to be added as a new row at the very top of
   the sheet, before any data or `lastUpdate` information. Useful for adding
   notes or disclaimers.
-- **`options.lastUpdate`**: - If `true`, a row indicating the date and time of
-  the update will be added before the data. Defaults to `false`.
-- **`options.timeZone`**: - If `lastUpdate` is `true`, this option allows you to
+- **`options.lastUpdate`**: If `true`, a row indicating the date and time of the
+  update will be added before the data. Defaults to `false`.
+- **`options.timeZone`**: If `lastUpdate` is `true`, this option allows you to
   specify a time zone for the timestamp (e.g., `"Canada/Eastern"`). If omitted,
   the date will be formatted in UTC.
-- **`options.raw`**: - If `true`, data will be written as raw values, preventing
+- **`options.raw`**: If `true`, data will be written as raw values, preventing
   Google Sheets from automatically guessing data types or applying formatting.
   This can be useful for preserving exact string representations. Defaults to
   `false`.
-- **`options.apiEmail`**: - Optional. Your Google Service Account email. If
+- **`options.apiEmail`**: Optional. Your Google Service Account email. If
   provided, this will override the `GOOGLE_SERVICE_ACCOUNT_EMAIL` environment
   variable.
-- **`options.apiKey`**: - Optional. Your Google Service Account private key. If
+- **`options.apiKey`**: Optional. Your Google Service Account private key. If
   provided, this will override the `GOOGLE_PRIVATE_KEY` environment variable.
 
 ### Returns
@@ -824,7 +824,7 @@ async function toBucket(
   options?: {
     project?: string;
     bucket?: string;
-    metadata?: UploadOptions["metadata"];
+    metadata?: any;
     overwrite?: boolean;
     skip?: boolean;
   },
@@ -833,22 +833,22 @@ async function toBucket(
 
 ### Parameters
 
-- **`file`**: - The absolute or relative path to the local file that you want to
+- **`file`**: The absolute or relative path to the local file that you want to
   upload.
-- **`destination`**: - The desired path and filename for the file within the GCS
+- **`destination`**: The desired path and filename for the file within the GCS
   bucket (e.g., `"my-folder/my-uploaded-file.txt"`).
-- **`options`**: - Optional settings to customize the upload behavior.
-- **`options.project`**: - Your Google Cloud Project ID. If not provided, it
+- **`options`**: Optional settings to customize the upload behavior.
+- **`options.project`**: Your Google Cloud Project ID. If not provided, it
   defaults to the `BUCKET_PROJECT` environment variable.
-- **`options.bucket`**: - The name of the Google Cloud Storage bucket. If not
+- **`options.bucket`**: The name of the Google Cloud Storage bucket. If not
   provided, it defaults to the `BUCKET_NAME` environment variable.
-- **`options.metadata`**: - An object containing custom metadata to be
-  associated with the uploaded file (e.g., `contentType`, `cacheControl`). This
-  is passed directly to the GCS upload options.
-- **`options.overwrite`**: - If `true`, an existing file at the `destination`
-  path in the bucket will be overwritten. Cannot be used with `skip: true`.
-  Defaults to `false`.
-- **`options.skip`**: - If `true`, the upload will be skipped if a file with the
+- **`options.metadata`**: An object containing custom metadata to be associated
+  with the uploaded file (e.g., `contentType`, `cacheControl`). This is passed
+  directly to the GCS upload options.
+- **`options.overwrite`**: If `true`, an existing file at the `destination` path
+  in the bucket will be overwritten. Cannot be used with `skip: true`. Defaults
+  to `false`.
+- **`options.skip`**: If `true`, the upload will be skipped if a file with the
   same `destination` path already exists in the bucket. If the local file does
   not exist but the remote file does, the URI of the remote file will be
   returned without an error. Cannot be used with `overwrite: true`. Defaults to
