@@ -27,13 +27,13 @@ journalist and senior data producer for [CBC News](https://www.cbc.ca/news).
 To install the library, you can use the following commands:
 
 ```bash
-# DENO
+# Deno
 deno add jsr:@nshiab/journalism-google
 
-# NODE.JS
+# Node
 npm i @nshiab/journalism-google
 
-# BUN
+# Bun
 bun add @nshiab/journalism-google
 ```
 
