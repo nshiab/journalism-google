@@ -1,6 +1,6 @@
 {
   "name": "@nshiab/journalism-google",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Useful TypeScript functions for journalism projects. This library focuses on accessing Google services.",
   "repository": "https://github.com/nshiab/journalism-google",
   "license": "MIT",
