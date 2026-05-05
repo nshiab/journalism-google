@@ -3,3 +3,4 @@ node_modules
 .env
 cov_profile
 docs.json
+npm
