@@ -492,6 +492,69 @@ if (existsInSpecificBucket) {
 }
 ```
 
+## openSpreadsheet
+
+Opens a Google spreadsheet and returns its loaded representation. When the URL
+identifies a specific tab with a `gid`, that ID is also returned as `sheetId`;
+otherwise, `sheetId` is undefined.
+
+By default, authentication uses `GOOGLE_SERVICE_ACCOUNT_EMAIL` and
+`GOOGLE_PRIVATE_KEY`. Alternatively, `GOOGLE_APPLICATION_CREDENTIALS` can point
+to a service-account JSON file. Credentials passed through `options.credentials`
+take precedence over both environment-based methods. The service account must
+have access to the spreadsheet.
+
+### Signature
+
+```typescript
+async function openSpreadsheet(spreadsheetUrl: string, options?: { credentials?: { email: string; privateKey: string }; apiEmail?: string; apiKey?: string }): Promise<{ spreadsheet: InstanceType<(google-spreadsheet)["GoogleSpreadsheet"]>; sheetId?: number }>;
+```
+
+### Parameters
+
+- **`spreadsheetUrl`**: A Google Sheets URL. It may identify a spreadsheet or a
+  specific tab.
+- **`options`**: Controls authentication. The standard Google environment
+  variables are used when omitted.
+- **`options.credentials`**: Explicit Google service-account credentials.
+- **`options.apiEmail`**: Name of the environment variable containing the
+  service-account email. Defaults to `GOOGLE_SERVICE_ACCOUNT_EMAIL`.
+- **`options.apiKey`**: Name of the environment variable containing the
+  service-account private key. Defaults to `GOOGLE_PRIVATE_KEY`.
+
+### Returns
+
+The loaded spreadsheet and the tab ID found in the URL, if any.
+
+### Examples
+
+Open a spreadsheet using credentials from the environment.
+
+```ts
+const { spreadsheet } = await openSpreadsheet(spreadsheetUrl);
+console.log(spreadsheet.title);
+```
+
+Open a spreadsheet with explicit credentials.
+
+```ts
+const { spreadsheet } = await openSpreadsheet(spreadsheetUrl, {
+  credentials: {
+    email: "service-account@project.iam.gserviceaccount.com",
+    privateKey: "-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n",
+  },
+});
+```
+
+Access the tab selected by a URL containing a `gid`.
+
+```ts
+const { spreadsheet, sheetId } = await openSpreadsheet(sheetUrl);
+const sheet = sheetId === undefined
+  ? spreadsheet.sheetsByIndex[0]
+  : spreadsheet.sheetsById[sheetId];
+```
+
 ## overwriteSheetData
 
 Clears the content of a Google Sheet and then populates it with new data. This

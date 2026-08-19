@@ -1,5 +1,5 @@
 import type { GoogleSpreadsheetWorksheet } from "google-spreadsheet";
-import openSpreadsheet from "./openSpreadsheet.ts";
+import openSpreadsheet from "../openSpreadsheet.ts";
 
 /**
  * Authenticates with Google Sheets and returns a worksheet object.

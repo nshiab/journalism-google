@@ -6,8 +6,7 @@ import {
   assertRejects,
 } from "jsr:@std/assert";
 import getSheetData from "../../src/google/getSheetData.ts";
-import openSpreadsheet from "../../src/google/helpers/openSpreadsheet.ts";
-import pushToSheet from "../../src/google/pushToSheet.ts";
+import { openSpreadsheet, pushToSheet } from "../../src/index.ts";
 
 const data = [{ first: "Nael", last: "Shiab" }];
 const sheetUrl =

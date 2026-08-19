@@ -1,7 +1,7 @@
 import type { GoogleSpreadsheetWorksheet } from "google-spreadsheet";
 
 import appendRowsToTab from "./helpers/appendRowsToTab.ts";
-import openSpreadsheet from "./helpers/openSpreadsheet.ts";
+import openSpreadsheet from "./openSpreadsheet.ts";
 import overwriteTabData from "./helpers/overwriteTabData.ts";
 
 /**
