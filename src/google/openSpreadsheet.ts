@@ -16,6 +16,10 @@ import parseSheetUrl from "./helpers/parseSheetUrl.ts";
  * `options.credentials` take precedence over both environment-based methods.
  * The service account must have access to the spreadsheet.
  *
+ * To learn what you can do with the returned `spreadsheet`, refer to the
+ * `node-google-spreadsheet` documentation:
+ * [https://theoephraim.github.io/node-google-spreadsheet/#/](https://theoephraim.github.io/node-google-spreadsheet/#/).
+ *
  * @param spreadsheetUrl A Google Sheets URL. It may identify a spreadsheet or
  * a specific tab.
  * @param options Controls authentication. The standard Google environment

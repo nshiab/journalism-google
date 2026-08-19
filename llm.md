@@ -504,6 +504,10 @@ to a service-account JSON file. Credentials passed through `options.credentials`
 take precedence over both environment-based methods. The service account must
 have access to the spreadsheet.
 
+To learn what you can do with the returned `spreadsheet`, refer to the
+`node-google-spreadsheet` documentation:
+[https://theoephraim.github.io/node-google-spreadsheet/#/](https://theoephraim.github.io/node-google-spreadsheet/#/).
+
 ### Signature
 
 ```typescript
