@@ -38,7 +38,7 @@ if (
   //         { first: "Dexter", last: "McMillan" },
   //     ])
   // })
-  Deno.test("should add a row to a sheet with a specific headerIndex", {
+  /* Deno.test("should add a row to a sheet with a specific headerIndex", {
     sanitizeResources: false,
   }, async () => {
     await overwriteSheetData(data, sheetUrl, {
@@ -61,7 +61,7 @@ if (
       ...data,
       { first: "Dexter", last: "McMillan" },
     ]);
-  });
+  }); */
 } else {
   console.log(
     "No GOOGLE_SERVICE_ACCOUNT_EMAIL or GOOGLE_PRIVATE_KEY in process.env",

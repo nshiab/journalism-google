@@ -1,5 +1,6 @@
 import cleanData from "./helpers/cleanData.ts";
 import logToSheet from "./helpers/logToSheet.ts";
+import warnDeprecated from "./helpers/warnDeprecated.ts";
 
 /**
  * Appends new rows of data to an existing Google Sheet. This function is useful for continuously adding new records to a spreadsheet without overwriting existing data, such as logging events, collecting form submissions, or appending new data points to a time series.
@@ -60,6 +61,8 @@ import logToSheet from "./helpers/logToSheet.ts";
  * });
  * console.log("Rows added using custom API credentials.");
  * ```
+ * @deprecated Use `pushToSheet(data, sheetUrl, { mode: "append" })` instead.
+ * This function may be removed in the next major release.
  * @category Google
  */
 export default async function addSheetRows(
@@ -72,6 +75,7 @@ export default async function addSheetRows(
     apiKey?: string;
   } = {},
 ): Promise<void> {
+  warnDeprecated("addSheetRows", 'pushToSheet() with mode: "append"');
   const sheet = await logToSheet(sheetUrl, options);
   const headerRow = Object.keys(data[0]);
   await sheet.setHeaderRow(

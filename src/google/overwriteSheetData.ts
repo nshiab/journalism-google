@@ -1,6 +1,7 @@
 import { formatDate } from "@nshiab/journalism-format";
 import cleanData from "./helpers/cleanData.ts";
 import logToSheet from "./helpers/logToSheet.ts";
+import warnDeprecated from "./helpers/warnDeprecated.ts";
 
 /**
  * Clears the content of a Google Sheet and then populates it with new data. This function is useful for regularly updating datasets in Google Sheets, ensuring that the sheet always reflects the latest information without manual intervention.
@@ -78,6 +79,8 @@ import logToSheet from "./helpers/logToSheet.ts";
  * });
  * console.log("Sheet updated using custom API credentials.");
  * ```
+ * @deprecated Use `pushToSheet(data, sheetUrl, { mode: "overwrite" })` instead.
+ * This function may be removed in the next major release.
  * @category Google
  */
 
@@ -101,6 +104,10 @@ export default async function overwriteSheetData(
     apiKey?: string;
   } = {},
 ): Promise<void> {
+  warnDeprecated(
+    "overwriteSheetData",
+    'pushToSheet() with mode: "overwrite"',
+  );
   const sheet = await logToSheet(sheetUrl, options);
   await sheet.clear();
 

@@ -631,6 +631,101 @@ await overwriteSheetData(data, sheetUrl, {
 console.log("Sheet updated using custom API credentials.");
 ```
 
+## pushToSheet
+
+Writes data to a Google Sheets tab, either replacing its contents or appending
+rows. The tab can be selected by the URL's `gid` or by title. If a titled tab
+does not exist, creation must be explicitly enabled with `create: true`. In
+append mode, column headers are detected automatically within the first 100 rows
+of the tab.
+
+By default, authentication uses `GOOGLE_SERVICE_ACCOUNT_EMAIL` and
+`GOOGLE_PRIVATE_KEY`. Alternatively, `GOOGLE_APPLICATION_CREDENTIALS` can point
+to a service-account JSON file. Credentials passed through `options.credentials`
+take precedence over both environment-based methods. For detailed setup
+instructions, refer to the `node-google-spreadsheet` authentication guide:
+[https://theoephraim.github.io/node-google-spreadsheet/#/guides/authentication](https://theoephraim.github.io/node-google-spreadsheet/#/guides/authentication).
+
+### Signature
+
+```typescript
+async function pushToSheet(
+  data: Record<string, string | number | boolean | Date | null>[],
+  sheetUrl: string,
+  options?: {
+    mode?: "overwrite" | "append";
+    tabTitle?: string;
+    create?: boolean;
+    prepend?: string;
+    lastUpdate?:
+      | boolean
+      | "Canada/Atlantic"
+      | "Canada/Central"
+      | "Canada/Eastern"
+      | "Canada/Mountain"
+      | "Canada/Newfoundland"
+      | "Canada/Pacific"
+      | "Canada/Saskatchewan"
+      | "Canada/Yukon";
+    raw?: boolean;
+    credentials?: { email: string; privateKey: string };
+  },
+): Promise<void>;
+```
+
+### Parameters
+
+- **`data`**: Rows of data. Object keys are used as column headers.
+- **`sheetUrl`**: A Google Sheets URL. It may identify a spreadsheet or a
+  specific tab.
+- **`options`**: Controls tab selection, writing, metadata, value parsing, and
+  authentication.
+- **`options.mode`**: Whether to overwrite the tab or append rows. Defaults to
+  `"overwrite"`.
+- **`options.tabTitle`**: Selects a tab by title instead of using the URL's
+  `gid`.
+- **`options.create`**: Creates a missing titled tab. Requires `tabTitle` and
+  defaults to `false`.
+- **`options.prepend`**: Adds text above the header row in overwrite mode.
+- **`options.lastUpdate`**: Adds a UTC timestamp when `true`, or a timestamp in
+  the specified Canadian time zone. Available only in overwrite mode.
+- **`options.raw`**: Writes values without Google Sheets interpretation.
+  Defaults to `true`.
+- **`options.credentials`**: Explicit Google service-account credentials. These
+  values override `GOOGLE_APPLICATION_CREDENTIALS`,
+  `GOOGLE_SERVICE_ACCOUNT_EMAIL`, and `GOOGLE_PRIVATE_KEY`.
+
+### Returns
+
+A promise that resolves when the data has been written.
+
+### Examples
+
+Overwrite the tab selected by the URL.
+
+```ts
+await pushToSheet(data, sheetUrl);
+```
+
+Append rows to a tab selected by title.
+
+```ts
+await pushToSheet(data, sheetUrl, {
+  mode: "append",
+  tabTitle: "Election results",
+});
+```
+
+Create a missing tab and write a timestamp in Eastern time.
+
+```ts
+await pushToSheet(data, sheetUrl, {
+  tabTitle: "Election results",
+  create: true,
+  lastUpdate: "Canada/Eastern",
+});
+```
+
 ## toBucket
 
 Uploads a local file to a Google Cloud Storage (GCS) bucket and returns the URI
