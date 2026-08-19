@@ -27,6 +27,8 @@ import deleteFromBucket from "./google/deleteFromBucket.ts";
 import inBucket from "./google/inBucket.ts";
 import downloadFromBucket from "./google/downloadFromBucket.ts";
 import filesInBucket from "./google/filesInBucket.ts";
+import pushToSheet from "./google/pushToSheet.ts";
+import openSpreadsheet from "./google/openSpreadsheet.ts";
 
 export {
   addSheetRows,
@@ -35,6 +37,8 @@ export {
   filesInBucket,
   getSheetData,
   inBucket,
+  openSpreadsheet,
   overwriteSheetData,
+  pushToSheet,
   toBucket,
 };

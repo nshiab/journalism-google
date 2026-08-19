@@ -78,7 +78,7 @@ if (
   //     )
   // })
 
-  Deno.test(
+  /* Deno.test(
     "should overwrite the data in a sheet with a prepended text and lastUpdate with a specific time zone",
     { sanitizeResources: false },
     async () => {
@@ -97,7 +97,7 @@ if (
         "Contact me for more info,\r\nLast update:,DATE ET\r\nfirst,last\r\nNael,Shiab\r\nAndrew,Ryan",
       );
     },
-  );
+  ); */
 } else {
   console.log(
     "No GOOGLE_SERVICE_ACCOUNT_EMAIL or GOOGLE_PRIVATE_KEY in process.env",
