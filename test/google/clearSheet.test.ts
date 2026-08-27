@@ -1,4 +1,3 @@
-import "@std/dotenv/load";
 import { assertEquals } from "jsr:@std/assert";
 import clearSheet from "../../src/google/clearSheet.ts";
 import getSheetData from "../../src/google/getSheetData.ts";

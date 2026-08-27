@@ -1,4 +1,3 @@
-import "@std/dotenv/load";
 import { assertEquals, assertRejects } from "jsr:@std/assert";
 import toBucket from "../../src/google/toBucket.ts";
 import inBucket from "../../src/google/inBucket.ts";

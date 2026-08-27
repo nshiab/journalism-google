@@ -1,5 +1,5 @@
-import { csvParse } from "d3-dsv";
 import logToSheet from "./helpers/logToSheet.ts";
+import parseCsv from "./helpers/parseCsv.ts";
 
 /**
  * Retrieves data from a Google Sheet.
@@ -214,8 +214,6 @@ export default async function getSheetData(
   if (options.csv) {
     return csv;
   } else {
-    const data = csvParse(csv);
-    delete data.columns;
-    return data;
+    return parseCsv(csv);
   }
 }

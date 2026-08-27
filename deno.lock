@@ -3,15 +3,11 @@
   "specifiers": {
     "jsr:@nshiab/bump-version@*": "0.1.4",
     "jsr:@nshiab/deno-docs-to-md@*": "0.1.12",
-    "jsr:@nshiab/journalism-format@^1.1.9": "1.1.9",
     "jsr:@std/assert@*": "1.0.16",
-    "jsr:@std/dotenv@~0.225.8": "0.225.8",
     "jsr:@std/fs@*": "1.0.20",
     "jsr:@std/internal@^1.0.12": "1.0.12",
     "jsr:@std/path@^1.1.3": "1.1.3",
     "npm:@google-cloud/storage@8": "8.0.0",
-    "npm:d3-dsv@^3.0.1": "3.0.1",
-    "npm:date-fns-tz@^3.2.0": "3.2.0_date-fns@4.4.0",
     "npm:google-auth-library@^11.0.2": "11.0.2",
     "npm:google-spreadsheet@^5.3.0": "5.3.0_google-auth-library@11.0.2"
   },
@@ -22,21 +18,11 @@
     "@nshiab/deno-docs-to-md@0.1.12": {
       "integrity": "bfd7872bc6631b071c2785f29bf1fcfd9c5d69ecd109ea45afe912379ef58292"
     },
-    "@nshiab/journalism-format@1.1.9": {
-      "integrity": "57614fcd2752f7615ff66874be24039c40b61dbcd4e14ec49b9a7f3ef24b7a58",
-      "dependencies": [
-        "npm:d3-dsv",
-        "npm:date-fns-tz"
-      ]
-    },
     "@std/assert@1.0.16": {
       "integrity": "6a7272ed1eaa77defe76e5ff63ca705d9c495077e2d5fd0126d2b53fc5bd6532",
       "dependencies": [
         "jsr:@std/internal"
       ]
-    },
-    "@std/dotenv@0.225.8": {
-      "integrity": "27b8c1a9d00cbf938345a5924487c04d9b27bdd7e7bd1983f54bcf76d0a0174a"
     },
     "@std/fs@1.0.20": {
       "integrity": "e953206aae48d46ee65e8783ded459f23bec7dd1f3879512911c35e5484ea187",
@@ -167,29 +153,8 @@
         "delayed-stream"
       ]
     },
-    "commander@7.2.0": {
-      "integrity": "sha512-QrWXB+ZQSVPmIWIhtEO9H+gwHaMGYiF5ChvoJ+K9ZGHG/sVsa6yiesAD1GC/x46sET00Xlwo1u49RVVVzvcSkw=="
-    },
-    "d3-dsv@3.0.1": {
-      "integrity": "sha512-UG6OvdI5afDIFP9w4G0mNq50dSOsXHJaRE8arAS5o9ApWnIElp8GZw1Dun8vP8OyHOZ/QJUKUJwxiiCCnUwm+Q==",
-      "dependencies": [
-        "commander",
-        "iconv-lite",
-        "rw"
-      ],
-      "bin": true
-    },
     "data-uri-to-buffer@4.0.1": {
       "integrity": "sha512-0R9ikRb668HB7QDxT1vkpuUBtqc53YyAwMwGeUFKRojY/NWKvdZ+9UYtRfGmhqNbRkTSVpMbmyhXipFFv2cb/A=="
-    },
-    "date-fns-tz@3.2.0_date-fns@4.4.0": {
-      "integrity": "sha512-sg8HqoTEulcbbbVXeg84u5UnlsQa8GS5QXMqjjYIhS4abEVVKIUwe0/l/UhrZdKaL/W5eWZNlbTeEIiOXTcsBQ==",
-      "dependencies": [
-        "date-fns"
-      ]
-    },
-    "date-fns@4.4.0": {
-      "integrity": "sha512-+1UMbeh68lH1SegH83CGWwpb6OHHbpSgr3+s5Eww5M4CAgswBpoWS0AjTOfEJ33HiYKz1hdj/KTFprzXHmq/6w=="
     },
     "debug@4.4.3": {
       "integrity": "sha512-RGwwWnwQvkVfavKVt22FGLw+xYSdzARwm0ru6DhTVA3umU5hZc28V3kO4stgYryrTlLpuvgI9GiijltAjNbcqA==",
@@ -450,12 +415,6 @@
         "debug"
       ]
     },
-    "iconv-lite@0.6.3": {
-      "integrity": "sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==",
-      "dependencies": [
-        "safer-buffer"
-      ]
-    },
     "inherits@2.0.4": {
       "integrity": "sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ=="
     },
@@ -560,14 +519,8 @@
     "retry@0.13.1": {
       "integrity": "sha512-XQBQ3I8W1Cge0Seh+6gjj03LbmRFWuoszgK9ooCpwYIrhhoO80pfq4cUkU5DkknwfOfFteRwlZ56PYOGYyFWdg=="
     },
-    "rw@1.3.3": {
-      "integrity": "sha512-PdhdWy89SiZogBLaw42zdeqtRJ//zFd2PgQavcICDUgJT5oW10QCRKbJ6bg4r0/UY2M6BWd5tkxuGFRvCkgfHQ=="
-    },
     "safe-buffer@5.2.1": {
       "integrity": "sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ=="
-    },
-    "safer-buffer@2.1.2": {
-      "integrity": "sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg=="
     },
     "stream-events@1.0.5": {
       "integrity": "sha512-E1GUzBSgvct8Jsb3v2X15pjzN1tYebtbLaMg+eBOUOAxgbLoSbT2NS91ckc5lJD1KfLjId+jXJRgo0qnV5Nerg==",
@@ -642,10 +595,7 @@
   },
   "workspace": {
     "dependencies": [
-      "jsr:@nshiab/journalism-format@^1.1.9",
-      "jsr:@std/dotenv@~0.225.8",
       "npm:@google-cloud/storage@8",
-      "npm:d3-dsv@^3.0.1",
       "npm:google-auth-library@^11.0.2",
       "npm:google-spreadsheet@^5.3.0"
     ]

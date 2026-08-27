@@ -1,5 +1,5 @@
-import { formatDate } from "@nshiab/journalism-format";
 import cleanData from "./helpers/cleanData.ts";
+import formatLastUpdate from "./helpers/formatLastUpdate.ts";
 import logToSheet from "./helpers/logToSheet.ts";
 import warnDeprecated from "./helpers/warnDeprecated.ts";
 
@@ -127,13 +127,9 @@ export default async function overwriteSheetData(
     cellLastUpdate.value = "Last update:";
     const cellDate = sheet.getCellByA1(`B${startIndex}`);
     if (typeof options.timeZone === "string") {
-      cellDate.value = formatDate(new Date(), "YYYY-MM-DD HH:MM:SS TZ", {
-        timeZone: options.timeZone,
-      });
+      cellDate.value = formatLastUpdate(new Date(), options.timeZone);
     } else {
-      cellDate.value = formatDate(new Date(), "YYYY-MM-DD HH:MM:SS TZ", {
-        utc: true,
-      });
+      cellDate.value = formatLastUpdate(new Date());
     }
     startIndex += 1;
   }

@@ -1,4 +1,3 @@
-import "@std/dotenv/load";
 import {
   assertEquals,
   assertExists,

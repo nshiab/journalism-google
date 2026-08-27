@@ -1,7 +1,7 @@
-import { formatDate } from "@nshiab/journalism-format";
 import type { GoogleSpreadsheetWorksheet } from "google-spreadsheet";
 
 import cleanData from "./cleanData.ts";
+import formatLastUpdate from "./formatLastUpdate.ts";
 
 export default async function overwriteTabData(
   data: {
@@ -43,10 +43,8 @@ export default async function overwriteTabData(
     sheet.getCellByA1(`A${headerRow}`).value = "Last update:";
     sheet.getCellByA1(`B${headerRow}`).value = typeof options.lastUpdate ===
         "string"
-      ? formatDate(new Date(), "YYYY-MM-DD HH:MM:SS TZ", {
-        timeZone: options.lastUpdate,
-      })
-      : formatDate(new Date(), "YYYY-MM-DD HH:MM:SS TZ", { utc: true });
+      ? formatLastUpdate(new Date(), options.lastUpdate)
+      : formatLastUpdate(new Date());
     headerRow += 1;
   }
   if (typeof options.prepend === "string" || options.lastUpdate) {
