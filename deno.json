@@ -1,6 +1,6 @@
 {
   "name": "@nshiab/journalism-google",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Useful TypeScript functions for journalism projects. This library focuses on accessing Google services.",
   "repository": "https://github.com/nshiab/journalism-google",
   "license": "MIT",
@@ -27,7 +27,7 @@
   },
   "nodeModulesDir": "auto",
   "imports": {
-    "@google-cloud/storage": "npm:@google-cloud/storage@^8.0.0",
+    "@google-cloud/storage": "npm:@google-cloud/storage@^8.0.1",
     "google-auth-library": "npm:google-auth-library@^11.0.2",
     "google-spreadsheet": "npm:google-spreadsheet@^5.3.0"
   },
