@@ -5,13 +5,11 @@
 - [README](https://raw.githubusercontent.com/nshiab/journalism-google/v1.1.3/README.md): Installation, examples and usage.
 
 ## API
-- [addSheetRows](https://raw.githubusercontent.com/nshiab/journalism-google/v1.1.3/docs/functions/addSheetRows.md): addSheetRows function
 - [deleteFromBucket](https://raw.githubusercontent.com/nshiab/journalism-google/v1.1.3/docs/functions/deleteFromBucket.md): deleteFromBucket function
 - [downloadFromBucket](https://raw.githubusercontent.com/nshiab/journalism-google/v1.1.3/docs/functions/downloadFromBucket.md): downloadFromBucket function
 - [filesInBucket](https://raw.githubusercontent.com/nshiab/journalism-google/v1.1.3/docs/functions/filesInBucket.md): filesInBucket function
 - [getSheetData](https://raw.githubusercontent.com/nshiab/journalism-google/v1.1.3/docs/functions/getSheetData.md): getSheetData function
 - [inBucket](https://raw.githubusercontent.com/nshiab/journalism-google/v1.1.3/docs/functions/inBucket.md): inBucket function
 - [openSpreadsheet](https://raw.githubusercontent.com/nshiab/journalism-google/v1.1.3/docs/functions/openSpreadsheet.md): openSpreadsheet function
-- [overwriteSheetData](https://raw.githubusercontent.com/nshiab/journalism-google/v1.1.3/docs/functions/overwriteSheetData.md): overwriteSheetData function
 - [pushToSheet](https://raw.githubusercontent.com/nshiab/journalism-google/v1.1.3/docs/functions/pushToSheet.md): pushToSheet function
 - [toBucket](https://raw.githubusercontent.com/nshiab/journalism-google/v1.1.3/docs/functions/toBucket.md): toBucket function

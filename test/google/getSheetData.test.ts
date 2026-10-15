@@ -1,5 +1,5 @@
 import { test, expect, describe } from "vite-plus/test";
-import overwriteSheetData from "../../src/google/overwriteSheetData.ts";
+import pushToSheet from "../../src/google/pushToSheet.ts";
 import getSheetData from "../../src/google/getSheetData.ts";
 const sheetUrl =
   "https://docs.google.com/spreadsheets/d/1Ar19cP8oGYEzacfrkLWnSH7ZqImILMUrosBwnZ43EQM/edit#gid=0";
@@ -15,7 +15,7 @@ describe.skipIf(
   process.env.CI === "true" || ((!email || !key) && !process.env.GOOGLE_APPLICATION_CREDENTIALS),
 )("live Google integration", () => {
   test("should return the data as an array of objects after skipping the first row", async () => {
-    await overwriteSheetData(originalData, sheetUrl, {
+    await pushToSheet(originalData, sheetUrl, {
       prepend: "Contact me for more info",
     });
     const data = await getSheetData(sheetUrl, { skip: 1 });

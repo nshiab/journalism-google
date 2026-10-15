@@ -14,8 +14,6 @@
  * ```
  */
 
-import addSheetRows from "./google/addSheetRows.ts";
-import overwriteSheetData from "./google/overwriteSheetData.ts";
 import getSheetData from "./google/getSheetData.ts";
 import toBucket from "./google/toBucket.ts";
 import deleteFromBucket from "./google/deleteFromBucket.ts";
@@ -26,14 +24,12 @@ import pushToSheet from "./google/pushToSheet.ts";
 import openSpreadsheet from "./google/openSpreadsheet.ts";
 
 export {
-  addSheetRows,
   deleteFromBucket,
   downloadFromBucket,
   filesInBucket,
   getSheetData,
   inBucket,
   openSpreadsheet,
-  overwriteSheetData,
   pushToSheet,
   toBucket,
 };

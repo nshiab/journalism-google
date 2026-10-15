@@ -79,14 +79,12 @@ vi.mock("@google-cloud/storage", () => ({
 }));
 
 import {
-  addSheetRows,
   deleteFromBucket,
   downloadFromBucket,
   filesInBucket,
   getSheetData,
   inBucket,
   openSpreadsheet,
-  overwriteSheetData,
   pushToSheet,
   toBucket,
 } from "../../src/index.ts";
@@ -261,15 +259,9 @@ test("empty overwrite clears while empty append leaves rows unchanged", async ()
   await expect(pushToSheet([{}], sheetUrl)).rejects.toThrow("at least one column");
 });
 
-test("preserves deprecated append and overwrite header and raw defaults", async () => {
-  await addSheetRows([{ id: "1", name: null }], sheetUrl, { headerIndex: 2 });
-  expect(mocks.sheet.setHeaderRow).toHaveBeenCalledWith(["id", "name"], 3);
-  expect(mocks.sheet.addRows).toHaveBeenLastCalledWith([{ id: "1", name: "" }], { raw: undefined });
-  await overwriteSheetData([{ id: "2" }], sheetUrl, { prepend: "Note" });
-  expect(mocks.sheet.setHeaderRow).toHaveBeenLastCalledWith(["id"], 2);
-  expect(mocks.sheet.addRows).toHaveBeenLastCalledWith([{ id: "2" }], { raw: undefined });
+test("clears a sheet", async () => {
   await clearSheet(sheetUrl);
-  expect(mocks.sheet.clear).toHaveBeenCalledTimes(2);
+  expect(mocks.sheet.clear).toHaveBeenCalledOnce();
 });
 
 test("passes project, bucket, upload path and metadata to storage", async () => {

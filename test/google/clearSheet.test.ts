@@ -1,7 +1,7 @@
 import { test, expect, describe } from "vite-plus/test";
 import clearSheet from "../../src/google/clearSheet.ts";
 import getSheetData from "../../src/google/getSheetData.ts";
-import overwriteSheetData from "../../src/google/overwriteSheetData.ts";
+import pushToSheet from "../../src/google/pushToSheet.ts";
 const data = [
   { first: "Nael", last: "Shiab" },
   { first: "Andrew", last: "Ryan" },
@@ -14,10 +14,9 @@ describe.skipIf(
   process.env.CI === "true" || ((!email || !key) && !process.env.GOOGLE_APPLICATION_CREDENTIALS),
 )("live Google integration", () => {
   test("should clear a sheet", async () => {
-    await overwriteSheetData(data, sheetUrl, {
+    await pushToSheet(data, sheetUrl, {
       prepend: "Hi",
-      lastUpdate: true,
-      timeZone: "Canada/Eastern",
+      lastUpdate: "Canada/Eastern",
     });
     await clearSheet(sheetUrl);
     const testData = await getSheetData(sheetUrl);
