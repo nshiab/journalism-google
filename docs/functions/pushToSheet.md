@@ -1,4 +1,4 @@
-[**Journalism Google v1.1.3**](../index.md)
+[**Journalism Google v2.0.0**](../index.md)
 
 ***
 

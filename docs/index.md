@@ -1,4 +1,4 @@
-**Journalism Google v1.1.3**
+**Journalism Google v2.0.0**
 
 ***
 
