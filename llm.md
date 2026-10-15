@@ -1,94 +1,134 @@
-# The Journalism library (Google services functions)
+**Journalism Google v1.1.3**
 
-To install the library with Deno, use:
+***
 
-```bash
-deno add jsr:@nshiab/journalism-google
+# The Journalism Library (google)
+
+Useful TypeScript functions for accessing Google Sheets and Cloud Storage in journalism projects.
+Part of the [journalism library](https://github.com/nshiab/journalism).
+
+The library is maintained by [Nael Shiab](https://naelshiab.com/), computational
+journalist and senior data producer for [CBC News](https://www.cbc.ca/news).
+
+> [!TIP]
+> To learn how to use this library and more, check out
+> [Code Like a Journalist](https://www.code-like-a-journalist.com/), a free and
+> open-source data analysis and data visualization course in TypeScript. You
+> might also find
+> [simple-data-analysis](https://github.com/nshiab/simple-data-analysis) useful.
+
+## Installation
+
+Requires **Node.js 24.21.0 or later**.
+
+```sh
+npm install @nshiab/journalism-google
 ```
-
-To install the library with Node.js, use:
-
-```bash
-npm i @nshiab/journalism-google
-```
-
-To import a function, use:
 
 ```ts
-import { functionName } from "@nshiab/journalism-google";
+import { getSheetData } from "@nshiab/journalism-google";
+
+const rows = await getSheetData(
+  "https://docs.google.com/spreadsheets/d/your-spreadsheet-id/edit#gid=0",
+);
+console.log(rows);
 ```
 
-## addSheetRows
+Configure Google service-account credentials before accessing Google services;
+see the function documentation for authentication options.
 
-Appends new rows of data to an existing Google Sheet. This function is useful
-for continuously adding new records to a spreadsheet without overwriting
-existing data, such as logging events, collecting form submissions, or appending
-new data points to a time series.
+To start a data project with folders, configuration and documentation for AI
+agents, run:
 
-The function expects the data to be an array of objects, where the keys of these
-objects correspond to the column headers in your Google Sheet.
-
-By default, authentication is handled via environment variables
-(`GOOGLE_PRIVATE_KEY` and `GOOGLE_SERVICE_ACCOUNT_EMAIL`). Alternatively, you
-can use `GOOGLE_APPLICATION_CREDENTIALS` pointing to a service account JSON
-file. For detailed setup instructions, refer to the `node-google-spreadsheet`
-authentication guide:
-[https://theoephraim.github.io/node-google-spreadsheet/#/guides/authentication](https://theoephraim.github.io/node-google-spreadsheet/#/guides/authentication).
-
-### Signature
-
-```typescript
-async function addSheetRows(
-  data: Record<string, string | number | boolean | Date | null>[],
-  sheetUrl: string,
-  options?: {
-    headerIndex?: number;
-    raw?: boolean;
-    apiEmail?: string;
-    apiKey?: string;
-  },
-): Promise<void>;
+```sh
+npx @nshiab/setup-data-project
 ```
 
-### Parameters
+## Documentation
 
-- **`data`**: An array of objects, where each object represents a row to be
-  appended to the sheet. The keys of the objects should match the existing
-  column headers in the sheet.
-- **`sheetUrl`**: The URL of the Google Sheet to which rows will be appended.
-  This URL should point to a specific sheet (e.g., ending with `#gid=0`).
-- **`options`**: An optional object with configuration options:
-- **`options.headerIndex`**: The 0-based index of the row that contains the
-  headers in your sheet. By default, the first row (index 0) is considered the
-  header. Use this if your headers are in a different row.
-- **`options.raw`**: If `true`, data will be written as raw values, preventing
-  Google Sheets from automatically guessing data types or applying formatting.
-  This can be useful for preserving exact string representations. Defaults to
-  `false`.
-- **`options.apiEmail`**: Optional. Your Google Service Account email. If
-  provided, this will override the `process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL`
-  environment variable.
-- **`options.apiKey`**: Optional. Your Google Service Account private key. If
-  provided, this will override the `process.env.GOOGLE_PRIVATE_KEY` environment
-  variable.
+- [Documentation](https://nshiab.github.io/journalism-google/)
+- [llms.txt — Documentation index for AI agents](https://nshiab.github.io/journalism-google/llms.txt)
+- [llm.md — Complete Markdown reference](https://nshiab.github.io/journalism-google/llm.md),
+  for AI assistants or offline reading
+- [npm package](https://www.npmjs.com/package/@nshiab/journalism-google)
 
-### Returns
+See
+[CONTRIBUTING.md](https://github.com/nshiab/journalism-google/blob/main/CONTRIBUTING.md)
+for development commands.
 
-A Promise that resolves when the rows have been successfully appended to the
-sheet.
+## Google
 
-### Examples
+### ~~addSheetRows()~~
+
+> **addSheetRows**(`data`, `sheetUrl`, `options?`): `Promise`\<`void`\>
+
+Appends new rows of data to an existing Google Sheet. This function is useful for continuously adding new records to a spreadsheet without overwriting existing data, such as logging events, collecting form submissions, or appending new data points to a time series.
+
+The function expects the data to be an array of objects, where the keys of these objects correspond to the column headers in your Google Sheet.
+
+By default, authentication is handled via environment variables (`GOOGLE_PRIVATE_KEY` and `GOOGLE_SERVICE_ACCOUNT_EMAIL`). Alternatively, you can use `GOOGLE_APPLICATION_CREDENTIALS` pointing to a service account JSON file. For detailed setup instructions, refer to the `node-google-spreadsheet` authentication guide: [https://theoephraim.github.io/node-google-spreadsheet/#/guides/authentication](https://theoephraim.github.io/node-google-spreadsheet/#/guides/authentication).
+
+#### Parameters
+
+##### data
+
+`object`[]
+
+An array of objects, where each object represents a row to be appended to the sheet. The keys of the objects should match the existing column headers in the sheet.
+
+##### sheetUrl
+
+`string`
+
+The URL of the Google Sheet to which rows will be appended. This URL should point to a specific sheet (e.g., ending with `#gid=0`).
+
+##### options?
+
+An optional object with configuration options:
+
+###### apiEmail?
+
+`string`
+
+Name of the environment variable containing the service-account email. Defaults to `GOOGLE_SERVICE_ACCOUNT_EMAIL`.
+
+###### apiKey?
+
+`string`
+
+Name of the environment variable containing the service-account private key. Defaults to `GOOGLE_PRIVATE_KEY`.
+
+###### headerIndex?
+
+`number`
+
+The 0-based index of the row that contains the headers in your sheet. By default, the first row (index 0) is considered the header. Use this if your headers are in a different row.
+
+###### raw?
+
+`boolean`
+
+If `true`, data will be written as raw values, preventing Google Sheets from automatically guessing data types or applying formatting. This can be useful for preserving exact string representations. Defaults to `false`.
+
+#### Returns
+
+`Promise`\<`void`\>
+
+A Promise that resolves when the rows have been successfully appended to the sheet.
+
+#### Examples
 
 ```ts
+import { addSheetRows } from "@nshiab/journalism-google";
+
 // The data needs to be an array of objects. The keys of the objects must match the sheet's columns.
 const data = [
   { first: "Nael", last: "Shiab" },
-  { first: "Andrew", last: "Ryan" },
+  { first: "Andrew", last: "Ryan" }
 ];
 
 // Fake URL used as an example.
-const sheetUrl =
-  "https://docs.google.com/spreadsheets/d/nrqo3oP4KMWYbELScQa8W1nHZPfIrA7LIz9UmcRE4GyJN/edit#gid=0";
+const sheetUrl = "https://docs.google.com/spreadsheets/d/nrqo3oP4KMWYbELScQa8W1nHZPfIrA7LIz9UmcRE4GyJN/edit#gid=0";
 
 // Appending the new rows to the sheet.
 await addSheetRows(data, sheetUrl);
@@ -98,8 +138,8 @@ console.log("Rows added successfully.");
 ```ts
 // Append data as raw values to prevent Google Sheets from interpreting them.
 const rawData = [
-  { product_id: "001", quantity: "05" }, // '05' might be interpreted as 5 without raw: true
-  { product_id: "002", quantity: "10" },
+  { product_id: '001', quantity: '05' }, // '05' might be interpreted as 5 without raw: true
+  { product_id: '002', quantity: '10' }
 ];
 await addSheetRows(rawData, sheetUrl, { raw: true });
 console.log("Raw rows added successfully.");
@@ -108,59 +148,77 @@ console.log("Raw rows added successfully.");
 ```ts
 // If your sheet's headers are on the second row (index 1).
 const dataWithHeaderIndex = [
-  { Name: "John Doe", Age: 30 },
+  { Name: "John Doe", Age: 30 }
 ];
 await addSheetRows(dataWithHeaderIndex, sheetUrl, { headerIndex: 1 });
 console.log("Rows added with custom header index.");
 ```
 
 ```ts
-// Use explicitly provided API credentials instead of environment variables.
+// Use custom environment variable names for the service-account credentials.
 await addSheetRows(data, sheetUrl, {
-  apiEmail: "your-service-account@project-id.iam.gserviceaccount.com",
-  apiKey: "-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n",
+  apiEmail: "GG_EMAIL",
+  apiKey: "GG_KEY"
 });
 console.log("Rows added using custom API credentials.");
 ```
 
-## deleteFromBucket
+#### Deprecated
+
+Use `pushToSheet(data, sheetUrl, { mode: "append" })` instead.
+This function may be removed in the next major release.
+
+***
+
+### deleteFromBucket()
+
+> **deleteFromBucket**(`destination`, `options?`): `Promise`\<`void`\>
 
 Deletes a specified file from a Google Cloud Storage (GCS) bucket.
 
-The function requires the Google Cloud project ID and the target bucket name.
-These can be provided either through environment variables (`BUCKET_PROJECT` and
-`BUCKET_NAME`) or directly as parameters in the `options` object. Parameters
-passed in `options` will take precedence over environment variables.
+The function requires the Google Cloud project ID and the target bucket name. These can be provided either through environment variables (`BUCKET_PROJECT` and `BUCKET_NAME`) or directly as parameters in the `options` object. Parameters passed in `options` will take precedence over environment variables.
 
-By default, if the specified file does not exist in the bucket, the function
-will throw an error. However, you can suppress this behavior by setting the
-`try` option to `true`, which will cause the function to complete silently if
-the file is not found.
+By default, if the specified file does not exist in the bucket, the function will throw an error. However, you can suppress this behavior by setting the `try` option to `true`, which will cause the function to complete silently if the file is not found.
 
-### Signature
+#### Parameters
 
-```typescript
-async function deleteFromBucket(
-  destination: string,
-  options?: { project?: string; bucket?: string; try?: boolean },
-): Promise<void>;
-```
+##### destination
 
-### Parameters
+`string`
 
-- **`destination`**: The full path to the file within the bucket (e.g.,
-  'my-folder/my-file.txt').
-- **`options`**: Optional configuration for the deletion operation.
-- **`options.project`**: The Google Cloud project ID. If not provided, it
-  defaults to the `BUCKET_PROJECT` environment variable.
-- **`options.bucket`**: The name of the Google Cloud Storage bucket. If not
-  provided, it defaults to the `BUCKET_NAME` environment variable.
-- **`options.try`**: If `true`, the function will not throw an error if the file
-  to be deleted does not exist. Defaults to `false`.
+The full path to the file within the bucket (e.g., 'my-folder/my-file.txt').
 
-### Examples
+##### options?
+
+Optional configuration for the deletion operation.
+
+###### bucket?
+
+`string`
+
+The name of the Google Cloud Storage bucket. If not provided, it defaults to the `BUCKET_NAME` environment variable.
+
+###### project?
+
+`string`
+
+The Google Cloud project ID. If not provided, it defaults to the `BUCKET_PROJECT` environment variable.
+
+###### try?
+
+`boolean`
+
+If `true`, the function will not throw an error if the file to be deleted does not exist. Defaults to `false`.
+
+#### Returns
+
+`Promise`\<`void`\>
+
+#### Examples
 
 ```ts
+import { deleteFromBucket } from "@nshiab/journalism-google";
+
 // Basic usage: Delete a file from the bucket.
 await deleteFromBucket("path/to/your/file.txt");
 ```
@@ -174,145 +232,149 @@ await deleteFromBucket("path/to/non-existent-file.txt", { try: true });
 // Explicitly specify project ID and bucket name.
 await deleteFromBucket("reports/2023-summary.pdf", {
   project: "my-gcp-project-id",
-  bucket: "my-data-bucket",
+  bucket: "my-data-bucket"
 });
 ```
 
-## downloadFromBucket
+***
 
-Downloads a file from a Google Cloud Storage (GCS) bucket to a specified local
-path. This function provides robust handling for existing local files, allowing
-you to skip downloads or overwrite files as needed.
+### downloadFromBucket()
 
-The function requires the Google Cloud project ID and the target bucket name.
-These can be provided either through environment variables (`BUCKET_PROJECT` and
-`BUCKET_NAME`) or directly as parameters in the `options` object. Parameters
-passed in `options` will take precedence over environment variables.
+> **downloadFromBucket**(`source`, `destination`, `options?`): `Promise`\<`void`\>
 
-By default, if a local file with the same name already exists at the
-`destination` path, the function will throw an error to prevent accidental
-overwrites. You can modify this behavior using the `skip` or `overwrite`
-options.
+Downloads a file from a Google Cloud Storage (GCS) bucket to a specified local path. This function provides robust handling for existing local files, allowing you to skip downloads or overwrite files as needed.
 
-### Signature
+The function requires the Google Cloud project ID and the target bucket name. These can be provided either through environment variables (`BUCKET_PROJECT` and `BUCKET_NAME`) or directly as parameters in the `options` object. Parameters passed in `options` will take precedence over environment variables.
 
-```typescript
-async function downloadFromBucket(
-  source: string,
-  destination: string,
-  options?: {
-    project?: string;
-    bucket?: string;
-    overwrite?: boolean;
-    skip?: boolean;
-  },
-): Promise<void>;
-```
+By default, if a local file with the same name already exists at the `destination` path, the function will throw an error to prevent accidental overwrites. You can modify this behavior using the `skip` or `overwrite` options.
 
-### Parameters
+#### Parameters
 
-- **`source`**: The path to the file within the GCS bucket (e.g.,
-  'my-folder/document.pdf').
-- **`destination`**: The local file path where the downloaded file will be saved
-  (e.g., './downloads/document.pdf').
-- **`options`**: Optional configuration for the download operation.
-- **`options.project`**: The Google Cloud project ID. If not provided, it
-  defaults to the `BUCKET_PROJECT` environment variable.
-- **`options.bucket`**: The name of the Google Cloud Storage bucket. If not
-  provided, it defaults to the `BUCKET_NAME` environment variable.
-- **`options.overwrite`**: If `true`, an existing local file at the
-  `destination` path will be overwritten. Cannot be used with `skip`. Defaults
-  to `false`.
-- **`options.skip`**: If `true`, the download will be skipped if a local file
-  already exists at the `destination` path. Cannot be used with `overwrite`.
-  Defaults to `false`.
+##### source
 
-### Examples
+`string`
+
+The path to the file within the GCS bucket (e.g., 'my-folder/document.pdf').
+
+##### destination
+
+`string`
+
+The local file path where the downloaded file will be saved (e.g., './downloads/document.pdf').
+
+##### options?
+
+Optional configuration for the download operation.
+
+###### bucket?
+
+`string`
+
+The name of the Google Cloud Storage bucket. If not provided, it defaults to the `BUCKET_NAME` environment variable.
+
+###### overwrite?
+
+`boolean`
+
+If `true`, an existing local file at the `destination` path will be overwritten. Cannot be used with `skip`. Defaults to `false`.
+
+###### project?
+
+`string`
+
+The Google Cloud project ID. If not provided, it defaults to the `BUCKET_PROJECT` environment variable.
+
+###### skip?
+
+`boolean`
+
+If `true`, the download will be skipped if a local file already exists at the `destination` path. Cannot be used with `overwrite`. Defaults to `false`.
+
+#### Returns
+
+`Promise`\<`void`\>
+
+#### Examples
 
 ```ts
+import { downloadFromBucket } from "@nshiab/journalism-google";
+
 // Basic usage: Download a file.
-await downloadFromBucket(
-  "reports/annual-report.pdf",
-  "./local-reports/annual-report.pdf",
-);
+await downloadFromBucket("reports/annual-report.pdf", "./local-reports/annual-report.pdf");
 console.log("File downloaded successfully!");
 ```
 
 ```ts
 // Skip download if the file already exists locally.
-await downloadFromBucket("images/profile.jpg", "./local-images/profile.jpg", {
-  skip: true,
-});
+await downloadFromBucket("images/profile.jpg", "./local-images/profile.jpg", { skip: true });
 console.log("Download skipped if file exists, or downloaded otherwise.");
 ```
 
 ```ts
 // Overwrite an existing local file.
-await downloadFromBucket(
-  "data/latest-data.csv",
-  "./local-data/latest-data.csv",
-  { overwrite: true },
-);
+await downloadFromBucket("data/latest-data.csv", "./local-data/latest-data.csv", { overwrite: true });
 console.log("File downloaded and overwritten if it existed.");
 ```
 
 ```ts
 // Specify project and bucket explicitly.
-await downloadFromBucket(
-  "configs/app-settings.json",
-  "./local-configs/settings.json",
-  {
-    project: "my-gcp-project",
-    bucket: "my-config-bucket",
-  },
-);
+await downloadFromBucket("configs/app-settings.json", "./local-configs/settings.json", {
+  project: "my-gcp-project",
+  bucket: "my-config-bucket"
+});
 ```
 
-## filesInBucket
+***
 
-Lists files within a Google Cloud Storage (GCS) bucket. You can list all files
-in the bucket or narrow down the results to a specific folder. The function can
-also return the full Google Storage URIs for each file.
+### filesInBucket()
 
-This function requires the Google Cloud project ID and the target bucket name.
-These can be provided either through environment variables (`BUCKET_PROJECT` and
-`BUCKET_NAME`) or directly as parameters in the `options` object. Parameters
-passed in `options` will take precedence over environment variables.
+> **filesInBucket**(`options?`): `Promise`\<`string`[]\>
 
-### Signature
+Lists files within a Google Cloud Storage (GCS) bucket. You can list all files in the bucket or narrow down the results to a specific folder. The function can also return the full Google Storage URIs for each file.
 
-```typescript
-async function filesInBucket(
-  options?: {
-    folder?: string;
-    project?: string;
-    bucket?: string;
-    URI?: boolean;
-  },
-): Promise<string[]>;
-```
+This function requires the Google Cloud project ID and the target bucket name. These can be provided either through environment variables (`BUCKET_PROJECT` and `BUCKET_NAME`) or directly as parameters in the `options` object. Parameters passed in `options` will take precedence over environment variables.
 
-### Parameters
+#### Parameters
 
-- **`options`**: Optional configuration for listing files.
-- **`options.folder`**: The path to a specific folder within the bucket (e.g.,
-  'my-data/'). Only files within this folder will be listed.
-- **`options.project`**: The Google Cloud project ID. If not provided, it
-  defaults to the `BUCKET_PROJECT` environment variable.
-- **`options.bucket`**: The name of the Google Cloud Storage bucket. If not
-  provided, it defaults to the `BUCKET_NAME` environment variable.
-- **`options.URI`**: If `true`, the function will return the full Google Storage
-  URI (e.g., 'gs://your-bucket/path/to/file.txt') for each file. Defaults to
-  `false`, returning just the file path within the bucket.
+##### options?
 
-### Returns
+Optional configuration for listing files.
 
-An array of strings, where each string is either the file path within the bucket
-or its full Google Storage URI, depending on the `URI` option.
+###### bucket?
 
-### Examples
+`string`
+
+The name of the Google Cloud Storage bucket. If not provided, it defaults to the `BUCKET_NAME` environment variable.
+
+###### folder?
+
+`string`
+
+The path to a specific folder within the bucket (e.g., 'my-data/'). Only files within this folder will be listed.
+
+###### project?
+
+`string`
+
+The Google Cloud project ID. If not provided, it defaults to the `BUCKET_PROJECT` environment variable.
+
+###### URI?
+
+`boolean`
+
+If `true`, the function will return the full Google Storage URI (e.g., 'gs://your-bucket/path/to/file.txt') for each file. Defaults to `false`, returning just the file path within the bucket.
+
+#### Returns
+
+`Promise`\<`string`[]\>
+
+An array of strings, where each string is either the file path within the bucket or its full Google Storage URI, depending on the `URI` option.
+
+#### Examples
 
 ```ts
+import { filesInBucket } from "@nshiab/journalism-google";
+
 // List all files in the default bucket.
 const allFiles = await filesInBucket();
 console.log("All files:", allFiles);
@@ -335,62 +397,26 @@ console.log("File URIs:", fileURIs);
 const specificBucketFiles = await filesInBucket({
   project: "my-gcp-project",
   bucket: "my-archive-bucket",
-  folder: "old-data/",
+  folder: "old-data/"
 });
 console.log("Files from specific bucket:", specificBucketFiles);
 ```
 
-## getSheetData
+***
+
+### getSheetData()
 
 Retrieves data from a Google Sheet.
 
-By default, this function attempts to authenticate using environment variables
-(`GOOGLE_PRIVATE_KEY` for the API key and `GOOGLE_SERVICE_ACCOUNT_EMAIL` for the
-service account email). Alternatively, you can use
-`GOOGLE_APPLICATION_CREDENTIALS` pointing to a service account JSON file. For
-detailed instructions on setting up credentials, refer to the
-`node-google-spreadsheet` authentication guide:
-[https://theoephraim.github.io/node-google-spreadsheet/#/guides/authentication](https://theoephraim.github.io/node-google-spreadsheet/#/guides/authentication).
+By default, this function attempts to authenticate using environment variables (`GOOGLE_PRIVATE_KEY` for the API key and `GOOGLE_SERVICE_ACCOUNT_EMAIL` for the service account email). Alternatively, you can use `GOOGLE_APPLICATION_CREDENTIALS` pointing to a service account JSON file. For detailed instructions on setting up credentials, refer to the `node-google-spreadsheet` authentication guide: [https://theoephraim.github.io/node-google-spreadsheet/#/guides/authentication](https://theoephraim.github.io/node-google-spreadsheet/#/guides/authentication).
 
-### Signature
-
-```typescript
-function getSheetData(
-  sheetUrl: string,
-  options: { csv: true; skip?: number; apiEmail?: string; apiKey?: string },
-): Promise<string>;
-```
-
-### Parameters
-
-- **`sheetUrl`**: The URL of the Google Sheet from which to retrieve data. This
-  URL should point to a specific sheet (e.g., ending with `#gid=0`).
-- **`options`**: An optional object with configuration options:
-- **`options.skip`**: The number of rows to skip from the beginning of the sheet
-  before parsing the data. This is useful for sheets that have metadata at the
-  top. Defaults to `0`.
-- **`options.csv`**: If `true`, the function will return the raw data as a CSV
-  string. If `false` or omitted, it will return an array of objects, where each
-  object represents a row and keys correspond to column headers. Defaults to
-  `false`.
-- **`options.apiEmail`**: Optional. Your Google Service Account email. If
-  provided, this will override the `GOOGLE_SERVICE_ACCOUNT_EMAIL` environment
-  variable.
-- **`options.apiKey`**: Optional. Your Google Service Account private key. If
-  provided, this will override the `GOOGLE_PRIVATE_KEY` environment variable.
-
-### Returns
-
-A Promise that resolves to either an array of objects
-(`Record<string, string>[]`) if `options.csv` is `false`, or a CSV string
-(`string`) if `options.csv` is `true`.
-
-### Examples
+#### Examples
 
 ```ts
+import { getSheetData } from "@nshiab/journalism-google";
+
 // Fake URL used as an example.
-const sheetUrl =
-  "https://docs.google.com/spreadsheets/d/nrqo3oP4KMWYbELScQa8W1nHZPfIrA7LIz9UmcRE4GyJN/edit#gid=0";
+const sheetUrl = "https://docs.google.com/spreadsheets/d/nrqo3oP4KMWYbELScQa8W1nHZPfIrA7LIz9UmcRE4GyJN/edit#gid=0";
 
 // Returning the data as an array of objects.
 const data = await getSheetData(sheetUrl);
@@ -425,51 +451,284 @@ console.log(csvString);
 // Use custom environment variable names for API email and key.
 const dataWithCustomCredentials = await getSheetData(sheetUrl, {
   apiEmail: "GG_EMAIL",
-  apiKey: "GG_KEY",
+  apiKey: "GG_KEY"
 });
 console.log(dataWithCustomCredentials);
 ```
 
-## inBucket
+#### Param
 
-Checks if a specified file exists within a Google Cloud Storage (GCS) bucket.
-This function provides a straightforward way to verify the presence of a file in
-your GCS infrastructure, which is useful for conditional operations, data
-validation, or status checks.
+**sheetUrl**
 
-Authentication and bucket identification can be configured either through
-environment variables (`BUCKET_PROJECT` for the Google Cloud Project ID and
-`BUCKET_NAME` for the bucket name) or by passing them directly as options to the
-function. Options provided directly will take precedence over environment
-variables.
+The URL of the Google Sheet from which to retrieve data. This URL should point to a specific sheet (e.g., ending with `#gid=0`).
 
-### Signature
+#### Param
 
-```typescript
-async function inBucket(
-  destination: string,
-  options?: { project?: string; bucket?: string },
-): Promise<boolean>;
-```
+**options**
 
-### Parameters
+An optional object with configuration options:
 
-- **`destination`**: The full path to the file within the bucket (e.g.,
-  'my-folder/my-file.txt').
-- **`options`**: Optional settings for configuring the GCS client.
-- **`options.project`**: Your Google Cloud Project ID. If not provided, it
-  defaults to the `BUCKET_PROJECT` environment variable.
-- **`options.bucket`**: The name of the Google Cloud Storage bucket. If not
-  provided, it defaults to the `BUCKET_NAME` environment variable.
+#### Param
 
-### Returns
+**options.skip**
 
-A Promise that resolves to `true` if the file exists in the bucket, and `false`
-otherwise.
+The number of rows to skip from the beginning of the sheet before parsing the data. This is useful for sheets that have metadata at the top. Defaults to `0`.
 
-### Examples
+#### Param
+
+**options.csv**
+
+If `true`, the function will return the raw data as a CSV string. If `false` or omitted, it will return an array of objects, where each object represents a row and keys correspond to column headers. Defaults to `false`.
+
+#### Param
+
+**options.apiEmail**
+
+Name of the environment variable containing the service-account email. Defaults to `GOOGLE_SERVICE_ACCOUNT_EMAIL`.
+
+#### Param
+
+**options.apiKey**
+
+Name of the environment variable containing the service-account private key. Defaults to `GOOGLE_PRIVATE_KEY`.
+
+#### Call Signature
+
+> **getSheetData**(`sheetUrl`, `options`): `Promise`\<`string`\>
+
+Retrieves data from a Google Sheet.
+
+By default, this function attempts to authenticate using environment variables (`GOOGLE_PRIVATE_KEY` for the API key and `GOOGLE_SERVICE_ACCOUNT_EMAIL` for the service account email). Alternatively, you can use `GOOGLE_APPLICATION_CREDENTIALS` pointing to a service account JSON file. For detailed instructions on setting up credentials, refer to the `node-google-spreadsheet` authentication guide: [https://theoephraim.github.io/node-google-spreadsheet/#/guides/authentication](https://theoephraim.github.io/node-google-spreadsheet/#/guides/authentication).
+
+##### Parameters
+
+###### sheetUrl
+
+`string`
+
+The URL of the Google Sheet from which to retrieve data. This URL should point to a specific sheet (e.g., ending with `#gid=0`).
+
+###### options
+
+An optional object with configuration options:
+
+###### apiEmail?
+
+`string`
+
+Name of the environment variable containing the service-account email. Defaults to `GOOGLE_SERVICE_ACCOUNT_EMAIL`.
+
+###### apiKey?
+
+`string`
+
+Name of the environment variable containing the service-account private key. Defaults to `GOOGLE_PRIVATE_KEY`.
+
+###### csv
+
+`true`
+
+If `true`, the function will return the raw data as a CSV string. If `false` or omitted, it will return an array of objects, where each object represents a row and keys correspond to column headers. Defaults to `false`.
+
+###### skip?
+
+`number`
+
+The number of rows to skip from the beginning of the sheet before parsing the data. This is useful for sheets that have metadata at the top. Defaults to `0`.
+
+##### Returns
+
+`Promise`\<`string`\>
+
+A Promise that resolves to either an array of objects (`Record<string, string>[]`) if `options.csv` is `false`, or a CSV string (`string`) if `options.csv` is `true`.
+
+##### Examples
 
 ```ts
+import { getSheetData } from "@nshiab/journalism-google";
+
+// Fake URL used as an example.
+const sheetUrl = "https://docs.google.com/spreadsheets/d/nrqo3oP4KMWYbELScQa8W1nHZPfIrA7LIz9UmcRE4GyJN/edit#gid=0";
+
+// Returning the data as an array of objects.
+const data = await getSheetData(sheetUrl);
+console.log(data);
+// Expected output (example):
+// [
+//   { Header1: 'Value1', Header2: 'Value2' },
+//   { Header1: 'Value3', Header2: 'Value4' }
+// ]
+```
+
+```ts
+// Retrieve data, skipping the first row (e.g., if it contains metadata).
+const dataSkippingFirstRow = await getSheetData(sheetUrl, { skip: 1 });
+console.log(dataSkippingFirstRow);
+// Expected output (example, assuming first row was metadata):
+// [
+//   { Header1: 'Value1', Header2: 'Value2' },
+//   { Header1: 'Value3', Header2: 'Value4' }
+// ]
+```
+
+```ts
+// Return the data as a raw CSV string, useful for direct writing to files or other systems.
+const csvString = await getSheetData(sheetUrl, { csv: true });
+console.log(csvString);
+// Expected output (example):
+// "Header1,Header2\nValue1,Value2\nValue3,Value4"
+```
+
+```ts
+// Use custom environment variable names for API email and key.
+const dataWithCustomCredentials = await getSheetData(sheetUrl, {
+  apiEmail: "GG_EMAIL",
+  apiKey: "GG_KEY"
+});
+console.log(dataWithCustomCredentials);
+```
+
+#### Call Signature
+
+> **getSheetData**(`sheetUrl`, `options?`): `Promise`\<`Record`\<`string`, `string`\>[]\>
+
+Retrieves data from a Google Sheet.
+
+By default, this function attempts to authenticate using environment variables (`GOOGLE_PRIVATE_KEY` for the API key and `GOOGLE_SERVICE_ACCOUNT_EMAIL` for the service account email). Alternatively, you can use `GOOGLE_APPLICATION_CREDENTIALS` pointing to a service account JSON file. For detailed instructions on setting up credentials, refer to the `node-google-spreadsheet` authentication guide: [https://theoephraim.github.io/node-google-spreadsheet/#/guides/authentication](https://theoephraim.github.io/node-google-spreadsheet/#/guides/authentication).
+
+##### Parameters
+
+###### sheetUrl
+
+`string`
+
+The URL of the Google Sheet from which to retrieve data. This URL should point to a specific sheet (e.g., ending with `#gid=0`).
+
+###### options?
+
+An optional object with configuration options:
+
+###### apiEmail?
+
+`string`
+
+Name of the environment variable containing the service-account email. Defaults to `GOOGLE_SERVICE_ACCOUNT_EMAIL`.
+
+###### apiKey?
+
+`string`
+
+Name of the environment variable containing the service-account private key. Defaults to `GOOGLE_PRIVATE_KEY`.
+
+###### csv?
+
+`false`
+
+If `true`, the function will return the raw data as a CSV string. If `false` or omitted, it will return an array of objects, where each object represents a row and keys correspond to column headers. Defaults to `false`.
+
+###### skip?
+
+`number`
+
+The number of rows to skip from the beginning of the sheet before parsing the data. This is useful for sheets that have metadata at the top. Defaults to `0`.
+
+##### Returns
+
+`Promise`\<`Record`\<`string`, `string`\>[]\>
+
+A Promise that resolves to either an array of objects (`Record<string, string>[]`) if `options.csv` is `false`, or a CSV string (`string`) if `options.csv` is `true`.
+
+##### Examples
+
+```ts
+import { getSheetData } from "@nshiab/journalism-google";
+
+// Fake URL used as an example.
+const sheetUrl = "https://docs.google.com/spreadsheets/d/nrqo3oP4KMWYbELScQa8W1nHZPfIrA7LIz9UmcRE4GyJN/edit#gid=0";
+
+// Returning the data as an array of objects.
+const data = await getSheetData(sheetUrl);
+console.log(data);
+// Expected output (example):
+// [
+//   { Header1: 'Value1', Header2: 'Value2' },
+//   { Header1: 'Value3', Header2: 'Value4' }
+// ]
+```
+
+```ts
+// Retrieve data, skipping the first row (e.g., if it contains metadata).
+const dataSkippingFirstRow = await getSheetData(sheetUrl, { skip: 1 });
+console.log(dataSkippingFirstRow);
+// Expected output (example, assuming first row was metadata):
+// [
+//   { Header1: 'Value1', Header2: 'Value2' },
+//   { Header1: 'Value3', Header2: 'Value4' }
+// ]
+```
+
+```ts
+// Return the data as a raw CSV string, useful for direct writing to files or other systems.
+const csvString = await getSheetData(sheetUrl, { csv: true });
+console.log(csvString);
+// Expected output (example):
+// "Header1,Header2\nValue1,Value2\nValue3,Value4"
+```
+
+```ts
+// Use custom environment variable names for API email and key.
+const dataWithCustomCredentials = await getSheetData(sheetUrl, {
+  apiEmail: "GG_EMAIL",
+  apiKey: "GG_KEY"
+});
+console.log(dataWithCustomCredentials);
+```
+
+***
+
+### inBucket()
+
+> **inBucket**(`destination`, `options?`): `Promise`\<`boolean`\>
+
+Checks if a specified file exists within a Google Cloud Storage (GCS) bucket. This function provides a straightforward way to verify the presence of a file in your GCS infrastructure, which is useful for conditional operations, data validation, or status checks.
+
+Authentication and bucket identification can be configured either through environment variables (`BUCKET_PROJECT` for the Google Cloud Project ID and `BUCKET_NAME` for the bucket name) or by passing them directly as options to the function. Options provided directly will take precedence over environment variables.
+
+#### Parameters
+
+##### destination
+
+`string`
+
+The full path to the file within the bucket (e.g., 'my-folder/my-file.txt').
+
+##### options?
+
+Optional settings for configuring the GCS client.
+
+###### bucket?
+
+`string`
+
+The name of the Google Cloud Storage bucket. If not provided, it defaults to the `BUCKET_NAME` environment variable.
+
+###### project?
+
+`string`
+
+Your Google Cloud Project ID. If not provided, it defaults to the `BUCKET_PROJECT` environment variable.
+
+#### Returns
+
+`Promise`\<`boolean`\>
+
+A Promise that resolves to `true` if the file exists in the bucket, and `false` otherwise.
+
+#### Examples
+
+```ts
+import { inBucket } from "@nshiab/journalism-google";
+
 // Check if a file exists in the default Google Cloud Storage bucket (configured via environment variables).
 const exists = await inBucket("remote/file.txt");
 if (exists) {
@@ -482,8 +741,8 @@ if (exists) {
 ```ts
 // Check for a file's existence in a specified project and bucket, overriding environment variables.
 const existsInSpecificBucket = await inBucket("remote/file.txt", {
-  project: "my-gcp-project",
-  bucket: "my-bucket-name",
+ project: "my-gcp-project",
+ bucket: "my-bucket-name"
 });
 if (existsInSpecificBucket) {
   console.log("File exists in the specified bucket.");
@@ -492,54 +751,87 @@ if (existsInSpecificBucket) {
 }
 ```
 
-## openSpreadsheet
+***
 
-Opens a Google spreadsheet and returns its loaded representation. When the URL
-identifies a specific tab with a `gid`, that ID is also returned as `sheetId`;
-otherwise, `sheetId` is undefined.
+### openSpreadsheet()
+
+> **openSpreadsheet**(`spreadsheetUrl`, `options?`): `Promise`\<\{ `sheetId?`: `number`; `spreadsheet`: `GoogleSpreadsheet`; \}\>
+
+Opens a Google spreadsheet and returns its loaded representation. When the
+URL identifies a specific tab with a `gid`, that ID is also returned as
+`sheetId`; otherwise, `sheetId` is undefined.
 
 By default, authentication uses `GOOGLE_SERVICE_ACCOUNT_EMAIL` and
-`GOOGLE_PRIVATE_KEY`. Alternatively, `GOOGLE_APPLICATION_CREDENTIALS` can point
-to a service-account JSON file. Credentials passed through `options.credentials`
-take precedence over both environment-based methods. The service account must
-have access to the spreadsheet.
+`GOOGLE_PRIVATE_KEY`. Alternatively, `GOOGLE_APPLICATION_CREDENTIALS` can
+point to a service-account JSON file. Credentials passed through
+`options.credentials` take precedence over both environment-based methods.
+The service account must have access to the spreadsheet.
 
 To learn what you can do with the returned `spreadsheet`, refer to the
 `node-google-spreadsheet` documentation:
 [https://theoephraim.github.io/node-google-spreadsheet/#/](https://theoephraim.github.io/node-google-spreadsheet/#/).
 
-### Signature
+#### Parameters
 
-```typescript
-async function openSpreadsheet(spreadsheetUrl: string, options?: { credentials?: { email: string; privateKey: string }; apiEmail?: string; apiKey?: string }): Promise<{ spreadsheet: InstanceType<(google-spreadsheet)["GoogleSpreadsheet"]>; sheetId?: number }>;
-```
+##### spreadsheetUrl
 
-### Parameters
+`string`
 
-- **`spreadsheetUrl`**: A Google Sheets URL. It may identify a spreadsheet or a
-  specific tab.
-- **`options`**: Controls authentication. The standard Google environment
-  variables are used when omitted.
-- **`options.credentials`**: Explicit Google service-account credentials.
-- **`options.apiEmail`**: Name of the environment variable containing the
-  service-account email. Defaults to `GOOGLE_SERVICE_ACCOUNT_EMAIL`.
-- **`options.apiKey`**: Name of the environment variable containing the
-  service-account private key. Defaults to `GOOGLE_PRIVATE_KEY`.
+A Google Sheets URL. It may identify a spreadsheet or
+a specific tab.
 
-### Returns
+##### options?
+
+Controls authentication. The standard Google environment
+variables are used when omitted.
+
+###### apiEmail?
+
+`string`
+
+Name of the environment variable containing the
+service-account email. Defaults to `GOOGLE_SERVICE_ACCOUNT_EMAIL`.
+
+###### apiKey?
+
+`string`
+
+Name of the environment variable containing the
+service-account private key. Defaults to `GOOGLE_PRIVATE_KEY`.
+
+###### credentials?
+
+\{ `email`: `string`; `privateKey`: `string`; \}
+
+Explicit Google service-account credentials.
+
+###### credentials.email
+
+`string`
+
+###### credentials.privateKey
+
+`string`
+
+#### Returns
+
+`Promise`\<\{ `sheetId?`: `number`; `spreadsheet`: `GoogleSpreadsheet`; \}\>
 
 The loaded spreadsheet and the tab ID found in the URL, if any.
 
-### Examples
+#### Examples
 
-Open a spreadsheet using credentials from the environment.
+**Open a spreadsheet using credentials from the environment.**
 
 ```ts
+import { openSpreadsheet } from "@nshiab/journalism-google";
+
+const spreadsheetUrl = "https://docs.google.com/spreadsheets/d/your-spreadsheet-id/edit";
 const { spreadsheet } = await openSpreadsheet(spreadsheetUrl);
 console.log(spreadsheet.title);
 ```
 
-Open a spreadsheet with explicit credentials.
+**Open a spreadsheet with explicit credentials.**
 
 ```ts
 const { spreadsheet } = await openSpreadsheet(spreadsheetUrl, {
@@ -550,7 +842,7 @@ const { spreadsheet } = await openSpreadsheet(spreadsheetUrl, {
 });
 ```
 
-Access the tab selected by a URL containing a `gid`.
+**Access the tab selected by a URL containing a gid.**
 
 ```ts
 const { spreadsheet, sheetId } = await openSpreadsheet(sheetUrl);
@@ -559,91 +851,90 @@ const sheet = sheetId === undefined
   : spreadsheet.sheetsById[sheetId];
 ```
 
-## overwriteSheetData
+***
 
-Clears the content of a Google Sheet and then populates it with new data. This
-function is useful for regularly updating datasets in Google Sheets, ensuring
-that the sheet always reflects the latest information without manual
-intervention.
+### ~~overwriteSheetData()~~
 
-The function automatically infers column headers from the keys of the first
-object in your `data` array. It supports various options for customizing the
-update process, including adding a timestamp of the last update, prepending
-custom text, and controlling how Google Sheets interprets the data types.
+> **overwriteSheetData**(`data`, `sheetUrl`, `options?`): `Promise`\<`void`\>
 
-By default, authentication is handled via environment variables
-(`GOOGLE_PRIVATE_KEY` and `GOOGLE_SERVICE_ACCOUNT_EMAIL`). Alternatively, you
-can use `GOOGLE_APPLICATION_CREDENTIALS` pointing to a service account JSON
-file. For detailed setup instructions, refer to the `node-google-spreadsheet`
-authentication guide:
-[https://theoephraim.github.io/node-google-spreadsheet/#/guides/authentication](https://theoephraim.github.io/node-google-spreadsheet/#/guides/authentication).
+Clears the content of a Google Sheet and then populates it with new data. This function is useful for regularly updating datasets in Google Sheets, ensuring that the sheet always reflects the latest information without manual intervention.
 
-### Signature
+The function automatically infers column headers from the keys of the first object in your `data` array. It supports various options for customizing the update process, including adding a timestamp of the last update, prepending custom text, and controlling how Google Sheets interprets the data types.
 
-```typescript
-async function overwriteSheetData(
-  data: Record<string, string | number | boolean | Date | null>[],
-  sheetUrl: string,
-  options?: {
-    prepend?: string;
-    lastUpdate?: boolean;
-    timeZone?:
-      | "Canada/Atlantic"
-      | "Canada/Central"
-      | "Canada/Eastern"
-      | "Canada/Mountain"
-      | "Canada/Newfoundland"
-      | "Canada/Pacific"
-      | "Canada/Saskatchewan"
-      | "Canada/Yukon";
-    raw?: boolean;
-    apiEmail?: string;
-    apiKey?: string;
-  },
-): Promise<void>;
-```
+By default, authentication is handled via environment variables (`GOOGLE_PRIVATE_KEY` and `GOOGLE_SERVICE_ACCOUNT_EMAIL`). Alternatively, you can use `GOOGLE_APPLICATION_CREDENTIALS` pointing to a service account JSON file. For detailed setup instructions, refer to the `node-google-spreadsheet` authentication guide: [https://theoephraim.github.io/node-google-spreadsheet/#/guides/authentication](https://theoephraim.github.io/node-google-spreadsheet/#/guides/authentication).
 
-### Parameters
+#### Parameters
 
-- **`data`**: An array of objects to be written to the Google Sheet. The keys of
-  the first object in this array will be used as column headers.
-- **`sheetUrl`**: The URL of the Google Sheet to be updated. This URL should
-  point to a specific sheet (e.g., ending with `#gid=0`).
-- **`options`**: An optional object with configuration options:
-- **`options.prepend`**: A string to be added as a new row at the very top of
-  the sheet, before any data or `lastUpdate` information. Useful for adding
-  notes or disclaimers.
-- **`options.lastUpdate`**: If `true`, a row indicating the date and time of the
-  update will be added before the data. Defaults to `false`.
-- **`options.timeZone`**: If `lastUpdate` is `true`, this option allows you to
-  specify a time zone for the timestamp (e.g., `"Canada/Eastern"`). If omitted,
-  the date will be formatted in UTC.
-- **`options.raw`**: If `true`, data will be written as raw values, preventing
-  Google Sheets from automatically guessing data types or applying formatting.
-  This can be useful for preserving exact string representations. Defaults to
-  `false`.
-- **`options.apiEmail`**: Optional. Your Google Service Account email. If
-  provided, this will override the `GOOGLE_SERVICE_ACCOUNT_EMAIL` environment
-  variable.
-- **`options.apiKey`**: Optional. Your Google Service Account private key. If
-  provided, this will override the `GOOGLE_PRIVATE_KEY` environment variable.
+##### data
 
-### Returns
+`object`[]
 
-A Promise that resolves when the sheet has been successfully cleared and
-populated with new data.
+An array of objects to be written to the Google Sheet. The keys of the first object in this array will be used as column headers.
 
-### Examples
+##### sheetUrl
+
+`string`
+
+The URL of the Google Sheet to be updated. This URL should point to a specific sheet (e.g., ending with `#gid=0`).
+
+##### options?
+
+An optional object with configuration options:
+
+###### apiEmail?
+
+`string`
+
+Name of the environment variable containing the service-account email. Defaults to `GOOGLE_SERVICE_ACCOUNT_EMAIL`.
+
+###### apiKey?
+
+`string`
+
+Name of the environment variable containing the service-account private key. Defaults to `GOOGLE_PRIVATE_KEY`.
+
+###### lastUpdate?
+
+`boolean`
+
+If `true`, a row indicating the date and time of the update will be added before the data. Defaults to `false`.
+
+###### prepend?
+
+`string`
+
+A string to be added as a new row at the very top of the sheet, before any data or `lastUpdate` information. Useful for adding notes or disclaimers.
+
+###### raw?
+
+`boolean`
+
+If `true`, data will be written as raw values, preventing Google Sheets from automatically guessing data types or applying formatting. This can be useful for preserving exact string representations. Defaults to `false`.
+
+###### timeZone?
+
+`"Canada/Atlantic"` \| `"Canada/Central"` \| `"Canada/Eastern"` \| `"Canada/Mountain"` \| `"Canada/Newfoundland"` \| `"Canada/Pacific"` \| `"Canada/Saskatchewan"` \| `"Canada/Yukon"`
+
+If `lastUpdate` is `true`, this option allows you to specify a time zone for the timestamp (e.g., `"Canada/Eastern"`). If omitted, the date will be formatted in UTC.
+
+#### Returns
+
+`Promise`\<`void`\>
+
+A Promise that resolves when the sheet has been successfully cleared and populated with new data.
+
+#### Examples
 
 ```ts
+import { overwriteSheetData } from "@nshiab/journalism-google";
+
 // The data needs to be an array of objects. The keys of the first object will be used to create the header row.
 const data = [
   { first: "Nael", last: "Shiab" },
-  { first: "Andrew", last: "Ryan" },
+  { first: "Andrew", last: "Ryan" }
 ];
 // Fake URL used as an example.
-const sheetUrl =
-  "https://docs.google.com/spreadsheets/d/nrqo3oP4KMWYbELScQa8W1nHZPfIrA7LIz9UmcRE4GyJN/edit#gid=0";
+const sheetUrl = "https://docs.google.com/spreadsheets/d/nrqo3oP4KMWYbELScQa8W1nHZPfIrA7LIz9UmcRE4GyJN/edit#gid=0";
 
 // Clearing the sheet and then populating it.
 await overwriteSheetData(data, sheetUrl);
@@ -653,8 +944,8 @@ console.log("Sheet updated successfully with data.");
 ```ts
 // Write data as raw values to prevent Google Sheets from interpreting them.
 const rawData = [
-  { id: "001", value: "05" }, // '05' might be interpreted as 5 without raw: true
-  { id: "002", value: "10" },
+  { id: '001', value: '05' }, // '05' might be interpreted as 5 without raw: true
+  { id: '002', value: '10' }
 ];
 await overwriteSheetData(rawData, sheetUrl, { raw: true });
 console.log("Sheet updated successfully with raw data.");
@@ -666,115 +957,154 @@ await overwriteSheetData(data, sheetUrl, { lastUpdate: true });
 console.log("Sheet updated with UTC timestamp.");
 
 // Add a timestamp formatted to a specific time zone.
-await overwriteSheetData(data, sheetUrl, {
-  lastUpdate: true,
-  timeZone: "Canada/Eastern",
-});
+await overwriteSheetData(data, sheetUrl, { lastUpdate: true, timeZone: "Canada/Eastern" });
 console.log("Sheet updated with Eastern Time timestamp.");
 ```
 
 ```ts
 // Add a custom message at the top of the sheet.
-await overwriteSheetData(data, sheetUrl, {
-  prepend: "For inquiries, contact data.team@example.com",
-});
+await overwriteSheetData(data, sheetUrl, { prepend: "For inquiries, contact data.team@example.com" });
 console.log("Sheet updated with prepended text.");
 
 // Combine prepend with last update and time zone.
 await overwriteSheetData(data, sheetUrl, {
   prepend: "For inquiries, contact data.team@example.com",
   lastUpdate: true,
-  timeZone: "Canada/Eastern",
+  timeZone: "Canada/Eastern"
 });
 console.log("Sheet updated with prepended text and timestamp.");
 ```
 
 ```ts
-// Use explicitly provided API credentials instead of environment variables.
+// Use custom environment variable names for the service-account credentials.
 await overwriteSheetData(data, sheetUrl, {
-  apiEmail: "your-service-account@project-id.iam.gserviceaccount.com",
-  apiKey: "-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n",
+  apiEmail: "GG_EMAIL",
+  apiKey: "GG_KEY"
 });
 console.log("Sheet updated using custom API credentials.");
 ```
 
-## pushToSheet
+#### Deprecated
 
-Writes data to a Google Sheets tab, either replacing its contents or appending
-rows. The tab can be selected by the URL's `gid` or by title. If a titled tab
-does not exist, creation must be explicitly enabled with `create: true`. In
-append mode, column headers are detected automatically within the first 100 rows
-of the tab.
+Use `pushToSheet(data, sheetUrl, { mode: "overwrite" })` instead.
+This function may be removed in the next major release.
+
+***
+
+### pushToSheet()
+
+> **pushToSheet**(`data`, `sheetUrl`, `options?`): `Promise`\<`void`\>
+
+Writes data to a Google Sheets tab, either replacing its contents or
+appending rows. The tab can be selected by the URL's `gid` or by title.
+If a titled tab does not exist, creation must be explicitly enabled with
+`create: true`. In append mode, column headers are detected automatically
+within the first 100 rows of the tab.
 
 By default, authentication uses `GOOGLE_SERVICE_ACCOUNT_EMAIL` and
-`GOOGLE_PRIVATE_KEY`. Alternatively, `GOOGLE_APPLICATION_CREDENTIALS` can point
-to a service-account JSON file. Credentials passed through `options.credentials`
-take precedence over both environment-based methods. For detailed setup
-instructions, refer to the `node-google-spreadsheet` authentication guide:
+`GOOGLE_PRIVATE_KEY`. Alternatively, `GOOGLE_APPLICATION_CREDENTIALS` can
+point to a service-account JSON file. Credentials passed through
+`options.credentials` take precedence over both environment-based methods.
+For detailed setup instructions, refer to the `node-google-spreadsheet`
+authentication guide:
 [https://theoephraim.github.io/node-google-spreadsheet/#/guides/authentication](https://theoephraim.github.io/node-google-spreadsheet/#/guides/authentication).
 
-### Signature
+#### Parameters
 
-```typescript
-async function pushToSheet(
-  data: Record<string, string | number | boolean | Date | null>[],
-  sheetUrl: string,
-  options?: {
-    mode?: "overwrite" | "append";
-    tabTitle?: string;
-    create?: boolean;
-    prepend?: string;
-    lastUpdate?:
-      | boolean
-      | "Canada/Atlantic"
-      | "Canada/Central"
-      | "Canada/Eastern"
-      | "Canada/Mountain"
-      | "Canada/Newfoundland"
-      | "Canada/Pacific"
-      | "Canada/Saskatchewan"
-      | "Canada/Yukon";
-    raw?: boolean;
-    credentials?: { email: string; privateKey: string };
-  },
-): Promise<void>;
-```
+##### data
 
-### Parameters
+`object`[]
 
-- **`data`**: Rows of data. Object keys are used as column headers.
-- **`sheetUrl`**: A Google Sheets URL. It may identify a spreadsheet or a
-  specific tab.
-- **`options`**: Controls tab selection, writing, metadata, value parsing, and
-  authentication.
-- **`options.mode`**: Whether to overwrite the tab or append rows. Defaults to
-  `"overwrite"`.
-- **`options.tabTitle`**: Selects a tab by title instead of using the URL's
-  `gid`.
-- **`options.create`**: Creates a missing titled tab. Requires `tabTitle` and
-  defaults to `false`.
-- **`options.prepend`**: Adds text above the header row in overwrite mode.
-- **`options.lastUpdate`**: Adds a UTC timestamp when `true`, or a timestamp in
-  the specified Canadian time zone. Available only in overwrite mode.
-- **`options.raw`**: Writes values without Google Sheets interpretation.
-  Defaults to `true`.
-- **`options.credentials`**: Explicit Google service-account credentials. These
-  values override `GOOGLE_APPLICATION_CREDENTIALS`,
-  `GOOGLE_SERVICE_ACCOUNT_EMAIL`, and `GOOGLE_PRIVATE_KEY`.
+Rows of data. Object keys are used as column headers.
 
-### Returns
+##### sheetUrl
+
+`string`
+
+A Google Sheets URL. It may identify a spreadsheet or a
+specific tab.
+
+##### options?
+
+Controls tab selection, writing, metadata, value parsing, and
+authentication.
+
+###### create?
+
+`boolean`
+
+Creates a missing titled tab. Requires `tabTitle` and
+defaults to `false`.
+
+###### credentials?
+
+\{ `email`: `string`; `privateKey`: `string`; \}
+
+Explicit Google service-account credentials.
+These values override `GOOGLE_APPLICATION_CREDENTIALS`,
+`GOOGLE_SERVICE_ACCOUNT_EMAIL`, and `GOOGLE_PRIVATE_KEY`.
+
+###### credentials.email
+
+`string`
+
+###### credentials.privateKey
+
+`string`
+
+###### lastUpdate?
+
+`boolean` \| `"Canada/Atlantic"` \| `"Canada/Central"` \| `"Canada/Eastern"` \| `"Canada/Mountain"` \| `"Canada/Newfoundland"` \| `"Canada/Pacific"` \| `"Canada/Saskatchewan"` \| `"Canada/Yukon"`
+
+Adds a UTC timestamp when `true`, or a timestamp in
+the specified Canadian time zone. Available only in overwrite mode.
+
+###### mode?
+
+`"overwrite"` \| `"append"`
+
+Whether to overwrite the tab or append rows. Defaults to
+`"overwrite"`.
+
+###### prepend?
+
+`string`
+
+Adds text above the header row in overwrite mode.
+
+###### raw?
+
+`boolean`
+
+Writes values without Google Sheets interpretation.
+Defaults to `true`.
+
+###### tabTitle?
+
+`string`
+
+Selects a tab by title instead of using the URL's
+`gid`.
+
+#### Returns
+
+`Promise`\<`void`\>
 
 A promise that resolves when the data has been written.
 
-### Examples
+#### Examples
 
-Overwrite the tab selected by the URL.
+**Overwrite the tab selected by the URL.**
 
 ```ts
+import { pushToSheet } from "@nshiab/journalism-google";
+
+const data = [{ id: "001", name: "Alice" }];
+const sheetUrl = "https://docs.google.com/spreadsheets/d/your-spreadsheet-id/edit#gid=0";
 await pushToSheet(data, sheetUrl);
 ```
 
-Append rows to a tab selected by title.
+**Append rows to a tab selected by title.**
 
 ```ts
 await pushToSheet(data, sheetUrl, {
@@ -783,7 +1113,7 @@ await pushToSheet(data, sheetUrl, {
 });
 ```
 
-Create a missing tab and write a timestamp in Eastern time.
+**Create a missing tab and write a timestamp in Eastern time.**
 
 ```ts
 await pushToSheet(data, sheetUrl, {
@@ -793,70 +1123,77 @@ await pushToSheet(data, sheetUrl, {
 });
 ```
 
-## toBucket
+***
 
-Uploads a local file to a Google Cloud Storage (GCS) bucket and returns the URI
-of the uploaded file. This function provides robust control over the upload
-process, including options for skipping uploads if the file already exists,
-overwriting existing files, and setting custom metadata.
+### toBucket()
 
-By default, if a file with the same destination path already exists in the
-bucket, an error will be thrown to prevent accidental overwrites. You can modify
-this behavior using the `skip` or `overwrite` options.
+> **toBucket**(`file`, `destination`, `options?`): `Promise`\<`string`\>
 
-Authentication and bucket identification can be configured either through
-environment variables (`BUCKET_PROJECT` for the Google Cloud Project ID and
-`BUCKET_NAME` for the bucket name) or by passing them directly as options to the
-function. Options provided directly will take precedence over environment
-variables.
+Uploads a local file to a Google Cloud Storage (GCS) bucket and returns the URI of the uploaded file. This function provides robust control over the upload process, including options for skipping uploads if the file already exists, overwriting existing files, and setting custom metadata.
 
-### Signature
+By default, if a file with the same destination path already exists in the bucket, an error will be thrown to prevent accidental overwrites. You can modify this behavior using the `skip` or `overwrite` options.
 
-```typescript
-async function toBucket(
-  file: string,
-  destination: string,
-  options?: {
-    project?: string;
-    bucket?: string;
-    metadata?: any;
-    overwrite?: boolean;
-    skip?: boolean;
-  },
-): Promise<string>;
-```
+Authentication and bucket identification can be configured either through environment variables (`BUCKET_PROJECT` for the Google Cloud Project ID and `BUCKET_NAME` for the bucket name) or by passing them directly as options to the function. Options provided directly will take precedence over environment variables.
 
-### Parameters
+#### Parameters
 
-- **`file`**: The absolute or relative path to the local file that you want to
-  upload.
-- **`destination`**: The desired path and filename for the file within the GCS
-  bucket (e.g., `"my-folder/my-uploaded-file.txt"`).
-- **`options`**: Optional settings to customize the upload behavior.
-- **`options.project`**: Your Google Cloud Project ID. If not provided, it
-  defaults to the `BUCKET_PROJECT` environment variable.
-- **`options.bucket`**: The name of the Google Cloud Storage bucket. If not
-  provided, it defaults to the `BUCKET_NAME` environment variable.
-- **`options.metadata`**: An object containing custom metadata to be associated
-  with the uploaded file (e.g., `contentType`, `cacheControl`). This is passed
-  directly to the GCS upload options.
-- **`options.overwrite`**: If `true`, an existing file at the `destination` path
-  in the bucket will be overwritten. Cannot be used with `skip: true`. Defaults
-  to `false`.
-- **`options.skip`**: If `true`, the upload will be skipped if a file with the
-  same `destination` path already exists in the bucket. If the local file does
-  not exist but the remote file does, the URI of the remote file will be
-  returned without an error. Cannot be used with `overwrite: true`. Defaults to
-  `false`.
+##### file
 
-### Returns
+`string`
 
-A Promise that resolves to the Google Cloud Storage URI of the uploaded file
-(e.g., `"gs://your-bucket-name/your-file-path.txt"`).
+The absolute or relative path to the local file that you want to upload.
 
-### Examples
+##### destination
+
+`string`
+
+The desired path and filename for the file within the GCS bucket (e.g., `"my-folder/my-uploaded-file.txt"`).
+
+##### options?
+
+Optional settings to customize the upload behavior.
+
+###### bucket?
+
+`string`
+
+The name of the Google Cloud Storage bucket. If not provided, it defaults to the `BUCKET_NAME` environment variable.
+
+###### metadata?
+
+\{\[`key`: `string`\]: `unknown`; \}
+
+An object containing custom metadata to be associated with the uploaded file (e.g., `contentType`, `cacheControl`). This is passed directly to the GCS upload options.
+
+###### overwrite?
+
+`boolean`
+
+If `true`, an existing file at the `destination` path in the bucket will be overwritten. Cannot be used with `skip: true`. Defaults to `false`.
+
+###### project?
+
+`string`
+
+Your Google Cloud Project ID. If not provided, it defaults to the `BUCKET_PROJECT` environment variable.
+
+###### skip?
+
+`boolean`
+
+If `true`, the upload will be skipped if a file with the same `destination` path already exists in the bucket. If the local file does not exist but the remote file does, the URI of the remote file will be returned without an error. Cannot be used with `overwrite: true`. Defaults to `false`.
+
+#### Returns
+
+`Promise`\<`string`\>
+
+A Promise that resolves to the Google Cloud Storage URI of the uploaded file (e.g., `"gs://your-bucket-name/your-file-path.txt"`).
+
+#### Examples
 
 ```ts
+import { toBucket } from "@nshiab/journalism-google";
+
 // Upload a file using environment variables for project and bucket.
 // Assuming `BUCKET_PROJECT` and `BUCKET_NAME` are set in your environment.
 const uri = await toBucket("./local/file.txt", "remote/file.txt");
@@ -866,7 +1203,7 @@ console.log(uri); // "gs://my-bucket/remote/file.txt"
 ```ts
 // Skip upload if the file already exists in the bucket.
 const uriSkip = await toBucket("./local/file.txt", "remote/file.txt", {
-  skip: true,
+  skip: true
 });
 console.log(uriSkip); // Returns URI whether file was uploaded or already existed
 ```
@@ -874,20 +1211,16 @@ console.log(uriSkip); // Returns URI whether file was uploaded or already existe
 ```ts
 // If the local file doesn't exist but the remote file does, the URI is returned without error.
 // (Assuming "./non-existent.txt" does not exist locally, but "remote/file.txt" exists in the bucket)
-const uriNonExistentLocal = await toBucket(
-  "./non-existent.txt",
-  "remote/file.txt",
-  {
-    skip: true,
-  },
-);
+const uriNonExistentLocal = await toBucket("./non-existent.txt", "remote/file.txt", {
+  skip: true
+});
 console.log(uriNonExistentLocal); // "gs://my-bucket/remote/file.txt"
 ```
 
 ```ts
 // Overwrite an existing file in the bucket.
 const uriOverwrite = await toBucket("./local/file.txt", "remote/file.txt", {
-  overwrite: true,
+  overwrite: true
 });
 console.log(uriOverwrite); // "gs://my-bucket/remote/file.txt"
 ```
@@ -899,8 +1232,8 @@ const uriExplicit = await toBucket("./local/file.txt", "remote/file.txt", {
   bucket: "my-bucket-name",
   metadata: {
     contentType: "text/plain",
-    cacheControl: "public, max-age=3600",
-  },
+    cacheControl: "public, max-age=3600"
+  }
 });
 console.log(uriExplicit);
 ```

@@ -8,14 +8,10 @@ import process from "node:process";
  *
  * By default, if the specified file does not exist in the bucket, the function will throw an error. However, you can suppress this behavior by setting the `try` option to `true`, which will cause the function to complete silently if the file is not found.
  *
- * @param destination The full path to the file within the bucket (e.g., 'my-folder/my-file.txt').
- * @param options Optional configuration for the deletion operation.
- * @param options.project The Google Cloud project ID. If not provided, it defaults to the `BUCKET_PROJECT` environment variable.
- * @param options.bucket The name of the Google Cloud Storage bucket. If not provided, it defaults to the `BUCKET_NAME` environment variable.
- * @param options.try If `true`, the function will not throw an error if the file to be deleted does not exist. Defaults to `false`.
- *
  * @example
  * ```ts
+ * import { deleteFromBucket } from "@nshiab/journalism-google";
+ *
  * // Basic usage: Delete a file from the bucket.
  * await deleteFromBucket("path/to/your/file.txt");
  * ```
@@ -32,6 +28,11 @@ import process from "node:process";
  *   bucket: "my-data-bucket"
  * });
  * ```
+ * @param destination The full path to the file within the bucket (e.g., 'my-folder/my-file.txt').
+ * @param options Optional configuration for the deletion operation.
+ * @param options.project The Google Cloud project ID. If not provided, it defaults to the `BUCKET_PROJECT` environment variable.
+ * @param options.bucket The name of the Google Cloud Storage bucket. If not provided, it defaults to the `BUCKET_NAME` environment variable.
+ * @param options.try If `true`, the function will not throw an error if the file to be deleted does not exist. Defaults to `false`.
  * @category Google
  */
 export default async function deleteFromBucket(
@@ -61,10 +62,8 @@ export default async function deleteFromBucket(
     } catch (error) {
       // Ignore 404 errors (file doesn't exist)
       if (
-        error instanceof Error && (
-          error.message.includes("404") ||
-          error.message.includes("No such object")
-        )
+        error instanceof Error &&
+        (error.message.includes("404") || error.message.includes("No such object"))
       ) {
         return;
       }

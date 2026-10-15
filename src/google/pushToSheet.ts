@@ -19,6 +19,29 @@ import overwriteTabData from "./helpers/overwriteTabData.ts";
  * authentication guide:
  * [https://theoephraim.github.io/node-google-spreadsheet/#/guides/authentication](https://theoephraim.github.io/node-google-spreadsheet/#/guides/authentication).
  *
+ * @example Overwrite the tab selected by the URL.
+ * ```ts
+ * import { pushToSheet } from "@nshiab/journalism-google";
+ *
+ * const data = [{ id: "001", name: "Alice" }];
+ * const sheetUrl = "https://docs.google.com/spreadsheets/d/your-spreadsheet-id/edit#gid=0";
+ * await pushToSheet(data, sheetUrl);
+ * ```
+ * @example Append rows to a tab selected by title.
+ * ```ts
+ * await pushToSheet(data, sheetUrl, {
+ *   mode: "append",
+ *   tabTitle: "Election results",
+ * });
+ * ```
+ * @example Create a missing tab and write a timestamp in Eastern time.
+ * ```ts
+ * await pushToSheet(data, sheetUrl, {
+ *   tabTitle: "Election results",
+ *   create: true,
+ *   lastUpdate: "Canada/Eastern",
+ * });
+ * ```
  * @param data Rows of data. Object keys are used as column headers.
  * @param sheetUrl A Google Sheets URL. It may identify a spreadsheet or a
  * specific tab.
@@ -39,29 +62,6 @@ import overwriteTabData from "./helpers/overwriteTabData.ts";
  * These values override `GOOGLE_APPLICATION_CREDENTIALS`,
  * `GOOGLE_SERVICE_ACCOUNT_EMAIL`, and `GOOGLE_PRIVATE_KEY`.
  * @returns A promise that resolves when the data has been written.
- *
- * @example Overwrite the tab selected by the URL.
- * ```ts
- * await pushToSheet(data, sheetUrl);
- * ```
- *
- * @example Append rows to a tab selected by title.
- * ```ts
- * await pushToSheet(data, sheetUrl, {
- *   mode: "append",
- *   tabTitle: "Election results",
- * });
- * ```
- *
- * @example Create a missing tab and write a timestamp in Eastern time.
- * ```ts
- * await pushToSheet(data, sheetUrl, {
- *   tabTitle: "Election results",
- *   create: true,
- *   lastUpdate: "Canada/Eastern",
- * });
- * ```
- *
  * @category Google
  */
 export default async function pushToSheet(
@@ -93,9 +93,7 @@ export default async function pushToSheet(
 ): Promise<void> {
   const mode = options.mode ?? "overwrite";
   if (mode !== "overwrite" && mode !== "append") {
-    throw new Error(
-      `Invalid mode: ${mode}. Expected "overwrite" or "append".`,
-    );
+    throw new Error(`Invalid mode: ${String(mode)}. Expected "overwrite" or "append".`);
   }
   if (options.tabTitle !== undefined && options.tabTitle.trim() === "") {
     throw new Error("tabTitle cannot be empty.");
@@ -103,13 +101,8 @@ export default async function pushToSheet(
   if (options.create && options.tabTitle === undefined) {
     throw new Error("The create option requires tabTitle.");
   }
-  if (
-    mode === "append" &&
-    (typeof options.prepend === "string" || options.lastUpdate)
-  ) {
-    throw new Error(
-      "prepend and lastUpdate are only available in overwrite mode.",
-    );
+  if (mode === "append" && (typeof options.prepend === "string" || options.lastUpdate)) {
+    throw new Error("prepend and lastUpdate are only available in overwrite mode.");
   }
 
   const { spreadsheet, sheetId } = await openSpreadsheet(sheetUrl, {
@@ -128,9 +121,7 @@ export default async function pushToSheet(
     }
   } else {
     if (sheetId === undefined) {
-      throw new Error(
-        "The Google Sheets URL must include a gid when tabTitle is not provided.",
-      );
+      throw new Error("The Google Sheets URL must include a gid when tabTitle is not provided.");
     }
     sheet = spreadsheet.sheetsById[sheetId];
     if (sheet === undefined) {

@@ -18,10 +18,7 @@ export default function parseSheetUrl(sheetUrl: string): {
   const querySheetId = url.searchParams.get("gid");
   const hashSheetId = new URLSearchParams(url.hash.slice(1)).get("gid");
 
-  if (
-    querySheetId !== null && hashSheetId !== null &&
-    querySheetId !== hashSheetId
-  ) {
+  if (querySheetId !== null && hashSheetId !== null && querySheetId !== hashSheetId) {
     throw new Error(
       `Ambiguous Google Sheets URL: query gid=${querySheetId} does not match fragment gid=${hashSheetId}.`,
     );

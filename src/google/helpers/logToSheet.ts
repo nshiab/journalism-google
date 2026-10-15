@@ -1,4 +1,3 @@
-import type { GoogleSpreadsheetWorksheet } from "google-spreadsheet";
 import openSpreadsheet from "../openSpreadsheet.ts";
 
 /**
@@ -18,10 +17,8 @@ export default async function logToSheet(
   const sheet = spreadsheet.sheetsById[sheetId];
 
   if (sheet === undefined) {
-    throw new Error(
-      `Sheet with ID ${sheetId} not found.`,
-    );
+    throw new Error(`Sheet with ID ${sheetId} not found.`);
   }
 
-  return sheet as GoogleSpreadsheetWorksheet;
+  return sheet;
 }

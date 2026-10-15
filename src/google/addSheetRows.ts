@@ -9,17 +9,10 @@ import warnDeprecated from "./helpers/warnDeprecated.ts";
  *
  * By default, authentication is handled via environment variables (`GOOGLE_PRIVATE_KEY` and `GOOGLE_SERVICE_ACCOUNT_EMAIL`). Alternatively, you can use `GOOGLE_APPLICATION_CREDENTIALS` pointing to a service account JSON file. For detailed setup instructions, refer to the `node-google-spreadsheet` authentication guide: [https://theoephraim.github.io/node-google-spreadsheet/#/guides/authentication](https://theoephraim.github.io/node-google-spreadsheet/#/guides/authentication).
  *
- * @param data - An array of objects, where each object represents a row to be appended to the sheet. The keys of the objects should match the existing column headers in the sheet.
- * @param sheetUrl - The URL of the Google Sheet to which rows will be appended. This URL should point to a specific sheet (e.g., ending with `#gid=0`).
- * @param options - An optional object with configuration options:
- *   @param options.headerIndex - The 0-based index of the row that contains the headers in your sheet. By default, the first row (index 0) is considered the header. Use this if your headers are in a different row.
- *   @param options.raw - If `true`, data will be written as raw values, preventing Google Sheets from automatically guessing data types or applying formatting. This can be useful for preserving exact string representations. Defaults to `false`.
- *   @param options.apiEmail - Optional. Your Google Service Account email. If provided, this will override the `process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL` environment variable.
- *   @param options.apiKey - Optional. Your Google Service Account private key. If provided, this will override the `process.env.GOOGLE_PRIVATE_KEY` environment variable.
- * @returns A Promise that resolves when the rows have been successfully appended to the sheet.
- *
  * @example
  * ```ts
+ * import { addSheetRows } from "@nshiab/journalism-google";
+ *
  * // The data needs to be an array of objects. The keys of the objects must match the sheet's columns.
  * const data = [
  *   { first: "Nael", last: "Shiab" },
@@ -54,16 +47,24 @@ import warnDeprecated from "./helpers/warnDeprecated.ts";
  * ```
  * @example
  * ```ts
- * // Use explicitly provided API credentials instead of environment variables.
+ * // Use custom environment variable names for the service-account credentials.
  * await addSheetRows(data, sheetUrl, {
- *   apiEmail: "your-service-account@project-id.iam.gserviceaccount.com",
- *   apiKey: "-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
+ *   apiEmail: "GG_EMAIL",
+ *   apiKey: "GG_KEY"
  * });
  * console.log("Rows added using custom API credentials.");
  * ```
+ * @param data - An array of objects, where each object represents a row to be appended to the sheet. The keys of the objects should match the existing column headers in the sheet.
+ * @param sheetUrl - The URL of the Google Sheet to which rows will be appended. This URL should point to a specific sheet (e.g., ending with `#gid=0`).
+ * @param options - An optional object with configuration options:
+ *   @param options.headerIndex - The 0-based index of the row that contains the headers in your sheet. By default, the first row (index 0) is considered the header. Use this if your headers are in a different row.
+ *   @param options.raw - If `true`, data will be written as raw values, preventing Google Sheets from automatically guessing data types or applying formatting. This can be useful for preserving exact string representations. Defaults to `false`.
+ *   @param options.apiEmail - Name of the environment variable containing the service-account email. Defaults to `GOOGLE_SERVICE_ACCOUNT_EMAIL`.
+ *   @param options.apiKey - Name of the environment variable containing the service-account private key. Defaults to `GOOGLE_PRIVATE_KEY`.
+ * @returns A Promise that resolves when the rows have been successfully appended to the sheet.
+ * @category Google
  * @deprecated Use `pushToSheet(data, sheetUrl, { mode: "append" })` instead.
  * This function may be removed in the next major release.
- * @category Google
  */
 export default async function addSheetRows(
   data: { [key: string]: string | number | boolean | Date | null }[],

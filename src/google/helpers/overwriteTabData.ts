@@ -41,10 +41,10 @@ export default async function overwriteTabData(
   }
   if (options.lastUpdate) {
     sheet.getCellByA1(`A${headerRow}`).value = "Last update:";
-    sheet.getCellByA1(`B${headerRow}`).value = typeof options.lastUpdate ===
-        "string"
-      ? formatLastUpdate(new Date(), options.lastUpdate)
-      : formatLastUpdate(new Date());
+    sheet.getCellByA1(`B${headerRow}`).value =
+      typeof options.lastUpdate === "string"
+        ? formatLastUpdate(new Date(), options.lastUpdate)
+        : formatLastUpdate(new Date());
     headerRow += 1;
   }
   if (typeof options.prepend === "string" || options.lastUpdate) {

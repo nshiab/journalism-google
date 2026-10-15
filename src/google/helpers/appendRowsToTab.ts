@@ -8,7 +8,15 @@ export default async function appendRowsToTab(
   data: {
     [key: string]: string | number | boolean | Date | null;
   }[],
-  sheet: GoogleSpreadsheetWorksheet,
+  sheet: Pick<
+    GoogleSpreadsheetWorksheet,
+    | "rowCount"
+    | "lastColumnLetter"
+    | "getCellsInRange"
+    | "loadHeaderRow"
+    | "setHeaderRow"
+    | "addRows"
+  >,
   options: { raw: boolean },
 ): Promise<void> {
   if (data.length === 0) {
@@ -20,23 +28,24 @@ export default async function appendRowsToTab(
     throw new Error("Data rows must contain at least one column.");
   }
 
-  const lastHeaderSearchRow = Math.max(
-    1,
-    Math.min(sheet.rowCount, MAX_HEADER_SEARCH_ROWS),
-  );
-  const rows = (await sheet.getCellsInRange(
-    `A1:${sheet.lastColumnLetter}${lastHeaderSearchRow}`,
-  ) ?? []) as unknown[][];
+  const lastHeaderSearchRow = Math.max(1, Math.min(sheet.rowCount, MAX_HEADER_SEARCH_ROWS));
+  const response: unknown =
+    (await sheet.getCellsInRange(`A1:${sheet.lastColumnLetter}${lastHeaderSearchRow}`)) ?? [];
+  if (
+    !Array.isArray(response) ||
+    !response.every((row: unknown): row is unknown[] => Array.isArray(row))
+  ) {
+    throw new Error("Google Sheets returned an invalid cell range.");
+  }
+  const rows: unknown[][] = response;
   const headerRow = findHeaderRow(rows, headers);
-  const isBlank = rows.every((row) =>
-    row.every((value) => String(value ?? "") === "")
-  );
+  const isBlank = rows.every((row) => row.every((value) => cellText(value) === ""));
 
   if (headerRow === undefined && !isBlank) {
     throw new Error(
-      `Could not find a header row containing ${
-        headers.join(", ")
-      } within the first ${lastHeaderSearchRow} rows.`,
+      `Could not find a header row containing ${headers.join(
+        ", ",
+      )} within the first ${lastHeaderSearchRow} rows.`,
     );
   }
   if (headerRow === undefined) {
@@ -48,22 +57,22 @@ export default async function appendRowsToTab(
   await sheet.addRows(cleanData(data), { raw: options.raw });
 }
 
-export function findHeaderRow(
-  rows: unknown[][],
-  headers: string[],
-): number | undefined {
+export function findHeaderRow(rows: unknown[][], headers: string[]): number | undefined {
   const matches = rows.flatMap((row, index) => {
-    const values = new Set(
-      row.map((value) => String(value ?? "").trim()),
-    );
+    const values = new Set(row.map((value) => cellText(value).trim()));
     return headers.every((header) => values.has(header)) ? [index + 1] : [];
   });
 
   if (matches.length > 1) {
-    throw new Error(
-      `Multiple possible header rows found (${matches.join(", ")}).`,
-    );
+    throw new Error(`Multiple possible header rows found (${matches.join(", ")}).`);
   }
 
   return matches[0];
+}
+
+function cellText(value: unknown): string {
+  if (value === null || value === undefined) return "";
+  if (typeof value === "string" || typeof value === "number" || typeof value === "boolean")
+    return String(value);
+  throw new Error("Google Sheets returned an invalid cell value.");
 }

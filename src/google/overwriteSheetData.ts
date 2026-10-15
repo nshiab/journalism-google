@@ -10,19 +10,10 @@ import warnDeprecated from "./helpers/warnDeprecated.ts";
  *
  * By default, authentication is handled via environment variables (`GOOGLE_PRIVATE_KEY` and `GOOGLE_SERVICE_ACCOUNT_EMAIL`). Alternatively, you can use `GOOGLE_APPLICATION_CREDENTIALS` pointing to a service account JSON file. For detailed setup instructions, refer to the `node-google-spreadsheet` authentication guide: [https://theoephraim.github.io/node-google-spreadsheet/#/guides/authentication](https://theoephraim.github.io/node-google-spreadsheet/#/guides/authentication).
  *
- * @param data - An array of objects to be written to the Google Sheet. The keys of the first object in this array will be used as column headers.
- * @param sheetUrl - The URL of the Google Sheet to be updated. This URL should point to a specific sheet (e.g., ending with `#gid=0`).
- * @param options - An optional object with configuration options:
- *   @param options.prepend - A string to be added as a new row at the very top of the sheet, before any data or `lastUpdate` information. Useful for adding notes or disclaimers.
- *   @param options.lastUpdate - If `true`, a row indicating the date and time of the update will be added before the data. Defaults to `false`.
- *   @param options.timeZone - If `lastUpdate` is `true`, this option allows you to specify a time zone for the timestamp (e.g., `"Canada/Eastern"`). If omitted, the date will be formatted in UTC.
- *   @param options.raw - If `true`, data will be written as raw values, preventing Google Sheets from automatically guessing data types or applying formatting. This can be useful for preserving exact string representations. Defaults to `false`.
- *   @param options.apiEmail - Optional. Your Google Service Account email. If provided, this will override the `GOOGLE_SERVICE_ACCOUNT_EMAIL` environment variable.
- *   @param options.apiKey - Optional. Your Google Service Account private key. If provided, this will override the `GOOGLE_PRIVATE_KEY` environment variable.
- * @returns A Promise that resolves when the sheet has been successfully cleared and populated with new data.
- *
  * @example
  * ```ts
+ * import { overwriteSheetData } from "@nshiab/journalism-google";
+ *
  * // The data needs to be an array of objects. The keys of the first object will be used to create the header row.
  * const data = [
  *   { first: "Nael", last: "Shiab" },
@@ -35,7 +26,6 @@ import warnDeprecated from "./helpers/warnDeprecated.ts";
  * await overwriteSheetData(data, sheetUrl);
  * console.log("Sheet updated successfully with data.");
  * ```
- *
  * @example
  * ```ts
  * // Write data as raw values to prevent Google Sheets from interpreting them.
@@ -72,16 +62,26 @@ import warnDeprecated from "./helpers/warnDeprecated.ts";
  * ```
  * @example
  * ```ts
- * // Use explicitly provided API credentials instead of environment variables.
+ * // Use custom environment variable names for the service-account credentials.
  * await overwriteSheetData(data, sheetUrl, {
- *   apiEmail: "your-service-account@project-id.iam.gserviceaccount.com",
- *   apiKey: "-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
+ *   apiEmail: "GG_EMAIL",
+ *   apiKey: "GG_KEY"
  * });
  * console.log("Sheet updated using custom API credentials.");
  * ```
+ * @param data - An array of objects to be written to the Google Sheet. The keys of the first object in this array will be used as column headers.
+ * @param sheetUrl - The URL of the Google Sheet to be updated. This URL should point to a specific sheet (e.g., ending with `#gid=0`).
+ * @param options - An optional object with configuration options:
+ *   @param options.prepend - A string to be added as a new row at the very top of the sheet, before any data or `lastUpdate` information. Useful for adding notes or disclaimers.
+ *   @param options.lastUpdate - If `true`, a row indicating the date and time of the update will be added before the data. Defaults to `false`.
+ *   @param options.timeZone - If `lastUpdate` is `true`, this option allows you to specify a time zone for the timestamp (e.g., `"Canada/Eastern"`). If omitted, the date will be formatted in UTC.
+ *   @param options.raw - If `true`, data will be written as raw values, preventing Google Sheets from automatically guessing data types or applying formatting. This can be useful for preserving exact string representations. Defaults to `false`.
+ *   @param options.apiEmail - Name of the environment variable containing the service-account email. Defaults to `GOOGLE_SERVICE_ACCOUNT_EMAIL`.
+ *   @param options.apiKey - Name of the environment variable containing the service-account private key. Defaults to `GOOGLE_PRIVATE_KEY`.
+ * @returns A Promise that resolves when the sheet has been successfully cleared and populated with new data.
+ * @category Google
  * @deprecated Use `pushToSheet(data, sheetUrl, { mode: "overwrite" })` instead.
  * This function may be removed in the next major release.
- * @category Google
  */
 
 export default async function overwriteSheetData(
@@ -104,10 +104,7 @@ export default async function overwriteSheetData(
     apiKey?: string;
   } = {},
 ): Promise<void> {
-  warnDeprecated(
-    "overwriteSheetData",
-    'pushToSheet() with mode: "overwrite"',
-  );
+  warnDeprecated("overwriteSheetData", 'pushToSheet() with mode: "overwrite"');
   const sheet = await logToSheet(sheetUrl, options);
   await sheet.clear();
 

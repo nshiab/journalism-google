@@ -1,10 +1,8 @@
-import { assertEquals } from "jsr:@std/assert";
+import { test, expect } from "vite-plus/test";
 import formatLastUpdate, {
   type CanadianTimeZone,
 } from "../../../src/google/helpers/formatLastUpdate.ts";
-
 const standardTime = new Date("2024-01-15T12:34:56Z");
-
 const standardTimeCases: [CanadianTimeZone, string][] = [
   ["Canada/Atlantic", "2024-01-15 08:34:56 AT"],
   ["Canada/Central", "2024-01-15 06:34:56 CT"],
@@ -15,36 +13,21 @@ const standardTimeCases: [CanadianTimeZone, string][] = [
   ["Canada/Saskatchewan", "2024-01-15 06:34:56 CT"],
   ["Canada/Yukon", "2024-01-15 05:34:56 GMT-7"],
 ];
-
 for (const [timeZone, expected] of standardTimeCases) {
-  Deno.test(`formats standard time in ${timeZone}`, () => {
-    assertEquals(formatLastUpdate(standardTime, timeZone), expected);
+  test(`formats standard time in ${timeZone}`, () => {
+    expect(formatLastUpdate(standardTime, timeZone)).toEqual(expected);
   });
 }
-
-Deno.test("formats UTC", () => {
-  assertEquals(
-    formatLastUpdate(standardTime),
-    "2024-01-15 12:34:56 UTC",
-  );
+test("formats UTC", () => {
+  expect(formatLastUpdate(standardTime)).toEqual("2024-01-15 12:34:56 UTC");
 });
-
-Deno.test("applies daylight time while preserving the time-zone abbreviation", () => {
-  assertEquals(
-    formatLastUpdate(
-      new Date("2024-07-15T12:34:56Z"),
-      "Canada/Eastern",
-    ),
+test("applies daylight time while preserving the time-zone abbreviation", () => {
+  expect(formatLastUpdate(new Date("2024-07-15T12:34:56Z"), "Canada/Eastern")).toEqual(
     "2024-07-15 08:34:56 ET",
   );
 });
-
-Deno.test("formats Newfoundland's daylight-time offset", () => {
-  assertEquals(
-    formatLastUpdate(
-      new Date("2024-07-15T12:34:56Z"),
-      "Canada/Newfoundland",
-    ),
+test("formats Newfoundland's daylight-time offset", () => {
+  expect(formatLastUpdate(new Date("2024-07-15T12:34:56Z"), "Canada/Newfoundland")).toEqual(
     "2024-07-15 10:04:56 GMT-2:30",
   );
 });

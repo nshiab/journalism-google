@@ -6,16 +6,10 @@ import process from "node:process";
  *
  * This function requires the Google Cloud project ID and the target bucket name. These can be provided either through environment variables (`BUCKET_PROJECT` and `BUCKET_NAME`) or directly as parameters in the `options` object. Parameters passed in `options` will take precedence over environment variables.
  *
- * @param options Optional configuration for listing files.
- * @param options.folder The path to a specific folder within the bucket (e.g., 'my-data/'). Only files within this folder will be listed.
- * @param options.project The Google Cloud project ID. If not provided, it defaults to the `BUCKET_PROJECT` environment variable.
- * @param options.bucket The name of the Google Cloud Storage bucket. If not provided, it defaults to the `BUCKET_NAME` environment variable.
- * @param options.URI If `true`, the function will return the full Google Storage URI (e.g., 'gs://your-bucket/path/to/file.txt') for each file. Defaults to `false`, returning just the file path within the bucket.
- *
- * @returns An array of strings, where each string is either the file path within the bucket or its full Google Storage URI, depending on the `URI` option.
- *
  * @example
  * ```ts
+ * import { filesInBucket } from "@nshiab/journalism-google";
+ *
  * // List all files in the default bucket.
  * const allFiles = await filesInBucket();
  * console.log("All files:", allFiles);
@@ -42,6 +36,12 @@ import process from "node:process";
  * });
  * console.log("Files from specific bucket:", specificBucketFiles);
  * ```
+ * @param options Optional configuration for listing files.
+ * @param options.folder The path to a specific folder within the bucket (e.g., 'my-data/'). Only files within this folder will be listed.
+ * @param options.project The Google Cloud project ID. If not provided, it defaults to the `BUCKET_PROJECT` environment variable.
+ * @param options.bucket The name of the Google Cloud Storage bucket. If not provided, it defaults to the `BUCKET_NAME` environment variable.
+ * @param options.URI If `true`, the function will return the full Google Storage URI (e.g., 'gs://your-bucket/path/to/file.txt') for each file. Defaults to `false`, returning just the file path within the bucket.
+ * @returns An array of strings, where each string is either the file path within the bucket or its full Google Storage URI, depending on the `URI` option.
  * @category Google
  */
 export default async function filesInBucket(
