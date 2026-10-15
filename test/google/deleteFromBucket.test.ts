@@ -1,83 +1,48 @@
-import { assertEquals, assertRejects } from "jsr:@std/assert";
+import { test, expect, describe, beforeEach, afterAll } from "vite-plus/test";
 import toBucket from "../../src/google/toBucket.ts";
 import inBucket from "../../src/google/inBucket.ts";
 import deleteFromBucket from "../../src/google/deleteFromBucket.ts";
-
-const bucketKey = Deno.env.get("BUCKET_PROJECT");
+const remotePrefix = `journalism-tests/deleteFromBucket-${crypto.randomUUID()}`;
 const testDataFile = "test/data/data.json";
-const testDestination = "journalism-tests/delete-test-file.json";
-
-if (typeof bucketKey === "string") {
-  Deno.test("deleteFromBucket deletes a file from the bucket", {
-    sanitizeResources: false,
-  }, async () => {
-    // Upload a file first
-    await toBucket(testDataFile, testDestination, { skip: true });
-
-    // Ensure it exists
-    let exists = await inBucket(testDestination);
-    assertEquals(exists, true);
-
-    // Delete it
-    await deleteFromBucket(testDestination);
-
-    // Ensure it no longer exists
-    exists = await inBucket(testDestination);
-    assertEquals(exists, false);
+const testDestination = `${remotePrefix}/delete-test-file.json`;
+describe.skipIf(
+  process.env.CI === "true" || !process.env.BUCKET_PROJECT || !process.env.BUCKET_NAME,
+)("live Google integration", () => {
+  beforeEach(async () => {
+    await toBucket("test/data/data.json", testDestination, { overwrite: true });
   });
-
-  Deno.test("deleteFromBucket throws error when file doesn't exist", {
-    sanitizeResources: false,
-  }, async () => {
-    const nonExistentFile = "journalism-tests/non-existent-file.json";
-
-    // Ensure file doesn't exist
-    const exists = await inBucket(nonExistentFile);
-    assertEquals(exists, false);
-
-    // Try to delete non-existent file - should throw
-    await assertRejects(
-      () => deleteFromBucket(nonExistentFile),
-      Error,
-    );
-  });
-
-  Deno.test(
-    "deleteFromBucket with try option doesn't throw when file doesn't exist",
-    { sanitizeResources: false },
-    async () => {
-      const nonExistentFile = "journalism-tests/try-delete-test.json";
-
-      // Ensure file doesn't exist
-      const exists = await inBucket(nonExistentFile);
-      assertEquals(exists, false);
-
-      // Delete with try option - should not throw
-      await deleteFromBucket(nonExistentFile, { try: true });
-
-      // Still shouldn't exist
-      const stillExists = await inBucket(nonExistentFile);
-      assertEquals(stillExists, false);
-    },
-  );
-
-  Deno.test("deleteFromBucket with try option deletes existing file", {
-    sanitizeResources: false,
-  }, async () => {
-    // Upload a file first
-    await toBucket(testDataFile, testDestination);
-
-    // Ensure it exists
-    let exists = await inBucket(testDestination);
-    assertEquals(exists, true);
-
-    // Delete with try option
+  afterAll(async () => {
     await deleteFromBucket(testDestination, { try: true });
-
-    // Ensure it no longer exists
-    exists = await inBucket(testDestination);
-    assertEquals(exists, false);
   });
-} else {
-  console.log("No BUCKET_PROJECT in process.env");
-}
+
+  test("deleteFromBucket deletes a file from the bucket", async () => {
+    await toBucket(testDataFile, testDestination, { skip: true });
+    let exists = await inBucket(testDestination);
+    expect(exists).toEqual(true);
+    await deleteFromBucket(testDestination);
+    exists = await inBucket(testDestination);
+    expect(exists).toEqual(false);
+  });
+  test("deleteFromBucket throws error when file doesn't exist", async () => {
+    const nonExistentFile = `${remotePrefix}/non-existent-file.json`;
+    const exists = await inBucket(nonExistentFile);
+    expect(exists).toEqual(false);
+    await expect(deleteFromBucket(nonExistentFile)).rejects.toThrow(Error);
+  });
+  test("deleteFromBucket with try option doesn't throw when file doesn't exist", async () => {
+    const nonExistentFile = `${remotePrefix}/try-delete-test.json`;
+    const exists = await inBucket(nonExistentFile);
+    expect(exists).toEqual(false);
+    await deleteFromBucket(nonExistentFile, { try: true });
+    const stillExists = await inBucket(nonExistentFile);
+    expect(stillExists).toEqual(false);
+  });
+  test("deleteFromBucket with try option deletes existing file", async () => {
+    await toBucket(testDataFile, testDestination, { overwrite: true });
+    let exists = await inBucket(testDestination);
+    expect(exists).toEqual(true);
+    await deleteFromBucket(testDestination, { try: true });
+    exists = await inBucket(testDestination);
+    expect(exists).toEqual(false);
+  });
+});

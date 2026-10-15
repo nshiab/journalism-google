@@ -1,56 +1,53 @@
-# The Journalism Library (google functions)
+# The Journalism Library (google)
 
-Useful TypeScript functions for journalism projects. This library focuses on
-accessing Google services. It's part of the
-[journalism library](https://github.com/nshiab/journalism).
+Useful TypeScript functions for accessing Google Sheets and Cloud Storage in journalism projects.
+Part of the [journalism library](https://github.com/nshiab/journalism).
 
-The library is available on [JSR](https://jsr.io/@nshiab/journalism-google) with
-its [documentation](https://jsr.io/@nshiab/journalism-google/doc) and on
-[NPM](https://www.npmjs.com/package/@nshiab/journalism-google).
-
-The documentation is also available as the markdown file
-[llm.md](https://github.com/nshiab/journalism-google/blob/main/llm.md), which
-can be passed as context to improve the use of the library by AI coding
-assistants or agents.
-
-The library is maintained by [Nael Shiab](http://naelshiab.com/), computational
+The library is maintained by [Nael Shiab](https://naelshiab.com/), computational
 journalist and senior data producer for [CBC News](https://www.cbc.ca/news).
 
 > [!TIP]
 > To learn how to use this library and more, check out
 > [Code Like a Journalist](https://www.code-like-a-journalist.com/), a free and
 > open-source data analysis and data visualization course in TypeScript. You
-> might also find the
-> [simple-data-analysis library](https://github.com/nshiab/simple-data-analysis)
-> interesting.
+> might also find
+> [simple-data-analysis](https://github.com/nshiab/simple-data-analysis) useful.
 
-To install the library, you can use the following commands:
+## Installation
 
-```bash
-# Deno
-deno add jsr:@nshiab/journalism-google
+Requires **Node.js 24.21.0 or later**.
 
-# Node
-npm i @nshiab/journalism-google
-
-# Bun
-bun add @nshiab/journalism-google
+```sh
+npm install @nshiab/journalism-google
 ```
 
-To quickly set up a data project with essential folders, configurations, and
-documentation for AI agents, you can use
-[@nshiab/setup-data-project](https://github.com/nshiab/setup-data-project).
+```ts
+import { getSheetData } from "@nshiab/journalism-google";
 
-```bash
-# Deno
-deno run -A jsr:@nshiab/setup-data-project
+const rows = await getSheetData(
+  "https://docs.google.com/spreadsheets/d/your-spreadsheet-id/edit#gid=0",
+);
+console.log(rows);
+```
 
-# Node
+Configure Google service-account credentials before accessing Google services;
+see the function documentation for authentication options.
+
+To start a data project with folders, configuration and documentation for AI
+agents, run:
+
+```sh
 npx @nshiab/setup-data-project
-
-# Bun
-bunx @nshiab/setup-data-project
 ```
 
-If you wish to contribute, please check the
-[guidelines](https://github.com/nshiab/journalism-google/blob/main/CONTRIBUTING.md).
+## Documentation
+
+- [Documentation](https://nshiab.github.io/journalism-google/)
+- [llms.txt — Documentation index for AI agents](https://nshiab.github.io/journalism-google/llms.txt)
+- [llm.md — Complete Markdown reference](https://nshiab.github.io/journalism-google/llm.md),
+  for AI assistants or offline reading
+- [npm package](https://www.npmjs.com/package/@nshiab/journalism-google)
+
+See
+[CONTRIBUTING.md](https://github.com/nshiab/journalism-google/blob/main/CONTRIBUTING.md)
+for development commands.

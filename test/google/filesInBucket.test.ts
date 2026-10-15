@@ -1,54 +1,45 @@
-import { assertArrayIncludes, assertEquals } from "jsr:@std/assert";
+import deleteFromBucket from "../../src/google/deleteFromBucket.ts";
+import { test, expect, describe, beforeEach, afterAll } from "vite-plus/test";
 import toBucket from "../../src/google/toBucket.ts";
 import filesInBucket from "../../src/google/filesInBucket.ts";
-
-const bucketKey = Deno.env.get("BUCKET_PROJECT");
-
-if (typeof bucketKey === "string") {
-  Deno.test("filesInBucket lists uploaded files in a folder", {
-    sanitizeResources: false,
-  }, async () => {
-    await toBucket(
-      "test/data/data.json",
-      "journalism-tests/list-test/data.json",
-      { overwrite: true },
-    );
-    const files = await filesInBucket({
-      folder: "journalism-tests/list-test/",
+const remotePrefix = `journalism-tests/filesInBucket-${crypto.randomUUID()}`;
+describe.skipIf(
+  process.env.CI === "true" || !process.env.BUCKET_PROJECT || !process.env.BUCKET_NAME,
+)("live Google integration", () => {
+  beforeEach(async () => {
+    await toBucket("test/data/data.json", `${remotePrefix}/list-test/data.json`, {
+      overwrite: true,
     });
-    assertArrayIncludes(files, ["journalism-tests/list-test/data.json"]);
+  });
+  afterAll(async () => {
+    await deleteFromBucket(`${remotePrefix}/list-test/data.json`, { try: true });
   });
 
-  Deno.test(
-    "filesInBucket lists uploaded files in a folder and takes care of pagination",
-    { sanitizeResources: false },
-    async () => {
-      const files = await filesInBucket({
-        folder: "journalism-tests/test-many-files/",
-      });
-      assertEquals(files.length, 100_000);
-    },
-  );
-
-  Deno.test("filesInBucket lists all files in the bucket", {
-    sanitizeResources: false,
-  }, async () => {
+  test("filesInBucket lists uploaded files in a folder", async () => {
+    await toBucket("test/data/data.json", `${remotePrefix}/list-test/data.json`, {
+      overwrite: true,
+    });
+    const files = await filesInBucket({
+      folder: `${remotePrefix}/list-test/`,
+    });
+    expect(files).toEqual(expect.arrayContaining([`${remotePrefix}/list-test/data.json`]));
+  });
+  // This read-only check requires the existing 100,000-object fixture.
+  test("filesInBucket lists uploaded files in a folder and takes care of pagination", async () => {
+    const files = await filesInBucket({
+      folder: "journalism-tests/test-many-files/",
+    });
+    expect(files.length).toEqual(100000);
+  });
+  test("filesInBucket lists all files in the bucket", async () => {
     const files = await filesInBucket();
     if (files.length === 0) throw new Error("No files found in bucket");
   });
-
-  Deno.test("filesInBucket returns Google Storage URIs when URI is true", {
-    sanitizeResources: false,
-  }, async () => {
+  test("filesInBucket returns Google Storage URIs when URI is true", async () => {
     const uris = await filesInBucket({
-      folder: "journalism-tests/list-test/",
+      folder: `${remotePrefix}/list-test/`,
       URI: true,
     });
-    assertEquals(
-      uris,
-      ["gs://nael_test_bucket/journalism-tests/list-test/data.json"],
-    );
+    expect(uris).toEqual([`gs://${process.env.BUCKET_NAME}/${remotePrefix}/list-test/data.json`]);
   });
-} else {
-  console.log("No BUCKET_PROJECT in process.env");
-}
+});

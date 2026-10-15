@@ -8,10 +8,7 @@ export type CanadianTimeZone =
   | "Canada/Saskatchewan"
   | "Canada/Yukon";
 
-type FixedLabelTimeZone = Exclude<
-  CanadianTimeZone | "UTC",
-  "Canada/Newfoundland"
->;
+type FixedLabelTimeZone = Exclude<CanadianTimeZone | "UTC", "Canada/Newfoundland">;
 
 const timeZoneLabels: Record<FixedLabelTimeZone, string> = {
   UTC: "UTC",
@@ -40,7 +37,9 @@ export default function formatLastUpdate(
       minute: "2-digit",
       second: "2-digit",
       hourCycle: "h23",
-    }).formatToParts(date).map(({ type, value }) => [type, value]),
+    })
+      .formatToParts(date)
+      .map(({ type, value }) => [type, value]),
   );
 
   let timeZoneLabel: string;
@@ -48,7 +47,9 @@ export default function formatLastUpdate(
     const offsetPart = new Intl.DateTimeFormat("en-US", {
       timeZone,
       timeZoneName: "shortOffset",
-    }).formatToParts(date).find(({ type }) => type === "timeZoneName");
+    })
+      .formatToParts(date)
+      .find(({ type }) => type === "timeZoneName");
     if (offsetPart === undefined) {
       throw new Error(`Could not format the ${timeZone} offset.`);
     }

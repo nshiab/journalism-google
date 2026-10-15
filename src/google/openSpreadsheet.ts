@@ -20,6 +20,30 @@ import parseSheetUrl from "./helpers/parseSheetUrl.ts";
  * `node-google-spreadsheet` documentation:
  * [https://theoephraim.github.io/node-google-spreadsheet/#/](https://theoephraim.github.io/node-google-spreadsheet/#/).
  *
+ * @example Open a spreadsheet using credentials from the environment.
+ * ```ts
+ * import { openSpreadsheet } from "@nshiab/journalism-google";
+ *
+ * const spreadsheetUrl = "https://docs.google.com/spreadsheets/d/your-spreadsheet-id/edit";
+ * const { spreadsheet } = await openSpreadsheet(spreadsheetUrl);
+ * console.log(spreadsheet.title);
+ * ```
+ * @example Open a spreadsheet with explicit credentials.
+ * ```ts
+ * const { spreadsheet } = await openSpreadsheet(spreadsheetUrl, {
+ *   credentials: {
+ *     email: "service-account@project.iam.gserviceaccount.com",
+ *     privateKey: "-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n",
+ *   },
+ * });
+ * ```
+ * @example Access the tab selected by a URL containing a gid.
+ * ```ts
+ * const { spreadsheet, sheetId } = await openSpreadsheet(sheetUrl);
+ * const sheet = sheetId === undefined
+ *   ? spreadsheet.sheetsByIndex[0]
+ *   : spreadsheet.sheetsById[sheetId];
+ * ```
  * @param spreadsheetUrl A Google Sheets URL. It may identify a spreadsheet or
  * a specific tab.
  * @param options Controls authentication. The standard Google environment
@@ -30,31 +54,6 @@ import parseSheetUrl from "./helpers/parseSheetUrl.ts";
  * @param options.apiKey Name of the environment variable containing the
  * service-account private key. Defaults to `GOOGLE_PRIVATE_KEY`.
  * @returns The loaded spreadsheet and the tab ID found in the URL, if any.
- *
- * @example Open a spreadsheet using credentials from the environment.
- * ```ts
- * const { spreadsheet } = await openSpreadsheet(spreadsheetUrl);
- * console.log(spreadsheet.title);
- * ```
- *
- * @example Open a spreadsheet with explicit credentials.
- * ```ts
- * const { spreadsheet } = await openSpreadsheet(spreadsheetUrl, {
- *   credentials: {
- *     email: "service-account@project.iam.gserviceaccount.com",
- *     privateKey: "-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n",
- *   },
- * });
- * ```
- *
- * @example Access the tab selected by a URL containing a `gid`.
- * ```ts
- * const { spreadsheet, sheetId } = await openSpreadsheet(sheetUrl);
- * const sheet = sheetId === undefined
- *   ? spreadsheet.sheetsByIndex[0]
- *   : spreadsheet.sheetsById[sheetId];
- * ```
- *
  * @category Google
  */
 export default async function openSpreadsheet(
@@ -65,9 +64,7 @@ export default async function openSpreadsheet(
     apiKey?: string;
   } = {},
 ): Promise<{
-  spreadsheet: InstanceType<
-    (typeof import("google-spreadsheet"))["GoogleSpreadsheet"]
-  >;
+  spreadsheet: InstanceType<(typeof import("google-spreadsheet"))["GoogleSpreadsheet"]>;
   sheetId?: number;
 }> {
   const { spreadsheetId, sheetId } = parseSheetUrl(spreadsheetUrl);
@@ -83,11 +80,18 @@ export default async function openSpreadsheet(
     process.env.GOOGLE_APPLICATION_CREDENTIALS !== "" &&
     existsSync(process.env.GOOGLE_APPLICATION_CREDENTIALS)
   ) {
-    const credentials = JSON.parse(
+    const credentials: unknown = JSON.parse(
       readFileSync(process.env.GOOGLE_APPLICATION_CREDENTIALS, "utf-8"),
     );
-    email = credentials.client_email;
-    privateKey = credentials.private_key;
+    if (typeof credentials !== "object" || credentials === null) {
+      throw new Error("Google service account credentials must be an object.");
+    }
+    if ("client_email" in credentials && typeof credentials.client_email === "string") {
+      email = credentials.client_email;
+    }
+    if ("private_key" in credentials && typeof credentials.private_key === "string") {
+      privateKey = credentials.private_key;
+    }
   } else {
     const emailVariable = options.apiEmail ?? "GOOGLE_SERVICE_ACCOUNT_EMAIL";
     const keyVariable = options.apiKey ?? "GOOGLE_PRIVATE_KEY";
@@ -99,9 +103,7 @@ export default async function openSpreadsheet(
     throw new Error("Google service account email is undefined or empty.");
   }
   if (privateKey === undefined || privateKey === "") {
-    throw new Error(
-      "Google service account private key is undefined or empty.",
-    );
+    throw new Error("Google service account private key is undefined or empty.");
   }
 
   const jwt = new JWT({

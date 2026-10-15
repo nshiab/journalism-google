@@ -40,10 +40,7 @@ export default function parseCsv(text: string): Record<string, string>[] {
   });
 }
 
-function parseRows<T>(
-  text: string,
-  convert: (row: string[], index: number) => T | undefined,
-): T[] {
+function parseRows<T>(text: string, convert: (row: string[], index: number) => T | undefined): T[] {
   const rows: T[] = [];
   let length = text.length;
   let index = 0;
@@ -82,7 +79,7 @@ function parseRows<T>(
     }
 
     while (index < length) {
-      character = text.charCodeAt(end = index++);
+      character = text.charCodeAt((end = index++));
       if (character === NEWLINE) {
         eol = true;
       } else if (character === RETURN) {

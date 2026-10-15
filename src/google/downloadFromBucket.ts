@@ -9,16 +9,10 @@ import { existsSync } from "node:fs";
  *
  * By default, if a local file with the same name already exists at the `destination` path, the function will throw an error to prevent accidental overwrites. You can modify this behavior using the `skip` or `overwrite` options.
  *
- * @param source The path to the file within the GCS bucket (e.g., 'my-folder/document.pdf').
- * @param destination The local file path where the downloaded file will be saved (e.g., './downloads/document.pdf').
- * @param options Optional configuration for the download operation.
- * @param options.project The Google Cloud project ID. If not provided, it defaults to the `BUCKET_PROJECT` environment variable.
- * @param options.bucket The name of the Google Cloud Storage bucket. If not provided, it defaults to the `BUCKET_NAME` environment variable.
- * @param options.overwrite If `true`, an existing local file at the `destination` path will be overwritten. Cannot be used with `skip`. Defaults to `false`.
- * @param options.skip If `true`, the download will be skipped if a local file already exists at the `destination` path. Cannot be used with `overwrite`. Defaults to `false`.
- *
  * @example
  * ```ts
+ * import { downloadFromBucket } from "@nshiab/journalism-google";
+ *
  * // Basic usage: Download a file.
  * await downloadFromBucket("reports/annual-report.pdf", "./local-reports/annual-report.pdf");
  * console.log("File downloaded successfully!");
@@ -43,6 +37,13 @@ import { existsSync } from "node:fs";
  *   bucket: "my-config-bucket"
  * });
  * ```
+ * @param source The path to the file within the GCS bucket (e.g., 'my-folder/document.pdf').
+ * @param destination The local file path where the downloaded file will be saved (e.g., './downloads/document.pdf').
+ * @param options Optional configuration for the download operation.
+ * @param options.project The Google Cloud project ID. If not provided, it defaults to the `BUCKET_PROJECT` environment variable.
+ * @param options.bucket The name of the Google Cloud Storage bucket. If not provided, it defaults to the `BUCKET_NAME` environment variable.
+ * @param options.overwrite If `true`, an existing local file at the `destination` path will be overwritten. Cannot be used with `skip`. Defaults to `false`.
+ * @param options.skip If `true`, the download will be skipped if a local file already exists at the `destination` path. Cannot be used with `overwrite`. Defaults to `false`.
  * @category Google
  */
 export default async function downloadFromBucket(
