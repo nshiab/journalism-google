@@ -40,64 +40,63 @@ test("rejects a last-update timestamp in append mode", async () => {
 });
 const email = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
 const privateKey = process.env.GOOGLE_PRIVATE_KEY;
-describe.skipIf(process.env.CI === "true" || !email || !privateKey)(
-  "live Google integration",
-  () => {
-    test("overwrites and appends while discovering headers below metadata", async () => {
-      const integrationSheetUrl =
-        "https://docs.google.com/spreadsheets/d/1Ar19cP8oGYEzacfrkLWnSH7ZqImILMUrosBwnZ43EQM/edit?gid=0#gid=0";
-      const rawData = [{ id: "001", formula: "=1+1" }];
-      await pushToSheet(rawData, integrationSheetUrl, {
-        prepend: "Push to sheet integration test",
-        lastUpdate: "Canada/Eastern",
-      });
-      await pushToSheet([{ id: "002", formula: "+1+1" }], integrationSheetUrl, { mode: "append" });
-      expect(await getSheetData(integrationSheetUrl, { skip: 2 })).toEqual([
-        { id: "001", formula: "=1+1" },
-        { id: "002", formula: "+1+1" },
-      ]);
+describe.skipIf(
+  process.env.CI === "true" ||
+    ((!email || !privateKey) && !process.env.GOOGLE_APPLICATION_CREDENTIALS),
+)("live Google integration", () => {
+  test("overwrites and appends while discovering headers below metadata", async () => {
+    const integrationSheetUrl =
+      "https://docs.google.com/spreadsheets/d/1Ar19cP8oGYEzacfrkLWnSH7ZqImILMUrosBwnZ43EQM/edit?gid=0#gid=0";
+    const rawData = [{ id: "001", formula: "=1+1" }];
+    await pushToSheet(rawData, integrationSheetUrl, {
+      prepend: "Push to sheet integration test",
+      lastUpdate: "Canada/Eastern",
     });
-    test("creates a missing titled tab", async () => {
-      const spreadsheetUrl =
-        "https://docs.google.com/spreadsheets/d/1Ar19cP8oGYEzacfrkLWnSH7ZqImILMUrosBwnZ43EQM/edit";
-      if (!email || !privateKey) throw new Error("Missing test credentials.");
-      const credentials = { email, privateKey };
-      const tabTitle = `pushToSheet-${crypto.randomUUID()}`;
-      const { spreadsheet } = await openSpreadsheet(spreadsheetUrl, {
+    await pushToSheet([{ id: "002", formula: "+1+1" }], integrationSheetUrl, { mode: "append" });
+    expect(await getSheetData(integrationSheetUrl, { skip: 2 })).toEqual([
+      { id: "001", formula: "=1+1" },
+      { id: "002", formula: "+1+1" },
+    ]);
+  });
+  test("creates a missing titled tab", async () => {
+    const spreadsheetUrl =
+      "https://docs.google.com/spreadsheets/d/1Ar19cP8oGYEzacfrkLWnSH7ZqImILMUrosBwnZ43EQM/edit";
+    const credentials = email && privateKey ? { email, privateKey } : undefined;
+    const tabTitle = `pushToSheet-${crypto.randomUUID()}`;
+    const { spreadsheet } = await openSpreadsheet(spreadsheetUrl, {
+      credentials,
+    });
+    try {
+      await expect(
+        pushToSheet(data, spreadsheetUrl, {
+          tabTitle,
+          credentials,
+        }),
+      ).rejects.toThrow(`Tab titled "${tabTitle}" not found`);
+      await pushToSheet(data, spreadsheetUrl, {
+        mode: "append",
+        tabTitle,
+        create: true,
         credentials,
       });
-      try {
-        await expect(
-          pushToSheet(data, spreadsheetUrl, {
-            tabTitle,
-            credentials,
-          }),
-        ).rejects.toThrow(`Tab titled "${tabTitle}" not found`);
-        await pushToSheet(data, spreadsheetUrl, {
-          mode: "append",
-          tabTitle,
-          create: true,
-          credentials,
-        });
-        await spreadsheet.loadInfo();
-        const createdTab = spreadsheet.sheetsByTitle[tabTitle];
-        expect(createdTab).toBeDefined();
-        await createdTab.loadHeaderRow();
-        expect(createdTab.headerValues).toEqual(["first", "last"]);
-        await pushToSheet([{ formula: "=1+1" }], `${spreadsheetUrl}?gid=0#gid=0`, {
-          tabTitle,
-          lastUpdate: true,
-          raw: false,
-          credentials,
-        });
-        const csv = await getSheetData(`${spreadsheetUrl}#gid=${createdTab.sheetId}`, {
-          csv: true,
-        });
-        expect(csv).toMatch(/^Last update:,.* UTC\r\nformula,\r\n2,$/);
-      } finally {
-        await spreadsheet.loadInfo();
-        await spreadsheet.sheetsByTitle[tabTitle]?.delete();
-      }
-    });
-  },
-);
+      await spreadsheet.loadInfo();
+      const createdTab = spreadsheet.sheetsByTitle[tabTitle];
+      expect(createdTab).toBeDefined();
+      await createdTab.loadHeaderRow();
+      expect(createdTab.headerValues).toEqual(["first", "last"]);
+      await pushToSheet([{ formula: "=1+1" }], `${spreadsheetUrl}?gid=0#gid=0`, {
+        tabTitle,
+        lastUpdate: true,
+        raw: false,
+        credentials,
+      });
+      const csv = await getSheetData(`${spreadsheetUrl}#gid=${createdTab.sheetId}`, {
+        csv: true,
+      });
+      expect(csv).toMatch(/^Last update:,.* UTC\r\nformula,\r\n2,$/);
+    } finally {
+      await spreadsheet.loadInfo();
+      await spreadsheet.sheetsByTitle[tabTitle]?.delete();
+    }
+  });
+});

@@ -4,10 +4,7 @@ import inBucket from "../../src/google/inBucket.ts";
 import toBucket from "../../src/google/toBucket.ts";
 const remotePrefix = `journalism-tests/inBucket-${crypto.randomUUID()}`;
 describe.skipIf(
-  process.env.CI === "true" ||
-    !process.env.BUCKET_PROJECT ||
-    !process.env.BUCKET_NAME ||
-    !process.env.GOOGLE_APPLICATION_CREDENTIALS,
+  process.env.CI === "true" || !process.env.BUCKET_PROJECT || !process.env.BUCKET_NAME,
 )("live Google integration", () => {
   beforeEach(async () => {
     await toBucket("test/data/data.json", `${remotePrefix}/data.json`, { overwrite: true });

@@ -9,7 +9,9 @@ const data = [
 ];
 const email = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
 const key = process.env.GOOGLE_PRIVATE_KEY;
-describe.skipIf(process.env.CI === "true" || !email || !key)("live Google integration", () => {
+describe.skipIf(
+  process.env.CI === "true" || ((!email || !key) && !process.env.GOOGLE_APPLICATION_CREDENTIALS),
+)("live Google integration", () => {
   test("overwrites rows with a note and a last-update timestamp", async () => {
     await overwriteSheetData(data, sheetUrl, {
       prepend: "Newsroom data",

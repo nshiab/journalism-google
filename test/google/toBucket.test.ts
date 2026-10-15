@@ -6,10 +6,7 @@ const remotePrefix = `journalism-tests/toBucket-${crypto.randomUUID()}`;
 const testDataFile = "test/data/data.json";
 const testDestination = `${remotePrefix}/test-file.json`;
 describe.skipIf(
-  process.env.CI === "true" ||
-    !process.env.BUCKET_PROJECT ||
-    !process.env.BUCKET_NAME ||
-    !process.env.GOOGLE_APPLICATION_CREDENTIALS,
+  process.env.CI === "true" || !process.env.BUCKET_PROJECT || !process.env.BUCKET_NAME,
 )("live Google integration", () => {
   beforeEach(async () => {
     await toBucket("test/data/data.json", testDestination, { overwrite: true });

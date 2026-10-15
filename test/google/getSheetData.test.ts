@@ -11,7 +11,9 @@ const originalData = [
 ];
 const email = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
 const key = process.env.GOOGLE_PRIVATE_KEY;
-describe.skipIf(process.env.CI === "true" || !email || !key)("live Google integration", () => {
+describe.skipIf(
+  process.env.CI === "true" || ((!email || !key) && !process.env.GOOGLE_APPLICATION_CREDENTIALS),
+)("live Google integration", () => {
   test("should return the data as an array of objects after skipping the first row", async () => {
     await overwriteSheetData(originalData, sheetUrl, {
       prepend: "Contact me for more info",

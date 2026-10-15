@@ -11,10 +11,7 @@ const testDestination = `${remotePrefix}/test-file.json`;
 let localDirectory = "";
 let localDestination = "";
 describe.skipIf(
-  process.env.CI === "true" ||
-    !process.env.BUCKET_PROJECT ||
-    !process.env.BUCKET_NAME ||
-    !process.env.GOOGLE_APPLICATION_CREDENTIALS,
+  process.env.CI === "true" || !process.env.BUCKET_PROJECT || !process.env.BUCKET_NAME,
 )("live Google integration", () => {
   beforeEach(async () => {
     if (localDirectory) rmSync(localDirectory, { recursive: true, force: true });
