@@ -96,6 +96,8 @@ Name of the environment variable containing the service-account private key. Def
 
 > **getSheetData**(`sheetUrl`, `options`): `Promise`\<`string`\>
 
+Defined in: [getSheetData.ts:62](https://github.com/nshiab/journalism-google/blob/v2.0.2/src/google/getSheetData.ts#L62)
+
 Retrieves data from a Google Sheet.
 
 By default, this function attempts to authenticate using environment variables (`GOOGLE_PRIVATE_KEY` for the API key and `GOOGLE_SERVICE_ACCOUNT_EMAIL` for the service account email). Alternatively, you can use `GOOGLE_APPLICATION_CREDENTIALS` pointing to a service account JSON file. For detailed instructions on setting up credentials, refer to the `node-google-spreadsheet` authentication guide: [https://theoephraim.github.io/node-google-spreadsheet/#/guides/authentication](https://theoephraim.github.io/node-google-spreadsheet/#/guides/authentication).
@@ -191,6 +193,8 @@ console.log(dataWithCustomCredentials);
 ## Call Signature
 
 > **getSheetData**(`sheetUrl`, `options?`): `Promise`\<`Record`\<`string`, `string`\>[]\>
+
+Defined in: [getSheetData.ts:130](https://github.com/nshiab/journalism-google/blob/v2.0.2/src/google/getSheetData.ts#L130)
 
 Retrieves data from a Google Sheet.
 
