@@ -1,8 +1,8 @@
-[**Journalism Google v2.0.2**](index.md)
+[**Journalism Google v2.0.3**](index.md)
 
 ***
 
-# Journalism Google v2.0.2
+# Journalism Google v2.0.3
 
 ## Google
 

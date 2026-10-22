@@ -1,4 +1,4 @@
-[**Journalism Google v2.0.2**](../index.md)
+[**Journalism Google v2.0.3**](../index.md)
 
 ***
 
@@ -8,7 +8,7 @@
 
 > **downloadFromBucket**(`source`, `destination`, `options?`): `Promise`\<`void`\>
 
-Defined in: [downloadFromBucket.ts:49](https://github.com/nshiab/journalism-google/blob/v2.0.2/src/google/downloadFromBucket.ts#L49)
+Defined in: [downloadFromBucket.ts:49](https://github.com/nshiab/journalism-google/blob/v2.0.3/src/google/downloadFromBucket.ts#L49)
 
 Downloads a file from a Google Cloud Storage (GCS) bucket to a specified local path. This function provides robust handling for existing local files, allowing you to skip downloads or overwrite files as needed.
 

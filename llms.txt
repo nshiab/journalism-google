@@ -1,15 +1,15 @@
-# Journalism Google v2.0.2
+# Journalism Google v2.0.3
 
 > Useful TypeScript functions for journalism projects. This library focuses on accessing Google services.
 
-- [README](https://raw.githubusercontent.com/nshiab/journalism-google/v2.0.2/README.md): Installation, examples and usage.
+- [README](https://raw.githubusercontent.com/nshiab/journalism-google/v2.0.3/README.md): Installation, examples and usage.
 
 ## API
-- [deleteFromBucket](https://raw.githubusercontent.com/nshiab/journalism-google/v2.0.2/docs/functions/deleteFromBucket.md): deleteFromBucket function
-- [downloadFromBucket](https://raw.githubusercontent.com/nshiab/journalism-google/v2.0.2/docs/functions/downloadFromBucket.md): downloadFromBucket function
-- [filesInBucket](https://raw.githubusercontent.com/nshiab/journalism-google/v2.0.2/docs/functions/filesInBucket.md): filesInBucket function
-- [getSheetData](https://raw.githubusercontent.com/nshiab/journalism-google/v2.0.2/docs/functions/getSheetData.md): getSheetData function
-- [inBucket](https://raw.githubusercontent.com/nshiab/journalism-google/v2.0.2/docs/functions/inBucket.md): inBucket function
-- [openSpreadsheet](https://raw.githubusercontent.com/nshiab/journalism-google/v2.0.2/docs/functions/openSpreadsheet.md): openSpreadsheet function
-- [pushToSheet](https://raw.githubusercontent.com/nshiab/journalism-google/v2.0.2/docs/functions/pushToSheet.md): pushToSheet function
-- [toBucket](https://raw.githubusercontent.com/nshiab/journalism-google/v2.0.2/docs/functions/toBucket.md): toBucket function
+- [deleteFromBucket](https://raw.githubusercontent.com/nshiab/journalism-google/v2.0.3/docs/functions/deleteFromBucket.md): deleteFromBucket function
+- [downloadFromBucket](https://raw.githubusercontent.com/nshiab/journalism-google/v2.0.3/docs/functions/downloadFromBucket.md): downloadFromBucket function
+- [filesInBucket](https://raw.githubusercontent.com/nshiab/journalism-google/v2.0.3/docs/functions/filesInBucket.md): filesInBucket function
+- [getSheetData](https://raw.githubusercontent.com/nshiab/journalism-google/v2.0.3/docs/functions/getSheetData.md): getSheetData function
+- [inBucket](https://raw.githubusercontent.com/nshiab/journalism-google/v2.0.3/docs/functions/inBucket.md): inBucket function
+- [openSpreadsheet](https://raw.githubusercontent.com/nshiab/journalism-google/v2.0.3/docs/functions/openSpreadsheet.md): openSpreadsheet function
+- [pushToSheet](https://raw.githubusercontent.com/nshiab/journalism-google/v2.0.3/docs/functions/pushToSheet.md): pushToSheet function
+- [toBucket](https://raw.githubusercontent.com/nshiab/journalism-google/v2.0.3/docs/functions/toBucket.md): toBucket function

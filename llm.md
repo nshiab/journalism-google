@@ -1,4 +1,4 @@
-**Journalism Google v2.0.2**
+**Journalism Google v2.0.3**
 
 ***
 
@@ -60,7 +60,7 @@ for development commands.
 
 > **deleteFromBucket**(`destination`, `options?`): `Promise`\<`void`\>
 
-Defined in: [deleteFromBucket.ts:38](https://github.com/nshiab/journalism-google/blob/v2.0.2/src/google/deleteFromBucket.ts#L38)
+Defined in: [deleteFromBucket.ts:38](https://github.com/nshiab/journalism-google/blob/v2.0.3/src/google/deleteFromBucket.ts#L38)
 
 Deletes a specified file from a Google Cloud Storage (GCS) bucket.
 
@@ -130,7 +130,7 @@ await deleteFromBucket("reports/2023-summary.pdf", {
 
 > **downloadFromBucket**(`source`, `destination`, `options?`): `Promise`\<`void`\>
 
-Defined in: [downloadFromBucket.ts:49](https://github.com/nshiab/journalism-google/blob/v2.0.2/src/google/downloadFromBucket.ts#L49)
+Defined in: [downloadFromBucket.ts:49](https://github.com/nshiab/journalism-google/blob/v2.0.3/src/google/downloadFromBucket.ts#L49)
 
 Downloads a file from a Google Cloud Storage (GCS) bucket to a specified local path. This function provides robust handling for existing local files, allowing you to skip downloads or overwrite files as needed.
 
@@ -220,7 +220,7 @@ await downloadFromBucket("configs/app-settings.json", "./local-configs/settings.
 
 > **filesInBucket**(`options?`): `Promise`\<`string`[]\>
 
-Defined in: [filesInBucket.ts:47](https://github.com/nshiab/journalism-google/blob/v2.0.2/src/google/filesInBucket.ts#L47)
+Defined in: [filesInBucket.ts:47](https://github.com/nshiab/journalism-google/blob/v2.0.3/src/google/filesInBucket.ts#L47)
 
 Lists files within a Google Cloud Storage (GCS) bucket. You can list all files in the bucket or narrow down the results to a specific folder. The function can also return the full Google Storage URIs for each file.
 
@@ -388,7 +388,7 @@ Name of the environment variable containing the service-account private key. Def
 
 > **getSheetData**(`sheetUrl`, `options`): `Promise`\<`string`\>
 
-Defined in: [getSheetData.ts:62](https://github.com/nshiab/journalism-google/blob/v2.0.2/src/google/getSheetData.ts#L62)
+Defined in: [getSheetData.ts:62](https://github.com/nshiab/journalism-google/blob/v2.0.3/src/google/getSheetData.ts#L62)
 
 Retrieves data from a Google Sheet.
 
@@ -486,7 +486,7 @@ console.log(dataWithCustomCredentials);
 
 > **getSheetData**(`sheetUrl`, `options?`): `Promise`\<`Record`\<`string`, `string`\>[]\>
 
-Defined in: [getSheetData.ts:130](https://github.com/nshiab/journalism-google/blob/v2.0.2/src/google/getSheetData.ts#L130)
+Defined in: [getSheetData.ts:130](https://github.com/nshiab/journalism-google/blob/v2.0.3/src/google/getSheetData.ts#L130)
 
 Retrieves data from a Google Sheet.
 
@@ -586,7 +586,7 @@ console.log(dataWithCustomCredentials);
 
 > **inBucket**(`destination`, `options?`): `Promise`\<`boolean`\>
 
-Defined in: [inBucket.ts:41](https://github.com/nshiab/journalism-google/blob/v2.0.2/src/google/inBucket.ts#L41)
+Defined in: [inBucket.ts:41](https://github.com/nshiab/journalism-google/blob/v2.0.3/src/google/inBucket.ts#L41)
 
 Checks if a specified file exists within a Google Cloud Storage (GCS) bucket. This function provides a straightforward way to verify the presence of a file in your GCS infrastructure, which is useful for conditional operations, data validation, or status checks.
 
@@ -655,7 +655,7 @@ if (existsInSpecificBucket) {
 
 > **openSpreadsheet**(`spreadsheetUrl`, `options?`): `Promise`\<\{ `sheetId?`: `number`; `spreadsheet`: `GoogleSpreadsheet`; \}\>
 
-Defined in: [openSpreadsheet.ts:59](https://github.com/nshiab/journalism-google/blob/v2.0.2/src/google/openSpreadsheet.ts#L59)
+Defined in: [openSpreadsheet.ts:59](https://github.com/nshiab/journalism-google/blob/v2.0.3/src/google/openSpreadsheet.ts#L59)
 
 Opens a Google spreadsheet and returns its loaded representation. When the
 URL identifies a specific tab with a `gid`, that ID is also returned as
@@ -757,7 +757,7 @@ const sheet = sheetId === undefined
 
 > **pushToSheet**(`data`, `sheetUrl`, `options?`): `Promise`\<`void`\>
 
-Defined in: [pushToSheet.ts:67](https://github.com/nshiab/journalism-google/blob/v2.0.2/src/google/pushToSheet.ts#L67)
+Defined in: [pushToSheet.ts:67](https://github.com/nshiab/journalism-google/blob/v2.0.3/src/google/pushToSheet.ts#L67)
 
 Writes data to a Google Sheets tab, either replacing its contents or
 appending rows. The tab can be selected by the URL's `gid` or by title.
@@ -893,7 +893,7 @@ await pushToSheet(data, sheetUrl, {
 
 > **toBucket**(`file`, `destination`, `options?`): `Promise`\<`string`\>
 
-Defined in: [toBucket.ts:70](https://github.com/nshiab/journalism-google/blob/v2.0.2/src/google/toBucket.ts#L70)
+Defined in: [toBucket.ts:70](https://github.com/nshiab/journalism-google/blob/v2.0.3/src/google/toBucket.ts#L70)
 
 Uploads a local file to a Google Cloud Storage (GCS) bucket and returns the URI of the uploaded file. This function provides robust control over the upload process, including options for skipping uploads if the file already exists, overwriting existing files, and setting custom metadata.
 

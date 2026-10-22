@@ -1,4 +1,4 @@
-[**Journalism Google v2.0.2**](../index.md)
+[**Journalism Google v2.0.3**](../index.md)
 
 ***
 
@@ -8,7 +8,7 @@
 
 > **filesInBucket**(`options?`): `Promise`\<`string`[]\>
 
-Defined in: [filesInBucket.ts:47](https://github.com/nshiab/journalism-google/blob/v2.0.2/src/google/filesInBucket.ts#L47)
+Defined in: [filesInBucket.ts:47](https://github.com/nshiab/journalism-google/blob/v2.0.3/src/google/filesInBucket.ts#L47)
 
 Lists files within a Google Cloud Storage (GCS) bucket. You can list all files in the bucket or narrow down the results to a specific folder. The function can also return the full Google Storage URIs for each file.
 

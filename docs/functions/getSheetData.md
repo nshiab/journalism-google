@@ -1,4 +1,4 @@
-[**Journalism Google v2.0.2**](../index.md)
+[**Journalism Google v2.0.3**](../index.md)
 
 ***
 
@@ -96,7 +96,7 @@ Name of the environment variable containing the service-account private key. Def
 
 > **getSheetData**(`sheetUrl`, `options`): `Promise`\<`string`\>
 
-Defined in: [getSheetData.ts:62](https://github.com/nshiab/journalism-google/blob/v2.0.2/src/google/getSheetData.ts#L62)
+Defined in: [getSheetData.ts:62](https://github.com/nshiab/journalism-google/blob/v2.0.3/src/google/getSheetData.ts#L62)
 
 Retrieves data from a Google Sheet.
 
@@ -194,7 +194,7 @@ console.log(dataWithCustomCredentials);
 
 > **getSheetData**(`sheetUrl`, `options?`): `Promise`\<`Record`\<`string`, `string`\>[]\>
 
-Defined in: [getSheetData.ts:130](https://github.com/nshiab/journalism-google/blob/v2.0.2/src/google/getSheetData.ts#L130)
+Defined in: [getSheetData.ts:130](https://github.com/nshiab/journalism-google/blob/v2.0.3/src/google/getSheetData.ts#L130)
 
 Retrieves data from a Google Sheet.
 

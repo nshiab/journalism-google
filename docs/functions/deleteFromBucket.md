@@ -1,4 +1,4 @@
-[**Journalism Google v2.0.2**](../index.md)
+[**Journalism Google v2.0.3**](../index.md)
 
 ***
 
@@ -8,7 +8,7 @@
 
 > **deleteFromBucket**(`destination`, `options?`): `Promise`\<`void`\>
 
-Defined in: [deleteFromBucket.ts:38](https://github.com/nshiab/journalism-google/blob/v2.0.2/src/google/deleteFromBucket.ts#L38)
+Defined in: [deleteFromBucket.ts:38](https://github.com/nshiab/journalism-google/blob/v2.0.3/src/google/deleteFromBucket.ts#L38)
 
 Deletes a specified file from a Google Cloud Storage (GCS) bucket.
 

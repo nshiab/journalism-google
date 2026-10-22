@@ -1,4 +1,4 @@
-[**Journalism Google v2.0.2**](../index.md)
+[**Journalism Google v2.0.3**](../index.md)
 
 ***
 
@@ -8,7 +8,7 @@
 
 > **inBucket**(`destination`, `options?`): `Promise`\<`boolean`\>
 
-Defined in: [inBucket.ts:41](https://github.com/nshiab/journalism-google/blob/v2.0.2/src/google/inBucket.ts#L41)
+Defined in: [inBucket.ts:41](https://github.com/nshiab/journalism-google/blob/v2.0.3/src/google/inBucket.ts#L41)
 
 Checks if a specified file exists within a Google Cloud Storage (GCS) bucket. This function provides a straightforward way to verify the presence of a file in your GCS infrastructure, which is useful for conditional operations, data validation, or status checks.
 

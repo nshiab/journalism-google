@@ -1,4 +1,4 @@
-[**Journalism Google v2.0.2**](../index.md)
+[**Journalism Google v2.0.3**](../index.md)
 
 ***
 
@@ -8,7 +8,7 @@
 
 > **toBucket**(`file`, `destination`, `options?`): `Promise`\<`string`\>
 
-Defined in: [toBucket.ts:70](https://github.com/nshiab/journalism-google/blob/v2.0.2/src/google/toBucket.ts#L70)
+Defined in: [toBucket.ts:70](https://github.com/nshiab/journalism-google/blob/v2.0.3/src/google/toBucket.ts#L70)
 
 Uploads a local file to a Google Cloud Storage (GCS) bucket and returns the URI of the uploaded file. This function provides robust control over the upload process, including options for skipping uploads if the file already exists, overwriting existing files, and setting custom metadata.
 

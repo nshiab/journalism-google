@@ -1,4 +1,4 @@
-[**Journalism Google v2.0.2**](../index.md)
+[**Journalism Google v2.0.3**](../index.md)
 
 ***
 
@@ -8,7 +8,7 @@
 
 > **pushToSheet**(`data`, `sheetUrl`, `options?`): `Promise`\<`void`\>
 
-Defined in: [pushToSheet.ts:67](https://github.com/nshiab/journalism-google/blob/v2.0.2/src/google/pushToSheet.ts#L67)
+Defined in: [pushToSheet.ts:67](https://github.com/nshiab/journalism-google/blob/v2.0.3/src/google/pushToSheet.ts#L67)
 
 Writes data to a Google Sheets tab, either replacing its contents or
 appending rows. The tab can be selected by the URL's `gid` or by title.

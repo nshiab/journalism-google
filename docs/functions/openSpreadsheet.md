@@ -1,4 +1,4 @@
-[**Journalism Google v2.0.2**](../index.md)
+[**Journalism Google v2.0.3**](../index.md)
 
 ***
 
@@ -8,7 +8,7 @@
 
 > **openSpreadsheet**(`spreadsheetUrl`, `options?`): `Promise`\<\{ `sheetId?`: `number`; `spreadsheet`: `GoogleSpreadsheet`; \}\>
 
-Defined in: [openSpreadsheet.ts:59](https://github.com/nshiab/journalism-google/blob/v2.0.2/src/google/openSpreadsheet.ts#L59)
+Defined in: [openSpreadsheet.ts:59](https://github.com/nshiab/journalism-google/blob/v2.0.3/src/google/openSpreadsheet.ts#L59)
 
 Opens a Google spreadsheet and returns its loaded representation. When the
 URL identifies a specific tab with a `gid`, that ID is also returned as
